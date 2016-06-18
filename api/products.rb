@@ -11,7 +11,7 @@ module ProductAPI
             params do
                 optional :q, type: String, allow_blank: false, desc: 'Search query.'
             end
-            #FIXME: Add pagination here
+            # FIXME: Add pagination here
             get '/' do
                 query = params[:q]
                 @products = if query
