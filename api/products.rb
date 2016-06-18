@@ -13,7 +13,7 @@ module ProductAPI
             end
             #FIXME: Add pagination here
             get '/' do
-                query = params[:q])
+                query = params[:q]
                 @products = if query
                                 Product.search query
                             else
