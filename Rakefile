@@ -87,7 +87,8 @@ namespace :db do
         load_env
         Rake::Task['db:reset'].execute
         # begin
-        Fabricate(:product)
+        product1 = Fabricate(:product)
+        product2 = Fabricate(:product, nombre: 'budweiser', category: product1.category)
         puts 'Data generated.'
         # rescue
         #  puts "Data looks stale, you may want to run rake db:reset first."

@@ -9,10 +9,16 @@ module ProductAPI
         resource :products do
             desc 'Searches for products.'
             params do
-                requires :q, type: String, desc: 'Search query.'
+                optional :q, type: String, allow_blank: false, desc: 'Search query.'
             end
+            #FIXME: Add pagination here
             get '/' do
-                @products = Product.search params[:q]
+                query = params[:q])
+                @products = if query
+                                Product.search query
+                            else
+                                Product.all
+                            end
                 present :products, @products
             end
 
