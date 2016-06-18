@@ -89,6 +89,9 @@ namespace :db do
         # begin
         product1 = Fabricate(:product)
         product2 = Fabricate(:product, nombre: 'budweiser', category: product1.category)
+        order1 = Fabricate(:order)
+        Fabricate(:line_item, product: product1, order: order1)
+        Fabricate(:line_item, product: product2, order: order1)
         puts 'Data generated.'
         # rescue
         #  puts "Data looks stale, you may want to run rake db:reset first."

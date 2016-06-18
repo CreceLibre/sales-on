@@ -71,16 +71,16 @@ describe ProductAPI::V1 do
         end
 
         it 'returns a specific product' do
-            allow(Product).to receive(:[]).and_return [product1]
+            allow(Product).to receive(:[]).and_return product1
             get '/api/v1/products/2'
 
             expect(last_response.status).to eq Rack::Utils.status_code(:ok)
             expect(last_response.body).to eq({
-                'product' => [{
+                'product' => {
                     'id' => product1.id,
                     'name' => product1.nombre,
                     'category' => product1.category.nombre
-                }]
+                }
             }.to_json)
         end
     end

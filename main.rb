@@ -4,5 +4,6 @@ module Bumblebee
         format :json
 
         mount ::ProductAPI::V1
+        mount ::OrderAPI::V1
     end
 end
