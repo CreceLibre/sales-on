@@ -23,6 +23,8 @@ db_options[:logger] = Logger.new('log/db.log') unless ENV['RACK_ENV'] == 'produc
 
 DB = Sequel.connect db_config, db_options
 
+R = Redis.new
+
 # Load all the basic scripts
 
 ['utils', 'api/formatters', 'api/validators', 'api', 'models', 'config/initializers', 'presenters'].each do |folder|

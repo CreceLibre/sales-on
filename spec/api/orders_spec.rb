@@ -56,8 +56,17 @@ describe OrderAPI::V1 do
             expect(last_response.body).to eq({ 'error' => 'pickup_location is missing, pickup_location is empty' }.to_json)
         end
 
-        it 'succeeds when proper payload is passed' do
+        it 'fails when proper payload is passed but cart cookie is not present' do
             allow(Order).to receive(:create).and_return order
+            post '/api/v1/orders', email: 'user@test.com', payment_method: 'webpay', pickup_location: 'galpon'
+
+            expect(last_response.status).to eq Rack::Utils.status_code(:bad_request)
+            expect(last_response.body).to eq({ 'error' => 'Cart is empty' }.to_json)
+        end
+
+        it 'succeeds when proper payload is passed and cookies is present' do
+            allow(Order).to receive(:new).and_return order
+            allow_any_instance_of(Cart).to receive(:empty?).and_return(false)
             post '/api/v1/orders', email: 'user@test.com', payment_method: 'webpay', pickup_location: 'galpon'
 
             expect(last_response.status).to eq Rack::Utils.status_code(:created)

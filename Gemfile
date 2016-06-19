@@ -6,6 +6,7 @@ gem 'grape-entity', '~> 0.5.1'
 gem 'sequel'
 gem 'thin'
 gem 'oj'
+gem 'redis'
 gem 'erubis'
 
 group :development do

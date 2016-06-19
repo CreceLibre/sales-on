@@ -5,7 +5,11 @@ module OrderAPI
     class V1 < Grape::API
         version 'v1', using: :path, vendor: 'CreceLibre'
         content_type :json, 'application/json;charset=UTF-8'
-
+        helpers do
+            def empty_cart!
+                error!({ error: 'Cart is empty' }, 400, 'Content-Type' => 'text/error')
+            end
+        end
         resource :orders do
             desc 'Places an order.'
             params do
@@ -14,8 +18,18 @@ module OrderAPI
                 requires :pickup_location, type: String, allow_blank: false
             end
             post '/' do
-                # TODO: pull data from cart
-                @order = Order.create params
+                cart = Cart.new cookies
+                empty_cart! if cart.empty?
+                Order.db.transaction do
+                    @order = Order.new params
+                    cart.items.each do |item|
+                        line_item = LineItem.new item
+                        line_item.product = Product[item['product_id']]
+                        @order.line_items << line_item
+                    end
+                    @order.save
+                end
+                cart.delete
                 present :order, @order
             end
 
