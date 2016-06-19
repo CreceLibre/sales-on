@@ -10,6 +10,9 @@ rvm:
 gemfile:
   - Gemfile
 
+services:
+  - redis-server
+
 before_script:
   - cp config/database.yml.copyme config/database.yml
   - bundle exec rake db:migrate
