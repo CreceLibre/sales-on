@@ -1,8 +1,6 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-require 'date'
-
 module CartAPI
     class V1 < Grape::API
         version 'v1', using: :path, vendor: 'CreceLibre'
@@ -15,14 +13,16 @@ module CartAPI
                 requires :quantity, type: Integer, desc: 'Product\'s quantity.'
             end
             post '/' do
-                cart = Cart.new cookies
+                cart = Cart.new cookies[:cart]
                 cart.add_item params
                 cart.save
+                cookies[:cart] = cart.id
+                "OK"
             end
 
             desc 'Get cart contents.'
             get '/' do
-                cart = Cart.new cookies
+                cart = Cart.new cookies[:cart]
                 present cart
             end
 
@@ -31,7 +31,7 @@ module CartAPI
                 requires :product_id, type: Integer, desc: 'Product\'s id.'
             end
             delete ':product_id' do
-                cart = Cart.new cookies
+                cart = Cart.new cookies[:cart]
                 cart.remove_item params[:product_id]
                 cart.save
             end
@@ -42,7 +42,7 @@ module CartAPI
                 requires :quantity, type: Integer, desc: 'Product\'s quantity.'
             end
             put ':product_id' do
-                cart = Cart.new cookies
+                cart = Cart.new cookies[:cart]
                 cart.update_item params
                 cart.save
             end

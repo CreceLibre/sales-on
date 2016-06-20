@@ -8,6 +8,7 @@ gem 'thin'
 gem 'oj'
 gem 'redis'
 gem 'erubis'
+gem 'money'
 
 group :development do
     gem 'rake'

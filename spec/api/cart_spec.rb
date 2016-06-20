@@ -13,7 +13,8 @@ describe CartAPI::V1 do
     end
 
     let(:empty_cart) do
-        Cart.new cookies
+        R.flushall
+        Cart.new 1
     end
 
     let(:cart) do

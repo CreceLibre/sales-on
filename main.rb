@@ -6,5 +6,6 @@ module Bumblebee
         mount ::ProductAPI::V1
         mount ::OrderAPI::V1
         mount ::CartAPI::V1
+        mount ::BreakdownAPI::V1
     end
 end

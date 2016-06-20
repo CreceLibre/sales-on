@@ -4,10 +4,8 @@ require 'json'
 class Cart
     attr_accessor :items, :id
 
-    def initialize(cookies)
-        @cookies = cookies
-        @cookies[:cart] ||= SecureRandom.uuid
-        @id = @cookies[:cart]
+    def initialize(id)
+        @id = id || SecureRandom.uuid
         items = R.get(@id)
         @items = if items
                      JSON.parse(items)
@@ -17,6 +15,7 @@ class Cart
     end
 
     def add_item(item)
+        # TODO: item should be encapsulated into a class, maybe reuse line_item?
         @items << item
     end
 
@@ -43,7 +42,6 @@ class Cart
 
     def delete
         R.del @id
-        @cookies.delete :cart
         @items = []
     end
 

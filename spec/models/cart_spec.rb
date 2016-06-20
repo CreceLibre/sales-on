@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Cart do
     before do
-        cookies = {}
-        @cart = Cart.new cookies
+        R.flushall
+        @cart = Cart.new 1
     end
 
     context '#items' do

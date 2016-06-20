@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Product do
     before do
-        @product = Fabricate :product
+        Fabricate :product
     end
 
     context '#search' do
