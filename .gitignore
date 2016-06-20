@@ -6,7 +6,6 @@ db/test.sqlite
 /.config
 /coverage/
 /InstalledFiles
-/elm-stuff/
 /pkg/
 /spec/reports/
 /test/tmp/
@@ -28,6 +27,10 @@ build/
 ## Environment normalisation:
 /.bundle/
 /lib/bundler/man/
+
+## webapp
+elm-stuff
+public
 
 # for a library or gem, you might want to ignore these files since the code is
 # intended to run in multiple environments; otherwise, check them in:
