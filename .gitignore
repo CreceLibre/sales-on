@@ -6,6 +6,7 @@ db/test.sqlite
 /.config
 /coverage/
 /InstalledFiles
+/elm-stuff/
 /pkg/
 /spec/reports/
 /test/tmp/
