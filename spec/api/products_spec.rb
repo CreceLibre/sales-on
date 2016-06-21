@@ -34,7 +34,8 @@ describe ProductAPI::V1 do
                 'products' => [{
                     'id' => product1.id,
                     'name' => product1.nombre,
-                    'category' => product1.category.nombre
+                    'category' => product1.category.nombre,
+                    'price' => product1.precio_venta
                 }]
             }.to_json)
         end
@@ -49,12 +50,14 @@ describe ProductAPI::V1 do
                     {
                         'id' => product1.id,
                         'name' => product1.nombre,
-                        'category' => product1.category.nombre
+                        'category' => product1.category.nombre,
+                        'price' => product1.precio_venta
                     },
                     {
                         'id' => product2.id,
                         'name' => product2.nombre,
-                        'category' => product2.category.nombre
+                        'category' => product2.category.nombre,
+                        'price' => product2.precio_venta
                     }
                 ]
             }.to_json)
@@ -79,7 +82,8 @@ describe ProductAPI::V1 do
                 'product' => {
                     'id' => product1.id,
                     'name' => product1.nombre,
-                    'category' => product1.category.nombre
+                    'category' => product1.category.nombre,
+                    'price' => product1.precio_venta
                 }
             }.to_json)
         end

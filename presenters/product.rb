@@ -7,6 +7,7 @@ class Product
         expose :id
         expose :nombre, as: :name
         expose :category
+        expose :precio_venta, as: :price
 
         private
 
