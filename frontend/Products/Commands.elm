@@ -4,6 +4,8 @@ import Http
 import Json.Decode as Decode exposing ((:=))
 import Products.Models exposing (ProductId, Product)
 import Products.Messages exposing (..)
+import AddToCart.Models
+import Json.Decode.Pipeline exposing (decode, required, optional, hardcoded)
 import Task
 
 fetchAll : Maybe String -> Cmd Msg
@@ -27,8 +29,9 @@ collectionDecoder =
 
 memberDecoder : Decode.Decoder Product
 memberDecoder =
-  Decode.object4 Product
-    ("id" := Decode.int)
-    ("name" := Decode.string)
-    ("category" := Decode.string)
-    ("price" := Decode.int)
+  decode Product
+    |> required "id" Decode.int
+    |> required "name" Decode.string
+    |> required "category" Decode.string
+    |> required "price" Decode.int
+    |> hardcoded AddToCart.Models.init

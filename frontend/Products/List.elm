@@ -1,10 +1,11 @@
 module Products.List exposing (..)
 
 import Html exposing (..)
+import Html.App
 import Html.Attributes exposing (class)
 import Products.Messages exposing (..)
 import Products.Models exposing (Product)
-
+import AddToCart.View
 
 view : List Product -> Html Msg
 view products =
@@ -39,4 +40,5 @@ productRow product =
         , td [] [ text (toString product.name) ]
         , td [] [ text (toString product.category) ]
         , td [] [ text (toString product.price) ]
+        , td [] [ Html.App.map (AddToCartMsg product.id) (AddToCart.View.view product.addToCart) ]
         ]
