@@ -5,7 +5,7 @@ import AddToCart.Models exposing (AddToCart)
 
 
 update : Msg -> AddToCart -> ( AddToCart, Cmd Msg)
-update action searchProduct =
+update action addToCart =
     case action of
         Add ->
-            ( searchProduct, Cmd.none)
+            ( addToCart, Cmd.none)
