@@ -6,14 +6,18 @@ import Products.Models exposing (ProductId, Product)
 import Products.Messages exposing (..)
 import Task
 
-fetchAll : Cmd Msg
-fetchAll =
-  Http.get collectionDecoder fetchAllUrl
+fetchAll : Maybe String -> Cmd Msg
+fetchAll query =
+  Http.get collectionDecoder (fetchAllUrl query)
     |> Task.perform FetchAllFail FetchAllDone
 
-fetchAllUrl : String
-fetchAllUrl =
-  "http://localhost:9292/api/v1/products"
+fetchAllUrl : Maybe String -> String
+fetchAllUrl query =
+  case query of
+    Just term ->
+      "http://localhost:9292/api/v1/products?q=" ++ term
+    Nothing ->
+      "http://localhost:9292/api/v1/products"
 
 collectionDecoder : Decode.Decoder (List Product)
 collectionDecoder =

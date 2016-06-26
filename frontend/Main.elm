@@ -14,8 +14,10 @@ init result =
     let
         currentRoute =
             Routing.routeFromResult result
+        model =
+          initialModel currentRoute
     in
-        ( initialModel currentRoute, Cmd.map ProductsMsg fetchAll )
+        ( model, Cmd.map ProductsMsg (fetchAll model.searchProduct) )
 
 
 subscriptions : Model -> Sub Msg

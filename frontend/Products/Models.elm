@@ -1,6 +1,5 @@
 module Products.Models exposing (..)
 
-
 type alias ProductId =
     Int
 

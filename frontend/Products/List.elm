@@ -8,14 +8,14 @@ import Products.Models exposing (Product)
 
 view : List Product -> Html Msg
 view products =
-    div []
-        [ nav products
-        , list products
-        ]
+  list products
 
 
 list : List Product -> Html Msg
 list products =
+  if List.isEmpty products then
+    text "No se encontraron productos"
+  else
     div [ class "p2" ]
         [ table []
             [ thead []
@@ -24,19 +24,11 @@ list products =
                     , th [] [ text "Name" ]
                     , th [] [ text "Category" ]
                     , th [] [ text "Price" ]
-                    , th [] [ ]
+                    , th [] []
                     ]
                 ]
             , tbody [] (List.map productRow products)
             ]
-        ]
-
-
-nav : List Product -> Html Msg
-nav products =
-    div [ class "clearfix mb2 white bg-black" ]
-        [ div [ class "left p2" ]
-            [ text "Products" ]
         ]
 
 
@@ -47,5 +39,4 @@ productRow product =
         , td [] [ text (toString product.name) ]
         , td [] [ text (toString product.category) ]
         , td [] [ text (toString product.price) ]
-        , td [] [ button [] [ text "add to cart"] ]
         ]
