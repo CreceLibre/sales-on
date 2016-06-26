@@ -1,8 +1,8 @@
 module Products.Update exposing (..)
 
 import Products.Messages exposing (Msg(..))
-import Products.Models exposing (Product)
-import AddToCart.Update
+import Products.Models exposing (Product, ProductId)
+import Products.Commands exposing (addProductToCart)
 
 
 update : Msg -> List Product -> ( List Product, Cmd Msg )
@@ -12,26 +12,25 @@ update action products =
             ( newProducts, Cmd.none )
 
         FetchAllFail error ->
-            let
-                _ =
-                    Debug.log "err" error
-            in
-                ( products, Cmd.none )
+            ( products, Cmd.none )
 
-        AddToCartMsg productId subMsg ->
-            let
-                updateCartButton product =
-                    if product.id == productId then
-                        let
-                            ( updatedAddToCart, cmds ) =
-                                AddToCart.Update.update subMsg product.addToCart
-                        in
-                            ( { product | addToCart = updatedAddToCart }, Cmd.map (AddToCartMsg productId) cmds )
-                    else
-                        ( product, Cmd.none )
+        AddToCart productId ->
+            ( products, addToCartCommands productId products |> Cmd.batch )
 
-                ( products', cmds' ) =
-                    List.map updateCartButton products
-                      |> List.unzip
-            in
-                ( products', Cmd.batch cmds' )
+        AddToCartSuccess ->
+            ( products, Cmd.none )
+
+        AddToCartFail error ->
+            ( products, Cmd.none )
+
+
+addToCartCommands : ProductId -> List Product -> List (Cmd Msg)
+addToCartCommands productId =
+    let
+        cmdForProduct product =
+            if product.id == productId then
+                addProductToCart productId
+            else
+                Cmd.none
+    in
+        List.map cmdForProduct

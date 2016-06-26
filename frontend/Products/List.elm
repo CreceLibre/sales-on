@@ -1,11 +1,10 @@
 module Products.List exposing (..)
 
 import Html exposing (..)
-import Html.App
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, disabled)
 import Products.Messages exposing (..)
 import Products.Models exposing (Product)
-import AddToCart.View
+import Html.Events exposing (onClick)
 
 view : List Product -> Html Msg
 view products =
@@ -40,5 +39,5 @@ productRow product =
         , td [] [ text (toString product.name) ]
         , td [] [ text (toString product.category) ]
         , td [] [ text (toString product.price) ]
-        , td [] [ Html.App.map (AddToCartMsg product.id) (AddToCart.View.view product.addToCart) ]
+        , td [] [ button [ onClick (AddToCart product.id), disabled (not product.addToCart) ] [ text "Add to cart" ] ]
         ]
