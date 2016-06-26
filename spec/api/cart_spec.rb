@@ -52,7 +52,7 @@ describe CartAPI::V1 do
     describe 'POST /api/v1/cart' do
         it 'adds an item into the cart' do
             allow(Cart).to receive(:new).and_return empty_cart
-            post '/api/v1/cart', product_id: 1, quantity: 3
+            post '/api/v1/cart', product_id: 1
 
             expect(last_response.status).to eq Rack::Utils.status_code(:created)
             expect(last_response.body).to eq "OK".to_json

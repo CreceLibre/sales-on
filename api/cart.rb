@@ -10,11 +10,10 @@ module CartAPI
             desc 'Adds and item into the cart.'
             params do
                 requires :product_id, type: Integer, desc: 'Product\'s id.'
-                requires :quantity, type: Integer, desc: 'Product\'s quantity.'
             end
             post '/' do
                 cart = Cart.new cookies[:cart]
-                cart.add_item params
+                cart.add_item params.merge(quantity: 1) # FIXME: should be inside Cart model
                 cart.save
                 cookies[:cart] = cart.id
                 "OK"
