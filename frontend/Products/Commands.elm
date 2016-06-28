@@ -9,12 +9,13 @@ import Json.Decode.Pipeline exposing (decode, required, optional, hardcoded)
 import Task
 
 
-saveUrl : String
-saveUrl =
+addToCartUrl : String
+addToCartUrl =
     "http://localhost:9292/api/v1/cart"
 
-saveTask : ProductId -> Task.Task Http.Error ()
-saveTask productId =
+
+addToCartTask : ProductId -> Task.Task Http.Error ()
+addToCartTask productId =
     let
         body =
             memberEncoded productId
@@ -24,11 +25,9 @@ saveTask productId =
         config =
             { verb = "POST"
             , headers = [ ( "Content-Type", "application/json" ) ]
-            , url = saveUrl
+            , url = addToCartUrl
             , body = body
             }
-
-
     in
         Http.send Http.defaultSettings config
             |> Http.fromJson (Decode.succeed ())
@@ -36,7 +35,7 @@ saveTask productId =
 
 addProductToCart : ProductId -> Cmd Msg
 addProductToCart productId =
-    saveTask productId
+    addToCartTask productId
         |> Task.perform AddToCartFail (always AddToCartSuccess)
 
 
