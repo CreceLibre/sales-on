@@ -24,6 +24,7 @@ list cartItems =
                     , th [] [ text "Name" ]
                     , th [] [ text "Price" ]
                     , th [] [ text "Quantity" ]
+                    , th [] [ text "Total" ]
                     ]
                 ]
             , tbody [] (List.map row cartItems)
@@ -35,7 +36,8 @@ row : CartItem -> Html Msg
 row cartItem =
     tr []
         [ td [] [ text (toString cartItem.id) ]
-        , td [] [ text (toString cartItem.name) ]
-        , td [] [ text (toString cartItem.unitPrice.formattedAmount) ]
+        , td [] [ text (cartItem.name) ]
+        , td [] [ text (cartItem.unitPrice) ]
         , td [] [ text (toString cartItem.quantity) ]
+        , td [] [ text (cartItem.total) ]
         ]

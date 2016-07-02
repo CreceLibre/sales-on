@@ -2,18 +2,18 @@ module Confirmation.Update exposing (..)
 
 import Confirmation.Messages exposing (Msg(..))
 import Confirmation.Models exposing (ConfirmationOrder)
-import CartItems.Update
+import OrderBreakdown.Update
 
 
 update : Msg -> ConfirmationOrder -> ( ConfirmationOrder, Cmd Msg )
-update action confirmationOrder =
-    case action of
-        CartItemsMsg subMsg ->
+update msg confirmationOrder =
+    case msg of
+        OrderBreakdownMsg subMsg ->
             let
-                ( newCartItems, cmds ) =
-                    CartItems.Update.update subMsg confirmationOrder.cartItems
+                ( newOrderBreakdown, cmds ) =
+                    OrderBreakdown.Update.update subMsg confirmationOrder.orderBreakdown
             in
-                ( { confirmationOrder | cartItems = newCartItems }, Cmd.map CartItemsMsg cmds )
+                ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.map OrderBreakdownMsg cmds )
 
         UpdateEmail newEmail ->
             ( { confirmationOrder | email = newEmail }, Cmd.none )
@@ -23,9 +23,3 @@ update action confirmationOrder =
 
         UpdatePickupLocation newPickupLocation ->
             ( { confirmationOrder | pickupLocation = newPickupLocation }, Cmd.none )
-
-        FetchBreakdownsDone newOrderBreakdown ->
-            ( newOrderBreakdown, Cmd.none )
-
-        FetchBreakdownsFail _ ->
-            ( confirmationOrder, Cmd.none )

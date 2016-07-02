@@ -1,17 +1,14 @@
 module Confirmation.Models exposing (..)
 
-import CartItems.Models exposing (CartItem)
-import Shared.Models exposing (Amount, initAmount)
+import OrderBreakdown.Models exposing (OrderBreakdown)
 
 type alias ConfirmationOrder =
     { email : String
     , paymentMethod : String
     , pickupLocation : String
-    , subtotal: Amount
-    , total: Amount
-    , cartItems : (List CartItem)
+    , orderBreakdown : OrderBreakdown
     }
 
 init : ConfirmationOrder
 init =
-  ConfirmationOrder "" "" "" initAmount initAmount []
+  ConfirmationOrder "" "" "" OrderBreakdown.Models.init
