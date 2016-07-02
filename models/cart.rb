@@ -16,7 +16,7 @@ class Cart
 
     def add_item(item)
         # TODO: item should be encapsulated into a class, maybe reuse line_item?
-        @items << item
+        @items << item unless @items.any? { |i| i['product_id'] == item.product_id } # Do not alow dup items
     end
 
     def remove_item(id)

@@ -5,19 +5,22 @@ import Messages exposing (Msg(..))
 import Models exposing (Model, initialModel)
 import View exposing (view)
 import Update exposing (update)
-import Products.Commands exposing (fetchAll)
-import Routing exposing (Route)
-
+import Routing exposing (Route(..))
+import Confirmation.Commands
+import Products.Commands
+import Debug
 
 init : Result String Route -> ( Model, Cmd Msg )
 init result =
     let
         currentRoute =
             Routing.routeFromResult result
+
         model =
-          initialModel currentRoute
+            initialModel currentRoute
+
     in
-        ( model, Cmd.map ProductsMsg (fetchAll model.searchProduct) )
+        urlUpdate result model
 
 
 subscriptions : Model -> Sub Msg
@@ -31,7 +34,20 @@ urlUpdate result model =
         currentRoute =
             Routing.routeFromResult result
     in
-        ( { model | route = currentRoute }, Cmd.none )
+        ( { model | route = currentRoute }, urlUpdateCommand model currentRoute )
+
+
+urlUpdateCommand : Model -> Route -> Cmd Msg
+urlUpdateCommand model route =
+    case route of
+        ConfirmationRoute ->
+            Cmd.map ConfirmationMsg Confirmation.Commands.fetchAll
+
+        ProductsRoute ->
+            Cmd.map ProductsMsg (Products.Commands.fetchAll model.searchProduct)
+
+        NotFoundRoute ->
+            Cmd.none
 
 
 main : Program Never

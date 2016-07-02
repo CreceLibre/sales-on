@@ -39,5 +39,5 @@ routeFromResult result =
         Ok route ->
             route
 
-        Err string ->
+        Err _ ->
             NotFoundRoute

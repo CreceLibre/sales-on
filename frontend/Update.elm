@@ -5,6 +5,7 @@ import Models exposing (Model)
 import Products.Update
 import SearchProduct.Update
 import Confirmation.Update
+import Confirmation.Commands
 import SearchProduct.Messages exposing (OutMsg(..))
 import Products.Commands exposing (fetchAll)
 import Navigation
@@ -42,9 +43,8 @@ update msg model =
                     ]
                 )
 
-
         ShowConfirmation ->
-            ( model, Navigation.newUrl "#confirmation")
+            ( model, Navigation.newUrl "#confirmation" )
 
 
 processSignal : SearchProduct.Messages.OutMsg -> Model -> ( Model, Cmd Msg )
