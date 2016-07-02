@@ -4,8 +4,10 @@ import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Products.Update
 import SearchProduct.Update
+import Confirmation.Update
 import SearchProduct.Messages exposing (OutMsg(..))
 import Products.Commands exposing (fetchAll)
+import Navigation
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -17,6 +19,13 @@ update msg model =
                     Products.Update.update subMsg model.products
             in
                 ( { model | products = updatedProducts }, Cmd.map ProductsMsg cmds )
+
+        ConfirmationMsg subMsg ->
+            let
+                ( updatedConfirmation, cmds ) =
+                    Confirmation.Update.update subMsg model.confirmationOrder
+            in
+                ( { model | confirmationOrder = updatedConfirmation }, Cmd.map ConfirmationMsg cmds )
 
         SearchProductMsg subMsg ->
             let
@@ -32,6 +41,10 @@ update msg model =
                     , cmdFromSignal
                     ]
                 )
+
+
+        ShowConfirmation ->
+            ( model, Navigation.newUrl "#confirmation")
 
 
 processSignal : SearchProduct.Messages.OutMsg -> Model -> ( Model, Cmd Msg )

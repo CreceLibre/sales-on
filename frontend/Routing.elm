@@ -7,7 +7,9 @@ import UrlParser exposing (..)
 
 type Route
     = ProductsRoute
+    | ConfirmationRoute
     | NotFoundRoute
+
 
 
 matchers : Parser (Route -> a) a
@@ -15,6 +17,7 @@ matchers =
     oneOf
         [ format ProductsRoute (s "")
         , format ProductsRoute (s "products")
+        , format ConfirmationRoute (s "confirmation")
         ]
 
 

@@ -2,11 +2,13 @@ module Models exposing (..)
 
 import Products.Models exposing (Product)
 import SearchProduct.Models exposing (SearchProduct)
+import Confirmation.Models exposing (ConfirmationOrder)
 import Routing
 
 
 type alias Model =
-    { products : List Product
+    { confirmationOrder : ConfirmationOrder
+    , products : List Product
     , searchProduct : SearchProduct
     , route : Routing.Route
     }
@@ -14,7 +16,8 @@ type alias Model =
 
 initialModel : Routing.Route -> Model
 initialModel route =
-    { products = []
-    , searchProduct = Nothing
+    { confirmationOrder = Confirmation.Models.init
+    , products = []
+    , searchProduct = SearchProduct.Models.init
     , route = route
     }
