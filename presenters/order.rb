@@ -4,7 +4,7 @@ class Order
     end
 
     class Entity < Grape::Entity
-        expose :id
+        expose :uuid
         expose :email
     end
 end

@@ -34,6 +34,12 @@ page model =
                 , Html.App.map ConfirmationMsg (Confirmation.View.view model.confirmationOrder)
                 ]
 
+        ReceiptRoute _ ->
+
+            div []
+                [ nav "Orden completada"
+                ]
+
         NotFoundRoute ->
             notFoundView
 

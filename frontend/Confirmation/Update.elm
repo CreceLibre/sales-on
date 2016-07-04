@@ -2,7 +2,9 @@ module Confirmation.Update exposing (..)
 
 import Confirmation.Messages exposing (Msg(..))
 import Confirmation.Models exposing (ConfirmationOrder)
+import Confirmation.Commands exposing (placeOrder)
 import OrderBreakdown.Update
+import Navigation
 
 
 update : Msg -> ConfirmationOrder -> ( ConfirmationOrder, Cmd Msg )
@@ -23,3 +25,12 @@ update msg confirmationOrder =
 
         UpdatePickupLocation newPickupLocation ->
             ( { confirmationOrder | pickupLocation = newPickupLocation }, Cmd.none )
+
+        PlaceOrderDone orderUuid ->
+          ( confirmationOrder, Navigation.newUrl ("#receipt/" ++ orderUuid) )
+
+        PlaceOrderFail error ->
+            ( confirmationOrder, Cmd.none )
+
+        PlaceOrder ->
+            ( confirmationOrder, placeOrder confirmationOrder )

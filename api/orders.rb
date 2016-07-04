@@ -18,7 +18,7 @@ module OrderAPI
                 requires :pickup_location, type: String, allow_blank: false
             end
             post '/' do
-                cart = Cart.new cookies
+                cart = Cart.new cookies[:cart]
                 empty_cart! if cart.empty?
                 Order.db.transaction do
                     @order = Order.new params

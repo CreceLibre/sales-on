@@ -11,4 +11,4 @@ type alias ConfirmationOrder =
 
 init : ConfirmationOrder
 init =
-  ConfirmationOrder "" "" "" OrderBreakdown.Models.init
+  ConfirmationOrder "andres@otarola.me" "webpay" "galpon" OrderBreakdown.Models.init

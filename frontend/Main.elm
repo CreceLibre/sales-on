@@ -8,7 +8,7 @@ import Update exposing (update)
 import Routing exposing (Route(..))
 import Confirmation.Commands
 import Products.Commands
-import Debug
+
 
 init : Result String Route -> ( Model, Cmd Msg )
 init result =
@@ -45,6 +45,9 @@ urlUpdateCommand model route =
 
         ProductsRoute ->
             Cmd.map ProductsMsg (Products.Commands.fetchAll model.searchProduct)
+
+        ReceiptRoute _ ->
+            Cmd.none
 
         NotFoundRoute ->
             Cmd.none

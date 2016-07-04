@@ -5,6 +5,7 @@ Sequel.migration do
         # - `pickup_location` should be multi-valued (?)
         create_table(:sales_order) do
             primary_key :id
+            String      :uuid,                      size: 36, null: false
             Integer     :total,                     null: false
             Integer     :subtotal_taxed,            null: false
             Integer     :subtotal_non_taxed,        null: false
