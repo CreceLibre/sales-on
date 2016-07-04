@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "api": "bundle exec rackup",
+    "c": "bundle exec rake c",
     "build": "webpack",
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --port 3000"

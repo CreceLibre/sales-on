@@ -5,7 +5,7 @@ import Models exposing (Model)
 import Products.Update
 import SearchProduct.Update
 import Confirmation.Update
-import Confirmation.Commands
+import Receipt.Update
 import SearchProduct.Messages exposing (OutMsg(..))
 import Products.Commands exposing (fetchAll)
 import Navigation
@@ -27,6 +27,13 @@ update msg model =
                     Confirmation.Update.update subMsg model.confirmationOrder
             in
                 ( { model | confirmationOrder = updatedConfirmation }, Cmd.map ConfirmationMsg cmds )
+
+        ReceiptMsg subMsg ->
+            let
+                ( updatedReceipt, cmds ) =
+                    Receipt.Update.update subMsg model.receiptOrder
+            in
+                ( { model | receiptOrder = updatedReceipt }, Cmd.map ReceiptMsg cmds )
 
         SearchProductMsg subMsg ->
             let

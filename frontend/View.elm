@@ -9,6 +9,7 @@ import Models exposing (Model)
 import Products.List
 import SearchProduct.View
 import Confirmation.View
+import Receipt.View
 import Routing exposing (Route(..))
 
 
@@ -38,6 +39,7 @@ page model =
 
             div []
                 [ nav "Orden completada"
+                , Html.App.map ReceiptMsg (Receipt.View.view model.receiptOrder)
                 ]
 
         NotFoundRoute ->

@@ -35,10 +35,10 @@ module OrderAPI
 
             desc 'Get a specified order.'
             params do
-                requires :id, type: Integer, desc: 'Order\'s id.'
+                requires :uuid, type: String, desc: 'Order\'s uuid.'
             end
-            get ':id' do
-                @order = Order[params[:id]]
+            get ':uuid' do
+                @order = Order.find uuid: params[:uuid]
                 present :order, @order
             end
         end
