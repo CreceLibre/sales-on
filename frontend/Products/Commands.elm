@@ -11,7 +11,7 @@ import Task
 
 addToCartUrl : String
 addToCartUrl =
-    "http://localhost:9292/api/v1/cart"
+    "/api/v1/cart"
 
 
 addToCartTask : ProductId -> Task.Task Http.Error ()
@@ -60,10 +60,10 @@ fetchAllUrl : Maybe String -> String
 fetchAllUrl query =
     case query of
         Just term ->
-            "http://localhost:9292/api/v1/products?q=" ++ term
+            "/api/v1/products?q=" ++ term
 
         Nothing ->
-            "http://localhost:9292/api/v1/products"
+            "/api/v1/products"
 
 
 collectionDecoder : Decode.Decoder (List Product)

@@ -9,6 +9,7 @@ gem 'oj'
 gem 'redis'
 gem 'erubis'
 gem 'money'
+gem 'rack-cors'
 
 group :development do
     gem 'rake'

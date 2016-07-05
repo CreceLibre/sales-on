@@ -70,7 +70,7 @@ describe CartAPI::V1 do
     end
 
     describe 'PUT /api/v1/cart/' do
-        it 'deletes an item from cart' do
+        it 'modifies an item from cart' do
             allow(Cart).to receive(:new).and_return cart
             put '/api/v1/cart/1', product_id: 1, quantity: 9
 

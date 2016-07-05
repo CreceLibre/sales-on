@@ -16,7 +16,7 @@ fetchAll =
 
 placeOrderUrl : String
 placeOrderUrl =
-    "http://localhost:9292/api/v1/orders"
+    "/api/v1/orders"
 
 
 placeOrderTask : ConfirmationOrder -> Task.Task Http.Error String

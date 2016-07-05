@@ -7,20 +7,10 @@ if ENV['RACK_ENV'] == 'development'
     # Serve any requests to the root path ('/') with public/index.html.
 end
 
-use Rack::Static,
-  :urls => "/",
-  :root => 'public',
-  :index => 'index.html'
-
-
-use Rack::Static,
-  :urls => ["/app.js"],
-  :root => 'public'
-
 use Rack::Config do |env|
     env['api.tilt.root'] = File.expand_path('views')
 end
 
 # NewRelic::Agent.manual_start
 
-run Bumblebee::API
+run SalesOn::App.instance

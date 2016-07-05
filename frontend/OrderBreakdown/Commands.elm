@@ -17,7 +17,7 @@ fetchAll =
 
 fetchAllUrl : String
 fetchAllUrl =
-    "http://localhost:9292/api/v1/breakdowns"
+    "/api/v1/breakdowns"
 
 
 collectionDecoder : Decode.Decoder OrderBreakdown

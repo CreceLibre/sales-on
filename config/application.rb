@@ -34,4 +34,5 @@ R = Redis.new
 end
 
 # Load starter app
-require File.expand_path('../../main', __FILE__)
+require File.expand_path('../../app/main', __FILE__)
+require File.expand_path('../../app/api', __FILE__)

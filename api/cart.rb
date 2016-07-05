@@ -29,7 +29,7 @@ module CartAPI
             params do
                 requires :product_id, type: Integer, desc: 'Product\'s id.'
             end
-            delete ':product_id' do
+            delete '/' do
                 cart = Cart.new cookies[:cart]
                 cart.remove_item params[:product_id]
                 cart.save
@@ -40,7 +40,7 @@ module CartAPI
                 requires :product_id, type: Integer, desc: 'Product\'s id.'
                 requires :quantity, type: Integer, desc: 'Product\'s quantity.'
             end
-            put ':product_id' do
+            put '/' do
                 cart = Cart.new cookies[:cart]
                 cart.update_item params
                 cart.save

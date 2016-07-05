@@ -10,7 +10,7 @@ import Json.Decode.Pipeline as Pipeline
 
 fetchOrderUrl : String -> String
 fetchOrderUrl orderUuid =
-    "http://localhost:9292/api/v1/orders/" ++ orderUuid
+    "/api/v1/orders/" ++ orderUuid
 
 
 fetchOrder : String -> Cmd Msg

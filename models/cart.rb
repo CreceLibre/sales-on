@@ -27,8 +27,8 @@ class Cart
 
     def update_item(item)
         @items = @items.map do |hash|
-            if hash[:product_id] == item[:product_id]
-                hash[:quantity] = item[:quantity]
+            if hash['product_id'] == item['product_id']
+                hash['quantity'] = item['quantity']
                 hash
             else
                 hash

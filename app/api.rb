@@ -1,4 +1,4 @@
-module Bumblebee
+module SalesOn
     class API < Grape::API
         prefix :api
         format :json
