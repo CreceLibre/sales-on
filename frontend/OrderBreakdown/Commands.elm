@@ -2,9 +2,9 @@ module OrderBreakdown.Commands exposing (..)
 
 import Http
 import Json.Decode as Decode
-import OrderBreakdown.Models exposing (OrderBreakdown)
+import Json.Encode as Encode
+import OrderBreakdown.Models exposing (OrderBreakdown, Item, ItemId)
 import OrderBreakdown.Messages exposing (..)
-import CartItems.Models exposing (CartItem)
 import Task
 import Json.Decode.Pipeline as Pipeline
 
@@ -40,11 +40,52 @@ decodeAmount =
         |> Pipeline.required "formattedAmount" Decode.string
 
 
-decodeCartItem : Decode.Decoder CartItem
+decodeCartItem : Decode.Decoder Item
 decodeCartItem =
-    Pipeline.decode CartItem
+    Pipeline.decode Item
         |> Pipeline.required "productId" Decode.int
         |> Pipeline.required "name" Decode.string
         |> Pipeline.required "unitPrice" decodeAmount
         |> Pipeline.required "total" decodeAmount
         |> Pipeline.required "quantity" Decode.int
+
+updateItemUrl : String
+updateItemUrl =
+    "/api/v1/cart"
+
+
+updateItemTask : ItemId -> Int -> Task.Task Http.Error ()
+updateItemTask itemId newQuantity =
+    let
+        body =
+            memberEncoded itemId newQuantity
+                |> Encode.encode 0
+                |> Http.string
+
+        config =
+            { verb = "PUT"
+            , headers = [ ( "Content-Type", "application/json" ) ]
+            , url = updateItemUrl
+            , body = body
+            }
+    in
+        Http.send Http.defaultSettings config
+            |> Http.fromJson (Decode.succeed ())
+
+
+updateItem : ItemId -> Int -> Cmd Msg
+updateItem itemId newQuantity =
+    updateItemTask itemId newQuantity
+        |> Task.perform UpdateItemQuantityFail (always UpdateItemQuantityDone)
+
+
+memberEncoded : ItemId -> Int -> Encode.Value
+memberEncoded itemId newQuantity =
+    let
+        list =
+            [ ( "product_id", Encode.int itemId )
+            , ( "quantity", Encode.int newQuantity )
+            ]
+    in
+        list
+            |> Encode.object

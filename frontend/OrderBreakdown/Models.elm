@@ -1,12 +1,20 @@
 module OrderBreakdown.Models exposing (..)
 
-import CartItems.Models exposing (CartItem)
+type alias ItemId =
+    Int
 
+type alias Item =
+    { id : ItemId
+    , name : String
+    , unitPrice : String
+    , total : String
+    , quantity : Int
+    }
 
 type alias OrderBreakdown =
     { subtotal : String
     , total : String
-    , cartItems : List CartItem
+    , items : List Item
     }
 
 
