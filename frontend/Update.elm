@@ -6,8 +6,6 @@ import Products.Update
 import SearchProduct.Update
 import Confirmation.Update
 import Receipt.Update
-import SearchProduct.Messages exposing (OutMsg(..))
-import Products.Commands exposing (fetch)
 import Navigation
 
 
@@ -37,28 +35,10 @@ update msg model =
 
         SearchProductMsg subMsg ->
             let
-                ( updatedSearchProduct, cmds, signalToProcess ) =
+                ( updatedSearchProduct, cmds ) =
                     SearchProduct.Update.update subMsg model.searchProduct
-
-                ( newModel, cmdFromSignal ) =
-                    processSignal signalToProcess { model | searchProduct = updatedSearchProduct }
             in
-                ( newModel
-                , Cmd.batch
-                    [ Cmd.map SearchProductMsg cmds
-                    , cmdFromSignal
-                    ]
-                )
+                ( { model | searchProduct = updatedSearchProduct }, Cmd.map SearchProductMsg cmds )
 
         ShowConfirmation ->
             ( model, Navigation.newUrl "#confirmation" )
-
-
-processSignal : SearchProduct.Messages.OutMsg -> Model -> ( Model, Cmd Msg )
-processSignal signal model =
-    case signal of
-        NoOp ->
-            ( model, Cmd.none )
-
-        Search ->
-            ( model, Cmd.map ProductsMsg (fetch model.searchProduct) )

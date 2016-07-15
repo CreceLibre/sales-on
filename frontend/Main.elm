@@ -9,6 +9,7 @@ import Routing exposing (Route(..))
 import Confirmation.Commands
 import Products.Commands
 import Receipt.Commands
+import Products.Subscriptions
 
 
 init : Result String Route -> ( Model, Cmd Msg )
@@ -25,7 +26,7 @@ init result =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Sub.map ProductsMsg (Products.Subscriptions.subscriptions model.products)
 
 
 urlUpdate : Result String Route -> Model -> ( Model, Cmd Msg )

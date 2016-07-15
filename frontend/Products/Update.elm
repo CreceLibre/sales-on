@@ -2,7 +2,7 @@ module Products.Update exposing (..)
 
 import Products.Messages exposing (Msg(..))
 import Products.Models exposing (Product, ProductId)
-import Products.Commands exposing (addProductToCart)
+import Products.Commands exposing (addProductToCart, fetch)
 
 
 update : Msg -> List Product -> ( List Product, Cmd Msg )
@@ -22,6 +22,9 @@ update action products =
 
         AddToCartFail error ->
             ( products, Cmd.none )
+
+        FetchByTerm term ->
+            ( products, fetch term )
 
 
 addToCartCommands : ProductId -> List Product -> List (Cmd Msg)
