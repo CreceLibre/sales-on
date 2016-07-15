@@ -41,13 +41,13 @@ urlUpdateCommand : Model -> Route -> Cmd Msg
 urlUpdateCommand model route =
     case route of
         ConfirmationRoute ->
-            Cmd.map ConfirmationMsg Confirmation.Commands.fetchAll
+            Cmd.map ConfirmationMsg Confirmation.Commands.fetchBreakdowns
 
         ProductsRoute ->
-            Cmd.map ProductsMsg (Products.Commands.fetchAll model.searchProduct)
+            Cmd.map ProductsMsg (Products.Commands.fetch model.searchProduct)
 
         ReceiptRoute orderUuid ->
-            Cmd.map ReceiptMsg (Receipt.Commands.fetchOrder orderUuid)
+            Cmd.map ReceiptMsg (Receipt.Commands.fetch orderUuid)
 
         NotFoundRoute ->
             Cmd.none

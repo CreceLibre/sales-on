@@ -7,7 +7,7 @@ import SearchProduct.Update
 import Confirmation.Update
 import Receipt.Update
 import SearchProduct.Messages exposing (OutMsg(..))
-import Products.Commands exposing (fetchAll)
+import Products.Commands exposing (fetch)
 import Navigation
 
 
@@ -61,4 +61,4 @@ processSignal signal model =
             ( model, Cmd.none )
 
         Search ->
-            ( model, Cmd.map ProductsMsg (fetchAll model.searchProduct) )
+            ( model, Cmd.map ProductsMsg (fetch model.searchProduct) )

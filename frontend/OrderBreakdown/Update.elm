@@ -2,7 +2,7 @@ module OrderBreakdown.Update exposing (..)
 
 import OrderBreakdown.Messages exposing (Msg(..))
 import OrderBreakdown.Models exposing (OrderBreakdown, Item, ItemId)
-import OrderBreakdown.Commands exposing (updateItem, fetchAll)
+import OrderBreakdown.Commands exposing (updateItem, fetch)
 
 updateQuantityCmd : ItemId -> Int -> List Item -> List (Cmd Msg)
 updateQuantityCmd itemId howMuch items =
@@ -41,7 +41,7 @@ update msg orderBreakdown =
             ( orderBreakdown, updateQuantityCmd itemId -1 orderBreakdown.items |> Cmd.batch )
 
         UpdateItemQuantityDone ->
-            ( orderBreakdown, fetchAll )
+            ( orderBreakdown, fetch )
 
         UpdateItemQuantityFail _ ->
             ( orderBreakdown, Cmd.none )
