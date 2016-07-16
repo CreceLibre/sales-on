@@ -45,7 +45,7 @@ urlUpdateCommand model route =
             Cmd.map ConfirmationMsg Confirmation.Commands.fetchBreakdowns
 
         ProductsRoute ->
-            Cmd.map ProductsMsg (Products.Commands.fetch model.searchProduct)
+            Cmd.map ProductsMsg (Products.Commands.fetch model.productSearch)
 
         ReceiptRoute orderUuid ->
             Cmd.map ReceiptMsg (Receipt.Commands.fetch orderUuid)

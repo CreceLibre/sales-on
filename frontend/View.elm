@@ -7,7 +7,7 @@ import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Products.List
-import SearchProduct.View
+import ProductSearch.View
 import Confirmation.View
 import Receipt.View
 import Routing exposing (Route(..))
@@ -25,7 +25,7 @@ page model =
         ProductsRoute ->
             div []
                 [ nav "Products"
-                , Html.App.map SearchProductMsg (SearchProduct.View.view model.searchProduct)
+                , Html.App.map ProductSearchMsg (ProductSearch.View.view model.productSearch)
                 , Html.App.map ProductsMsg (Products.List.view model.products)
                 ]
 

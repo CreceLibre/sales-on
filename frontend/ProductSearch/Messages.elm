@@ -1,4 +1,4 @@
-module SearchProduct.Messages exposing (..)
+module ProductSearch.Messages exposing (..)
 
 
 type Msg

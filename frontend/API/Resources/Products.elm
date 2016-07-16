@@ -3,8 +3,9 @@ module API.Resources.Products exposing (fetchTask)
 import Http
 import Json.Decode as Decode exposing ((:=))
 import Products.Models exposing (ProductId, Product)
-import Json.Decode.Pipeline exposing (decode, required, optional, hardcoded)
+import Json.Decode.Pipeline as Pipeline
 import Task
+
 
 endpointUrl : String
 endpointUrl =
@@ -34,9 +35,9 @@ collectionDecoder =
 
 memberDecoder : Decode.Decoder Product
 memberDecoder =
-    decode Product
-        |> required "id" Decode.int
-        |> required "name" Decode.string
-        |> required "category" Decode.string
-        |> required "price" Decode.int
-        |> hardcoded True
+    Pipeline.decode Product
+        |> Pipeline.required "id" Decode.int
+        |> Pipeline.required "name" Decode.string
+        |> Pipeline.required "category" Decode.string
+        |> Pipeline.required "price" Decode.int
+        |> Pipeline.hardcoded True

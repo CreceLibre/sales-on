@@ -17,7 +17,7 @@ endpointUrl =
 
 fetchUrl : String -> String
 fetchUrl qs =
-  endpointUrl ++ "/" ++ qs
+    endpointUrl ++ "/" ++ qs
 
 
 fetchTask : String -> Task.Task Http.Error Order'
