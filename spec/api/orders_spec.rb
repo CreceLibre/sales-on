@@ -21,12 +21,13 @@ describe OrderAPI::V1 do
         end
 
         it 'returns the requested order by id' do
-            allow(Order).to receive(:[]).and_return order
-            get '/api/v1/orders/1'
+            allow(Order).to receive(:find).and_return order
+            get "/api/v1/orders/#{order.uuid}"
 
             expect(last_response.status).to eq Rack::Utils.status_code(:ok)
-            expect(last_response.body).to eq(
+            expect(last_response.body).to eql(
                 { 'order' => {
+                    'uuid' => order.uuid,
                     'id' => order.id,
                     'email' => order.email
                 } }.to_json
@@ -70,8 +71,9 @@ describe OrderAPI::V1 do
             post '/api/v1/orders', email: 'user@test.com', payment_method: 'webpay', pickup_location: 'galpon'
 
             expect(last_response.status).to eq Rack::Utils.status_code(:created)
-            expect(last_response.body).to eq(
+            expect(last_response.body).to eql(
                 { 'order' => {
+                    'uuid' => order.uuid,
                     'id' => order.id,
                     'email' => order.email
                 } }.to_json

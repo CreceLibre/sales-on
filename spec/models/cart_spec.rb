@@ -53,14 +53,14 @@ describe Cart do
 
     context '#remove_item' do
         it 'removes an item from existent list' do
-            @cart.add_item(product_id: 1)
-            @cart.add_item(product_id: 2)
+            @cart.add_item({'product_id' => 1})
+            @cart.add_item({'product_id' => 2})
             @cart.remove_item(1)
             expect(@cart.items.length).to eq 1
             expect(@cart.items).to eq(
                 [
                     {
-                        product_id: 2
+                        'product_id' => 2
                     }
                 ]
             )
@@ -68,25 +68,25 @@ describe Cart do
     end
 
     context '#update_item' do
-        it 'removes an item from existent list' do
-            @cart.add_item(product_id: 1, quantity: 2)
-            @cart.add_item(product_id: 2, quantity: 4)
-            @cart.add_item(product_id: 3, quantity: 7)
-            @cart.update_item(product_id: 2, quantity: 9)
+        it 'updates an item from existent list' do
+            @cart.add_item({'product_id' => 1, 'quantity' => 2})
+            @cart.add_item({'product_id' => 2, 'quantity' => 4})
+            @cart.add_item({'product_id' => 3, 'quantity' => 7})
+            @cart.update_item({'product_id'=> 2, 'quantity'=> 9})
             expect(@cart.items.length).to eq 3
             expect(@cart.items).to eq(
                 [
                     {
-                        product_id: 1,
-                        quantity: 2
+                        'product_id' => 1,
+                        'quantity' => 2
                     },
                     {
-                        product_id: 2,
-                        quantity: 9
+                        'product_id' => 2,
+                        'quantity' => 9
                     },
                     {
-                        product_id: 3,
-                        quantity: 7
+                        'product_id' => 3,
+                        'quantity' => 7
                     }
                 ]
             )

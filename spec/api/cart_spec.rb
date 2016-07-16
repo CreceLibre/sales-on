@@ -62,7 +62,7 @@ describe CartAPI::V1 do
     describe 'DELETE /api/v1/cart/:product_id' do
         it 'deletes an item from cart' do
             allow(Cart).to receive(:new).and_return cart
-            delete '/api/v1/cart/1'
+            delete '/api/v1/cart', product_id: 1
 
             expect(last_response.status).to eq Rack::Utils.status_code(:ok)
             expect(last_response.body).to eq "OK".to_json
@@ -72,7 +72,7 @@ describe CartAPI::V1 do
     describe 'PUT /api/v1/cart/' do
         it 'modifies an item from cart' do
             allow(Cart).to receive(:new).and_return cart
-            put '/api/v1/cart/1', product_id: 1, quantity: 9
+            put '/api/v1/cart', product_id: 1, quantity: 9
 
             expect(last_response.status).to eq Rack::Utils.status_code(:ok)
             expect(last_response.body).to eq "OK".to_json
