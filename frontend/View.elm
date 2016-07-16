@@ -6,7 +6,7 @@ import Html.Events exposing (onClick)
 import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
-import Products.List
+import Products.View
 import ProductSearch.View
 import Confirmation.View
 import Receipt.View
@@ -26,7 +26,7 @@ page model =
             div []
                 [ nav "Products"
                 , Html.App.map ProductSearchMsg (ProductSearch.View.view model.productSearch)
-                , Html.App.map ProductsMsg (Products.List.view model.products)
+                , Html.App.map ProductsMsg (Products.View.view model.products)
                 ]
 
         ConfirmationRoute ->

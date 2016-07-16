@@ -1,4 +1,4 @@
-module Products.List exposing (..)
+module Products.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, disabled)
