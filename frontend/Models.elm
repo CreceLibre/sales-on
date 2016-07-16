@@ -1,26 +1,74 @@
 module Models exposing (..)
 
-import Products.Models exposing (Product)
-import SearchProduct.Models exposing (SearchProduct)
-import Confirmation.Models exposing (ConfirmationOrder)
-import Receipt.Models exposing (Order')
 import Routing
+
+
+type alias Id =
+    Int
+
+
+type alias ItemId =
+    Id
+
+
+type alias ProductId =
+    Id
+
+
+type alias Item =
+    { id : ItemId
+    , name : String
+    , unitPrice : String
+    , total : String
+    , quantity : Int
+    }
+
+
+type alias OrderBreakdown =
+    { subtotal : String
+    , total : String
+    , items : List Item
+    }
+
+
+type alias ConfirmationOrder =
+    { email : String
+    , paymentMethod : String
+    , pickupLocation : String
+    }
+
+
+type alias Order' =
+    { id : Int
+    , email : String
+    }
+
+
+type alias Product =
+    { id : ProductId
+    , name : String
+    , category : String
+    , price : Int
+    , addToCart : Bool
+    }
 
 
 type alias Model =
     { confirmationOrder : ConfirmationOrder
+    , orderBreakdown : OrderBreakdown
     , receiptOrder : Order'
     , products : List Product
-    , searchProduct : SearchProduct
+    , searchProduct : Maybe String
     , route : Routing.Route
     }
 
 
 initialModel : Routing.Route -> Model
 initialModel route =
-    { confirmationOrder = Confirmation.Models.init
-    , receiptOrder = Receipt.Models.init
+    { confirmationOrder = ConfirmationOrder "andres@otarola.me" "webpay" "galpon"
+    , orderBreakdown = OrderBreakdown "" "" []
+    , receiptOrder = Order' 0 ""
     , products = []
-    , searchProduct = SearchProduct.Models.init
+    , searchProduct = Nothing
     , route = route
     }

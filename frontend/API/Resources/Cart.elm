@@ -2,8 +2,7 @@ module API.Resources.Cart exposing (saveTask, updateTask)
 
 import Http
 import Json.Decode as Decode exposing ((:=))
-import Products.Models exposing (ProductId, Product)
-import OrderBreakdown.Models exposing (ItemId)
+import Models exposing (ProductId, Product, ItemId)
 import Json.Encode as Encode
 import Task
 
