@@ -1,34 +1,53 @@
 module Products.View exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, disabled)
+import Html.Attributes exposing (class, disabled, value, placeholder, type')
 import Products.Messages exposing (..)
-import Products.Models exposing (Product)
-import Html.Events exposing (onClick)
-
-view : List Product -> Html Msg
-view products =
-  list products
+import Products.Models exposing (Product, ProductPageModel)
+import Html.Events exposing (onClick, onInput)
 
 
-list : List Product -> Html Msg
-list products =
-  if List.isEmpty products then
-    text "No se encontraron productos"
-  else
-    div [ class "p2" ]
-        [ table []
-            [ thead []
-                [ tr []
-                    [ th [] [ text "ID" ]
-                    , th [] [ text "Name" ]
-                    , th [] [ text "Category" ]
-                    , th [] [ text "Price" ]
-                    , th [] []
+view : ProductPageModel -> Html Msg
+view model =
+    div []
+        [ searchView model.search
+        , listView model
+        ]
+
+
+listView : ProductPageModel -> Html Msg
+listView model =
+    let
+        { products, isLoading } =
+            model
+    in
+        if List.isEmpty products then
+            if isLoading then
+                text "Cargando..."
+            else
+                text "No se encontraron productos"
+        else
+            div [ class "p2" ]
+                [ table []
+                    [ thead []
+                        [ tr []
+                            [ th [] [ text "ID" ]
+                            , th [] [ text "Name" ]
+                            , th [] [ text "Category" ]
+                            , th [] [ text "Price" ]
+                            , th [] []
+                            ]
+                        ]
+                    , tbody [] (List.map productRow products)
                     ]
                 ]
-            , tbody [] (List.map productRow products)
-            ]
+
+
+searchView : Maybe String -> Html Msg
+searchView search =
+    div []
+        [ input [ placeholder "Search query", value (Maybe.withDefault "" search), type' "text", onInput UpdateSearch ] []
+        , button [ onClick ClickOnSearch ] [ text "Buscar" ]
         ]
 
 

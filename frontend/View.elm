@@ -7,7 +7,6 @@ import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Products.View
-import ProductSearch.View
 import Confirmation.View
 import Receipt.View
 import Routing exposing (Route(..))
@@ -25,8 +24,7 @@ page model =
         ProductsRoute ->
             div []
                 [ nav "Products"
-                , Html.App.map ProductSearchMsg (ProductSearch.View.view model.productSearch)
-                , Html.App.map ProductsMsg (Products.View.view model.products)
+                , Html.App.map ProductsMsg (Products.View.view model.productsPage)
                 ]
 
         ConfirmationRoute ->
@@ -36,7 +34,6 @@ page model =
                 ]
 
         ReceiptRoute _ ->
-
             div []
                 [ nav "Orden completada"
                 , Html.App.map ReceiptMsg (Receipt.View.view model.receiptOrder)
@@ -51,7 +48,7 @@ nav title =
     div [ class "clearfix mb2 white bg-black" ]
         [ div [ class "left p2" ]
             [ text title ]
-            , button [onClick ShowConfirmation] [text "comprar"]
+        , button [ onClick ShowConfirmation ] [ text "comprar" ]
         ]
 
 

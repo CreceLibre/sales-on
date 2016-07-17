@@ -3,7 +3,6 @@ module Update exposing (..)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Products.Update
-import ProductSearch.Update
 import Confirmation.Update
 import Receipt.Update
 import Navigation
@@ -15,9 +14,9 @@ update msg model =
         ProductsMsg subMsg ->
             let
                 ( updatedProducts, cmds ) =
-                    Products.Update.update subMsg model.products
+                    Products.Update.update subMsg model.productsPage
             in
-                ( { model | products = updatedProducts }, Cmd.map ProductsMsg cmds )
+                ( { model | productsPage = updatedProducts }, Cmd.map ProductsMsg cmds )
 
         ConfirmationMsg subMsg ->
             let
@@ -32,13 +31,6 @@ update msg model =
                     Receipt.Update.update subMsg model.receiptOrder
             in
                 ( { model | receiptOrder = updatedReceipt }, Cmd.map ReceiptMsg cmds )
-
-        ProductSearchMsg subMsg ->
-            let
-                ( updatedProductSearch, cmds ) =
-                    ProductSearch.Update.update subMsg model.productSearch
-            in
-                ( { model | productSearch = updatedProductSearch }, Cmd.map ProductSearchMsg cmds )
 
         ShowConfirmation ->
             ( model, Navigation.newUrl "#confirmation" )

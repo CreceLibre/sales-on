@@ -12,3 +12,14 @@ type alias Product =
     , price : Int
     , addToCart : Bool
     }
+
+
+type alias ProductPageModel =
+    { search : Maybe String
+    , products : List Product
+    , isLoading : Bool
+    }
+
+init : ProductPageModel
+init =
+  ProductPageModel Nothing [] True

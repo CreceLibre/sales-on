@@ -1,30 +1,40 @@
 module Products.Update exposing (..)
 
 import Products.Messages exposing (Msg(..))
-import Products.Models exposing (Product, ProductId)
+import Products.Models exposing (Product, ProductId, ProductPageModel)
 import Products.Commands exposing (addProductToCart, fetch)
 
 
-update : Msg -> List Product -> ( List Product, Cmd Msg )
-update action products =
+update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg )
+update action model =
     case action of
         FetchAllDone newProducts ->
-            ( newProducts, Cmd.none )
+            ( { model | products = newProducts, isLoading = False }, Cmd.none )
 
         FetchAllFail error ->
-            ( products, Cmd.none )
+            ( { model | isLoading = False }, Cmd.none )
 
         AddToCart productId ->
-            ( products, addToCartCommands productId products |> Cmd.batch )
+            ( model, addToCartCommands productId model.products |> Cmd.batch )
 
         AddToCartSuccess ->
-            ( products, Cmd.none )
+            ( model, Cmd.none )
 
         AddToCartFail error ->
-            ( products, Cmd.none )
+            ( model, Cmd.none )
 
-        FetchByTerm term ->
-            ( products, fetch term )
+        UpdateSearch keyword ->
+            let
+                search =
+                    if keyword == "" then
+                        Nothing
+                    else
+                        Just keyword
+            in
+                ( { model | search = search }, Cmd.none )
+
+        ClickOnSearch ->
+            ( { model | isLoading = True }, fetch model )
 
 
 addToCartCommands : ProductId -> List Product -> List (Cmd Msg)

@@ -10,4 +10,5 @@ type Msg
     | AddToCart ProductId
     | AddToCartSuccess
     | AddToCartFail Http.Error
-    | FetchByTerm (Maybe String)
+    | UpdateSearch String
+    | ClickOnSearch

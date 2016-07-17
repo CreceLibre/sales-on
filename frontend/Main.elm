@@ -9,7 +9,6 @@ import Routing exposing (Route(..))
 import Confirmation.Commands
 import Products.Commands
 import Receipt.Commands
-import Products.Subscriptions
 
 
 init : Result String Route -> ( Model, Cmd Msg )
@@ -22,11 +21,6 @@ init result =
             initialModel currentRoute
     in
         urlUpdate result model
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.map ProductsMsg (Products.Subscriptions.subscriptions model.products)
 
 
 urlUpdate : Result String Route -> Model -> ( Model, Cmd Msg )
@@ -45,7 +39,7 @@ urlUpdateCommand model route =
             Cmd.map ConfirmationMsg Confirmation.Commands.fetchBreakdowns
 
         ProductsRoute ->
-            Cmd.map ProductsMsg (Products.Commands.fetch model.productSearch)
+            Cmd.map ProductsMsg (Products.Commands.fetch model.productsPage)
 
         ReceiptRoute orderUuid ->
             Cmd.map ReceiptMsg (Receipt.Commands.fetch orderUuid)
@@ -61,5 +55,5 @@ main =
         , view = view
         , update = update
         , urlUpdate = urlUpdate
-        , subscriptions = subscriptions
+        , subscriptions = always Sub.none
         }
