@@ -1,8 +1,8 @@
 module View exposing (..)
 
-import Html exposing (Html, div, text, button)
+import Html exposing (Html, div, text, button, a, ul, li)
 import Html.App
-import Html.Events exposing (onClick)
+import Html.Attributes exposing (class, href)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Pages.Products.View
@@ -19,35 +19,40 @@ view model =
 
 page : Model -> Html Msg
 page model =
-    case model.route of
-        ProductsRoute ->
-            div []
-                [ nav "Products"
-                , Html.App.map ProductsMsg (Pages.Products.View.view model.productsPage)
+    let
+        routedPage =
+            case model.route of
+                ProductsRoute ->
+                    Html.App.map ProductsMsg (Pages.Products.View.view model.productsPage)
+
+                ConfirmationRoute ->
+                    Html.App.map ConfirmationMsg (Pages.Confirmation.View.view model.confirmationPage)
+
+                ReceiptRoute _ ->
+                    Html.App.map ReceiptMsg (Pages.Receipt.View.view model.receiptPage)
+
+                NotFoundRoute ->
+                    notFoundView
+    in
+        div []
+            [ menu
+            , routedPage
+            ]
+
+
+menu : Html Msg
+menu =
+    div [ class "pure-menu pure-menu-horizontal" ]
+        [ ul [ class "pure-menu-list" ]
+            [ li [ class "pure-menu-item" ]
+                [ a [ class "pure-menu-link", href "#products" ]
+                    [ text "Productos" ]
                 ]
-
-        ConfirmationRoute ->
-            div []
-                [ nav "Confirmación de compra"
-                , Html.App.map ConfirmationMsg (Pages.Confirmation.View.view model.confirmationPage)
+            , li [ class "pure-menu-item" ]
+                [ a [ class "pure-menu-link", href "#confirmation" ]
+                    [ text "Confirmación de Compra" ]
                 ]
-
-        ReceiptRoute _ ->
-            div []
-                [ nav "Orden completada"
-                , Html.App.map ReceiptMsg (Pages.Receipt.View.view model.receiptPage)
-                ]
-
-        NotFoundRoute ->
-            notFoundView
-
-
-nav : String -> Html Msg
-nav title =
-    div [ ]
-        [ div [ ]
-            [ text title ]
-        , button [ onClick ShowConfirmation ] [ text "comprar" ]
+            ]
         ]
 
 

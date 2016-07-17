@@ -9,4 +9,3 @@ type Msg
     = ProductsMsg Pages.Products.Messages.Msg
     | ConfirmationMsg Pages.Confirmation.Messages.Msg
     | ReceiptMsg Pages.Receipt.Messages.Msg
-    | ShowConfirmation

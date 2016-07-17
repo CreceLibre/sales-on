@@ -5,7 +5,6 @@ import Models exposing (Model)
 import Pages.Products.Update
 import Pages.Confirmation.Update
 import Pages.Receipt.Update
-import Navigation
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -31,6 +30,3 @@ update msg model =
                     Pages.Receipt.Update.update subMsg model.receiptPage
             in
                 ( { model | receiptPage = updatedReceipt }, Cmd.map ReceiptMsg cmds )
-
-        ShowConfirmation ->
-            ( model, Navigation.newUrl "#confirmation" )
