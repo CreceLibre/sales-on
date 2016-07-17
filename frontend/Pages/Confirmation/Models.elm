@@ -1,4 +1,4 @@
-module Confirmation.Models exposing (..)
+module Pages.Confirmation.Models exposing (..)
 
 import OrderBreakdown.Models exposing (OrderBreakdown)
 

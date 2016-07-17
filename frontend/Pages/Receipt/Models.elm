@@ -1,4 +1,4 @@
-module Receipt.Models exposing (..)
+module Pages.Receipt.Models exposing (..)
 
 
 type alias Order' =

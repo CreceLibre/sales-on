@@ -1,4 +1,4 @@
-module Confirmation.Messages exposing (..)
+module Pages.Confirmation.Messages exposing (..)
 
 import Http
 import OrderBreakdown.Messages

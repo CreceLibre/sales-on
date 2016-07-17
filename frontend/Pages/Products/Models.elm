@@ -1,4 +1,4 @@
-module Products.Models exposing (..)
+module Pages.Products.Models exposing (..)
 
 
 type alias ProductId =

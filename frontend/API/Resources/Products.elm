@@ -2,7 +2,7 @@ module API.Resources.Products exposing (fetchTask)
 
 import Http
 import Json.Decode as Decode exposing ((:=))
-import Products.Models exposing (ProductId, Product)
+import Pages.Products.Models exposing (ProductId, Product)
 import Json.Decode.Pipeline as Pipeline
 import Task
 

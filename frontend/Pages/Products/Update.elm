@@ -1,8 +1,8 @@
-module Products.Update exposing (..)
+module Pages.Products.Update exposing (..)
 
-import Products.Messages exposing (Msg(..))
-import Products.Models exposing (Product, ProductId, ProductPageModel)
-import Products.Commands exposing (addProductToCart, fetch)
+import Pages.Products.Messages exposing (Msg(..))
+import Pages.Products.Models exposing (Product, ProductId, ProductPageModel)
+import Pages.Products.Commands exposing (addProductToCart, fetch)
 
 
 update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg )

@@ -1,7 +1,7 @@
-module Products.Messages exposing (..)
+module Pages.Products.Messages exposing (..)
 
 import Http
-import Products.Models exposing (ProductId, Product)
+import Pages.Products.Models exposing (ProductId, Product)
 
 
 type Msg

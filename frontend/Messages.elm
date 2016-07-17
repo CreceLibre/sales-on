@@ -1,12 +1,12 @@
 module Messages exposing (..)
 
-import Products.Messages
-import Confirmation.Messages
-import Receipt.Messages
+import Pages.Products.Messages
+import Pages.Confirmation.Messages
+import Pages.Receipt.Messages
 
 
 type Msg
-    = ProductsMsg Products.Messages.Msg
-    | ConfirmationMsg Confirmation.Messages.Msg
-    | ReceiptMsg Receipt.Messages.Msg
+    = ProductsMsg Pages.Products.Messages.Msg
+    | ConfirmationMsg Pages.Confirmation.Messages.Msg
+    | ReceiptMsg Pages.Receipt.Messages.Msg
     | ShowConfirmation

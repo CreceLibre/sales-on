@@ -1,8 +1,8 @@
-module Confirmation.Update exposing (..)
+module Pages.Confirmation.Update exposing (..)
 
-import Confirmation.Messages exposing (Msg(..))
-import Confirmation.Models exposing (ConfirmationOrder)
-import Confirmation.Commands exposing (placeOrder)
+import Pages.Confirmation.Messages exposing (Msg(..))
+import Pages.Confirmation.Models exposing (ConfirmationOrder)
+import Pages.Confirmation.Commands exposing (placeOrder)
 import OrderBreakdown.Update
 import Navigation
 

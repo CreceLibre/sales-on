@@ -1,8 +1,8 @@
-module Confirmation.Commands exposing (..)
+module Pages.Confirmation.Commands exposing (..)
 
 import Task
-import Confirmation.Messages exposing (..)
-import Confirmation.Models exposing (ConfirmationOrder)
+import Pages.Confirmation.Messages exposing (..)
+import Pages.Confirmation.Models exposing (ConfirmationOrder)
 import OrderBreakdown.Commands
 import API.Resources.Orders as OrdersAPI
 import OrderBreakdown.Commands

@@ -1,9 +1,9 @@
-module Products.View exposing (..)
+module Pages.Products.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, disabled, value, placeholder, type')
-import Products.Messages exposing (..)
-import Products.Models exposing (Product, ProductPageModel)
+import Pages.Products.Messages exposing (..)
+import Pages.Products.Models exposing (Product, ProductPageModel)
 import Html.Events exposing (onClick, onInput)
 
 

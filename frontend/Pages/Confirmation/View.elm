@@ -1,11 +1,11 @@
-module Confirmation.View exposing (..)
+module Pages.Confirmation.View exposing (..)
 
 import Html exposing (..)
 import Html.App
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
-import Confirmation.Messages exposing (..)
-import Confirmation.Models exposing (ConfirmationOrder)
+import Pages.Confirmation.Messages exposing (..)
+import Pages.Confirmation.Models exposing (ConfirmationOrder)
 import OrderBreakdown.View
 
 

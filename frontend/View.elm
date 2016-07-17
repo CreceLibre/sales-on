@@ -6,9 +6,9 @@ import Html.Events exposing (onClick)
 import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
-import Products.View
-import Confirmation.View
-import Receipt.View
+import Pages.Products.View
+import Pages.Confirmation.View
+import Pages.Receipt.View
 import Routing exposing (Route(..))
 
 
@@ -24,19 +24,19 @@ page model =
         ProductsRoute ->
             div []
                 [ nav "Products"
-                , Html.App.map ProductsMsg (Products.View.view model.productsPage)
+                , Html.App.map ProductsMsg (Pages.Products.View.view model.productsPage)
                 ]
 
         ConfirmationRoute ->
             div []
                 [ nav "Confirmación de compra"
-                , Html.App.map ConfirmationMsg (Confirmation.View.view model.confirmationOrder)
+                , Html.App.map ConfirmationMsg (Pages.Confirmation.View.view model.confirmationPage)
                 ]
 
         ReceiptRoute _ ->
             div []
                 [ nav "Orden completada"
-                , Html.App.map ReceiptMsg (Receipt.View.view model.receiptOrder)
+                , Html.App.map ReceiptMsg (Pages.Receipt.View.view model.receiptPage)
                 ]
 
         NotFoundRoute ->

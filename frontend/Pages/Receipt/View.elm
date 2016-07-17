@@ -1,8 +1,8 @@
-module Receipt.View exposing (..)
+module Pages.Receipt.View exposing (..)
 
 import Html exposing (..)
-import Receipt.Messages exposing (..)
-import Receipt.Models exposing (Order')
+import Pages.Receipt.Messages exposing (..)
+import Pages.Receipt.Models exposing (Order')
 
 
 view : Order' -> Html Msg

@@ -1,7 +1,7 @@
-module Receipt.Update exposing (..)
+module Pages.Receipt.Update exposing (..)
 
-import Receipt.Messages exposing (Msg(..))
-import Receipt.Models exposing (Order')
+import Pages.Receipt.Messages exposing (Msg(..))
+import Pages.Receipt.Models exposing (Order')
 
 
 update : Msg -> Order' -> ( Order', Cmd Msg )

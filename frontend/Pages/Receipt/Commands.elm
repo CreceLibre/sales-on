@@ -1,6 +1,6 @@
-module Receipt.Commands exposing (..)
+module Pages.Receipt.Commands exposing (..)
 
-import Receipt.Messages exposing (..)
+import Pages.Receipt.Messages exposing (..)
 import Task
 import API.Resources.Orders as OrdersAPI
 

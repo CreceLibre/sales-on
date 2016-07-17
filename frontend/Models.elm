@@ -1,14 +1,14 @@
 module Models exposing (..)
 
-import Products.Models exposing (ProductPageModel)
-import Confirmation.Models exposing (ConfirmationOrder)
-import Receipt.Models exposing (Order')
+import Pages.Products.Models exposing (ProductPageModel)
+import Pages.Confirmation.Models exposing (ConfirmationOrder)
+import Pages.Receipt.Models exposing (Order')
 import Routing
 
 
 type alias Model =
-    { confirmationOrder : ConfirmationOrder
-    , receiptOrder : Order'
+    { confirmationPage : ConfirmationOrder
+    , receiptPage : Order'
     , productsPage : ProductPageModel
     , route : Routing.Route
     }
@@ -16,8 +16,8 @@ type alias Model =
 
 initialModel : Routing.Route -> Model
 initialModel route =
-    { confirmationOrder = Confirmation.Models.init
-    , receiptOrder = Receipt.Models.init
-    , productsPage = Products.Models.init
+    { confirmationPage = Pages.Confirmation.Models.init
+    , receiptPage = Pages.Receipt.Models.init
+    , productsPage = Pages.Products.Models.init
     , route = route
     }

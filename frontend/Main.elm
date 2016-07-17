@@ -6,9 +6,9 @@ import Models exposing (Model, initialModel)
 import View exposing (view)
 import Update exposing (update)
 import Routing exposing (Route(..))
-import Confirmation.Commands
-import Products.Commands
-import Receipt.Commands
+import Pages.Confirmation.Commands
+import Pages.Products.Commands
+import Pages.Receipt.Commands
 
 
 init : Result String Route -> ( Model, Cmd Msg )
@@ -36,13 +36,13 @@ urlUpdateCommand : Model -> Route -> Cmd Msg
 urlUpdateCommand model route =
     case route of
         ConfirmationRoute ->
-            Cmd.map ConfirmationMsg Confirmation.Commands.fetchBreakdowns
+            Cmd.map ConfirmationMsg Pages.Confirmation.Commands.fetchBreakdowns
 
         ProductsRoute ->
-            Cmd.map ProductsMsg (Products.Commands.fetch model.productsPage)
+            Cmd.map ProductsMsg (Pages.Products.Commands.fetch model.productsPage)
 
         ReceiptRoute orderUuid ->
-            Cmd.map ReceiptMsg (Receipt.Commands.fetch orderUuid)
+            Cmd.map ReceiptMsg (Pages.Receipt.Commands.fetch orderUuid)
 
         NotFoundRoute ->
             Cmd.none
