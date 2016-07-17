@@ -14,12 +14,16 @@ type alias Product =
     }
 
 
+type alias IndexedProduct = (Int, Product)
+
+
 type alias ProductPageModel =
     { search : Maybe String
-    , products : List Product
+    , products : List IndexedProduct
     , isLoading : Bool
     }
 
+
 init : ProductPageModel
 init =
-  ProductPageModel Nothing [] True
+    ProductPageModel Nothing [] True

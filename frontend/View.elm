@@ -3,7 +3,6 @@ module View exposing (..)
 import Html exposing (Html, div, text, button)
 import Html.App
 import Html.Events exposing (onClick)
-import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Pages.Products.View
@@ -45,8 +44,8 @@ page model =
 
 nav : String -> Html Msg
 nav title =
-    div [ class "clearfix mb2 white bg-black" ]
-        [ div [ class "left p2" ]
+    div [ ]
+        [ div [ ]
             [ text title ]
         , button [ onClick ShowConfirmation ] [ text "comprar" ]
         ]

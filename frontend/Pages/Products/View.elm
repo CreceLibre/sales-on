@@ -1,9 +1,16 @@
 module Pages.Products.View exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, disabled, value, placeholder, type')
+import Html.Attributes
+    exposing
+        ( class
+        , disabled
+        , value
+        , placeholder
+        , type'
+        )
 import Pages.Products.Messages exposing (..)
-import Pages.Products.Models exposing (Product, ProductPageModel)
+import Pages.Products.Models exposing (Product, ProductPageModel, IndexedProduct)
 import Html.Events exposing (onClick, onInput)
 
 
@@ -27,8 +34,8 @@ listView model =
             else
                 text "No se encontraron productos"
         else
-            div [ class "p2" ]
-                [ table []
+            div []
+                [ table [ class "pure-table" ]
                     [ thead []
                         [ tr []
                             [ th [] [ text "ID" ]
@@ -51,12 +58,19 @@ searchView search =
         ]
 
 
-productRow : Product -> Html Msg
-productRow product =
-    tr []
-        [ td [] [ text (toString product.id) ]
-        , td [] [ text (toString product.name) ]
-        , td [] [ text (toString product.category) ]
+productRow : IndexedProduct -> Html Msg
+productRow (index, product) =
+    tr [ class (oddClassName index) ]
+        [ td [] [ text (toString index) ]
+        , td [] [ text product.name ]
+        , td [] [ text product.category ]
         , td [] [ text (toString product.price) ]
         , td [] [ button [ onClick (AddToCart product.id), disabled (not product.addToCart) ] [ text "Add to cart" ] ]
         ]
+
+oddClassName : Int -> String
+oddClassName id =
+  if id%2 == 0 then
+    "pure-table-odd"
+  else
+    ""

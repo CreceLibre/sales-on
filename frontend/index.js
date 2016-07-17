@@ -1,7 +1,12 @@
 'use strict'
 
-require('ace-css/css/ace.css');
-require('font-awesome/css/font-awesome.css');
+// PureCSS styles
+require('purecss/build/pure-min.css');
+require('purecss/build/grids-responsive-min.css');
+require('purecss/build/buttons-min.css');
+
+// Font-Awesome
+require('font-awesome-webpack');
 
 require('./index.html');
 

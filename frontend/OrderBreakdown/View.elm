@@ -3,7 +3,6 @@ module OrderBreakdown.View exposing (..)
 import Html exposing (..)
 import OrderBreakdown.Messages exposing (..)
 import OrderBreakdown.Models exposing (OrderBreakdown, Item)
-import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 
 
@@ -22,7 +21,7 @@ itemList items =
     if List.isEmpty items then
         text "No se encontraron productos :("
     else
-        div [ class "p2" ]
+        div [ ]
             [ table []
                 [ thead []
                     [ tr []
