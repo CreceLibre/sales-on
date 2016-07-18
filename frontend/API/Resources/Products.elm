@@ -40,7 +40,7 @@ memberDecoder =
         |> Pipeline.required "name" Decode.string
         |> Pipeline.required "category" Decode.string
         |> Pipeline.required "price" decodePrice
-        |> Pipeline.hardcoded True
+        |> Pipeline.required "isInCart" Decode.bool
 
 decodePrice : Decode.Decoder String
 decodePrice =

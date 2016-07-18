@@ -1,6 +1,6 @@
 module View exposing (..)
 
-import Html exposing (Html, div, text, button, a, ul, li)
+import Html exposing (Html, div, text, button, a, ul, li, span)
 import Html.App
 import Html.Attributes exposing (class, href)
 import Messages exposing (Msg(..))
@@ -43,7 +43,9 @@ page model =
 menu : Html Msg
 menu =
     div [ class "pure-menu pure-menu-horizontal" ]
-        [ ul [ class "pure-menu-list" ]
+        [ span [ class "pure-menu-heading" ]
+            [ text "Sales On" ]
+        , ul [ class "pure-menu-list" ]
             [ li [ class "pure-menu-item" ]
                 [ a [ class "pure-menu-link", href "#products" ]
                     [ text "Productos" ]

@@ -19,6 +19,15 @@ class Cart
         @items << item unless @items.any? { |i| i['product_id'] == item['product_id'] } # Do not alow dup items
     end
 
+    def add_flag_to_product(product)
+        product.isInCart = if @items.detect { |hash| hash['product_id'] == product.id }
+                               true
+                           else
+                               false
+                         end
+        product
+    end
+
     def remove_item(id)
         @items = @items.select do |hash|
             hash['product_id'] != id

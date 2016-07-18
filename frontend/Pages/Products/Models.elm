@@ -10,7 +10,7 @@ type alias Product =
     , name : String
     , category : String
     , price : String
-    , addToCart : Bool
+    , isInCart : Bool
     }
 
 
@@ -26,4 +26,4 @@ type alias ProductPageModel =
 
 init : ProductPageModel
 init =
-    ProductPageModel Nothing [] True
+    ProductPageModel Nothing [] False

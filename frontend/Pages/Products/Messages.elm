@@ -9,6 +9,6 @@ type Msg
     | FetchAllFail Http.Error
     | AddToCart ProductId
     | AddToCartSuccess
-    | AddToCartFail Http.Error
+    | AddToCartFail ProductId Http.Error
     | UpdateSearch String
     | ClickOnSearch

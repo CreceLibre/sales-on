@@ -65,7 +65,7 @@ productRow (index, product) =
         , td [] [ text product.name ]
         , td [] [ text product.category ]
         , td [] [ text product.price ]
-        , td [] [ button [ onClick (AddToCart product.id), disabled (not product.addToCart) ] [ text "Add to cart" ] ]
+        , td [] [ button [ onClick (AddToCart product.id), disabled product.isInCart ] [ text "Add to cart" ] ]
         ]
 
 oddClassName : Int -> String

@@ -7,6 +7,7 @@ class Product
         expose :id
         expose :nombre, as: :name
         expose :category
+        expose :isInCart
         expose :price do
           expose :precio_venta, as: :amount
           expose :precio_venta, as: :formattedAmount, format_with: :currency

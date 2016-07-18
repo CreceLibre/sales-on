@@ -20,13 +20,16 @@ update action model =
             ( { model | isLoading = False }, Cmd.none )
 
         AddToCart productId ->
-            ( model, addToCartCommands productId model.products |> Cmd.batch )
+            ( { model | products = List.map (updateCartStatus productId True) model.products }
+            , addToCartCommands productId model.products |> Cmd.batch
+            )
 
         AddToCartSuccess ->
             ( model, Cmd.none )
 
-        AddToCartFail error ->
-            ( model, Cmd.none )
+        AddToCartFail productId error ->
+            ( { model | products = List.map (updateCartStatus productId False) model.products }
+            , Cmd.none )
 
         UpdateSearch keyword ->
             let
@@ -40,6 +43,18 @@ update action model =
 
         ClickOnSearch ->
             ( { model | isLoading = True }, fetch model )
+
+
+updateCartStatus : ProductId -> Bool -> IndexedProduct -> IndexedProduct
+updateCartStatus productId status indexedProduct =
+    let
+        ( index, product ) =
+            indexedProduct
+    in
+        if product.id == productId then
+            ( index, { product | isInCart = status } )
+        else
+            ( index, product )
 
 
 addToCartCommands : ProductId -> List IndexedProduct -> List (Cmd Msg)

@@ -15,4 +15,4 @@ fetch model =
 addProductToCart : ProductId -> Cmd Msg
 addProductToCart productId =
     CartAPI.saveTask productId
-        |> Task.perform AddToCartFail (always AddToCartSuccess)
+        |> Task.perform (AddToCartFail productId) (always AddToCartSuccess)
