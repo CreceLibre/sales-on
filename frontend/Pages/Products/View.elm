@@ -64,7 +64,7 @@ productRow (index, product) =
         [ td [] [ text (toString index) ]
         , td [] [ text product.name ]
         , td [] [ text product.category ]
-        , td [] [ text (toString product.price) ]
+        , td [] [ text product.price ]
         , td [] [ button [ onClick (AddToCart product.id), disabled (not product.addToCart) ] [ text "Add to cart" ] ]
         ]
 
