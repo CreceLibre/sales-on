@@ -14,14 +14,14 @@ module ProductAPI
             # FIXME: Add pagination here
             get '/' do
                 query = params[:q]
-                cart = Cart.new cookies[:cart]
                 @products = if query
-                                Product.search query, cart
+                                Product.search query
                             else
-                                Product.fetch_all cart
+                                Product.all
                             end
 
-                present :products, @products
+                cart = Cart.new cookies[:cart]
+                present :products, @products.map { |r| cart.add_flag_to_product r }
             end
 
             desc 'Get a specified product.'

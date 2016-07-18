@@ -9,11 +9,15 @@ describe ProductAPI::V1 do
     end
 
     let(:product1) do
-        Fabricate.build :product
+        product = Fabricate.build :product
+        product.isInCart = false
+        product
     end
 
     let(:product2) do
-        Fabricate.build :product, nombre: 'budweiser', category: product1.category
+        product = Fabricate.build :product, nombre: 'budweiser', category: product1.category
+        product.isInCart = false
+        product
     end
 
     describe 'GET /api/v1/products' do
@@ -35,6 +39,7 @@ describe ProductAPI::V1 do
                     'id' => product1.id,
                     'name' => product1.nombre,
                     'category' => product1.category.nombre,
+                    'isInCart' => false,
                     'price' => {
                       'amount': 1000,
                       'formattedAmount': '$1.000',
@@ -54,6 +59,7 @@ describe ProductAPI::V1 do
                         'id' => product1.id,
                         'name' => product1.nombre,
                         'category' => product1.category.nombre,
+                        'isInCart' => false,
                         'price' => {
                           'amount': 1000,
                           'formattedAmount': '$1.000',
@@ -63,6 +69,7 @@ describe ProductAPI::V1 do
                         'id' => product2.id,
                         'name' => product2.nombre,
                         'category' => product2.category.nombre,
+                        'isInCart' => false,
                         'price' => {
                           'amount': 1000,
                           'formattedAmount': '$1.000',
@@ -92,6 +99,7 @@ describe ProductAPI::V1 do
                     'id' => product1.id,
                     'name' => product1.nombre,
                     'category' => product1.category.nombre,
+                    'isInCart' => false,
                     'price' => {
                       'amount': 1000,
                       'formattedAmount': '$1.000',
