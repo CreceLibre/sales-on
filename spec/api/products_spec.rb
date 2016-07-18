@@ -35,7 +35,10 @@ describe ProductAPI::V1 do
                     'id' => product1.id,
                     'name' => product1.nombre,
                     'category' => product1.category.nombre,
-                    'price' => '$1.000'
+                    'price' => {
+                      'amount': 1000,
+                      'formattedAmount': '$1.000',
+                      }
                 }]
             }.to_json)
         end
@@ -51,13 +54,19 @@ describe ProductAPI::V1 do
                         'id' => product1.id,
                         'name' => product1.nombre,
                         'category' => product1.category.nombre,
-                        'price' => '$1.000'
+                        'price' => {
+                          'amount': 1000,
+                          'formattedAmount': '$1.000',
+                          }
                     },
                     {
                         'id' => product2.id,
                         'name' => product2.nombre,
                         'category' => product2.category.nombre,
-                        'price' => '$1.000'
+                        'price' => {
+                          'amount': 1000,
+                          'formattedAmount': '$1.000',
+                          }
                     }
                 ]
             }.to_json)
@@ -83,7 +92,10 @@ describe ProductAPI::V1 do
                     'id' => product1.id,
                     'name' => product1.nombre,
                     'category' => product1.category.nombre,
-                    'price' => '$1.000'
+                    'price' => {
+                      'amount': 1000,
+                      'formattedAmount': '$1.000',
+                      }
                 }
             }.to_json)
         end

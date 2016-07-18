@@ -39,5 +39,10 @@ memberDecoder =
         |> Pipeline.required "id" Decode.int
         |> Pipeline.required "name" Decode.string
         |> Pipeline.required "category" Decode.string
-        |> Pipeline.required "price" Decode.string
+        |> Pipeline.required "price" decodePrice
         |> Pipeline.hardcoded True
+
+decodePrice : Decode.Decoder String
+decodePrice =
+    Pipeline.decode identity
+        |> Pipeline.required "formattedAmount" Decode.string
