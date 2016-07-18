@@ -5,8 +5,13 @@ describe Breakdown do
         Fabricate :product
     end
 
+    let(:breakdownItem) do
+        Fabricate.build :breakdown_item
+    end
+
+
     let(:breakdowns) do
-        allow(Product).to receive(:[]).and_return(product)
+        allow(BreakdownItem).to receive(:new).and_return(breakdownItem)
         Breakdown.new [
             {
                 'product_id' => 1,
@@ -32,14 +37,7 @@ describe Breakdown do
         it 'returns the breakdowns total' do
             expect(breakdowns.items).to eq(
                 [
-                    {
-                        'product_id' => 1,
-                        'quantity' => 2,
-                        'name' => 'heineken',
-                        'unitPrice' => 1000,
-                        'total' => 2000
-
-                    }
+                  breakdownItem
                 ]
             )
         end

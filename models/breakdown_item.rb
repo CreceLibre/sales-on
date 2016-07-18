@@ -1,9 +1,9 @@
 
 class BreakdownItem
-    attr_reader :productId, :name, :unitPrice, :total, :quantity
+    attr_accessor :productId, :name, :unitPrice, :total, :quantity
 
-    def initialize(item)
-        build item
+    def initialize(opts = {})
+        build(opts[:item]) if opts[:item]
     end
 
     private

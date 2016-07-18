@@ -3,7 +3,7 @@ class Breakdown
     attr_reader :items, :subtotal, :total
 
     def initialize(items)
-        @items = items.map { |i| BreakdownItem.new i }
+        @items = items.map { |i| BreakdownItem.new item: i }
         build
     end
 
