@@ -26,4 +26,4 @@ type alias ProductPageModel =
 
 init : ProductPageModel
 init =
-    ProductPageModel Nothing [] False
+    ProductPageModel Nothing [] True
