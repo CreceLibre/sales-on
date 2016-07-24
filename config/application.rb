@@ -27,7 +27,7 @@ R = Redis.new
 
 # Load all the basic scripts
 
-['utils', 'api/formatters', 'api/validators', 'api', 'models', 'config/initializers', 'presenters'].each do |folder|
+['utils', 'api/formatters', 'api/validators', 'api', 'app/models', 'config/initializers', 'api/presenters'].each do |folder|
     Dir[File.expand_path(Project.join("#{folder}/*.rb"))].each do |f|
         require f
     end
