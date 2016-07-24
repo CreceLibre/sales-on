@@ -5,7 +5,6 @@ class Breakdown
 
     class Entity < Grape::Entity
         expose :breakdowns do
-            # present_collection true
             expose :items, using: 'BreakdownItem::Entity'
             expose :subtotal do
                 expose :subtotal, as: :amount
