@@ -8,8 +8,8 @@ class BreakdownItem
         expose :quantity
         expose :name
         expose :total do
-          expose :total, as: :amount
-          expose :total, as: :formattedAmount, format_with: :currency
+            expose :total, as: :amount
+            expose :total, as: :formattedAmount, format_with: :currency
         end
         expose :unitPrice do
             expose :unitPrice, as: :amount

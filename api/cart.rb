@@ -16,7 +16,7 @@ module CartAPI
                 cart.add_item params.merge(quantity: 1) # FIXME: should be inside Cart model
                 cart.save
                 cookies[:cart] = cart.id
-                "OK"
+                'OK'
             end
 
             desc 'Get cart contents.'

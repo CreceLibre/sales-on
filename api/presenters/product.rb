@@ -9,8 +9,8 @@ class Product
         expose :category
         expose :isInCart
         expose :price do
-          expose :precio_venta, as: :amount
-          expose :precio_venta, as: :formattedAmount, format_with: :currency
+            expose :precio_venta, as: :amount
+            expose :precio_venta, as: :formattedAmount, format_with: :currency
         end
 
         private
@@ -18,6 +18,5 @@ class Product
         def category
             object.category.nombre
         end
-
     end
 end
