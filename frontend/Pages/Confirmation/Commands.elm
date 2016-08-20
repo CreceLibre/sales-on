@@ -2,15 +2,23 @@ module Pages.Confirmation.Commands exposing (..)
 
 import Task
 import Pages.Confirmation.Messages exposing (..)
-import Pages.Confirmation.Models exposing (ConfirmationOrder)
-import OrderBreakdown.Commands
+import Pages.Confirmation.Models exposing (ConfirmationOrder, ItemId)
 import API.Resources.Orders as OrdersAPI
-import OrderBreakdown.Commands
+import API.Resources.Breakdowns as BreakdownsAPI
+import API.Resources.Cart as CartAPI
 
 
 fetchBreakdowns : Cmd Msg
 fetchBreakdowns =
-    Cmd.map OrderBreakdownMsg OrderBreakdown.Commands.fetch
+    BreakdownsAPI.fetchTask
+        |> Task.perform FetchBreakdownsFail FetchBreakdownsDone
+
+
+updateItem : ItemId -> Int -> Cmd Msg
+updateItem itemId newQuantity =
+    CartAPI.updateTask itemId newQuantity
+        |> Task.perform UpdateItemQuantityFail (always UpdateItemQuantityDone)
+
 
 placeOrder : ConfirmationOrder -> Cmd Msg
 placeOrder confirmationOrder =

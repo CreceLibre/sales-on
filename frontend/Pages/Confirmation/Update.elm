@@ -1,36 +1,88 @@
 module Pages.Confirmation.Update exposing (..)
 
 import Pages.Confirmation.Messages exposing (Msg(..))
-import Pages.Confirmation.Models exposing (ConfirmationOrder)
-import Pages.Confirmation.Commands exposing (placeOrder)
-import OrderBreakdown.Update
 import Navigation
+import Pages.Confirmation.Commands
+    exposing
+        ( placeOrder
+        , updateItem
+        , fetchBreakdowns
+        )
+import Pages.Confirmation.Models
+    exposing
+        ( ConfirmationOrder
+        , ItemId
+        , Item
+        , OrderBreakdown
+        )
 
 
 update : Msg -> ConfirmationOrder -> ( ConfirmationOrder, Cmd Msg )
 update msg confirmationOrder =
-    case msg of
-        OrderBreakdownMsg subMsg ->
-            let
-                ( newOrderBreakdown, cmds ) =
-                    OrderBreakdown.Update.update subMsg confirmationOrder.orderBreakdown
-            in
-                ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.map OrderBreakdownMsg cmds )
+    let
+        orderBreakdown =
+            confirmationOrder.orderBreakdown
+    in
+        case msg of
+            IncreaseQuantity itemId ->
+                ( confirmationOrder, updateQuantityCmd itemId 1 orderBreakdown.items |> Cmd.batch )
 
-        UpdateEmail newEmail ->
-            ( { confirmationOrder | email = newEmail }, Cmd.none )
+            DecreaseQuantity itemId ->
+                ( confirmationOrder, updateQuantityCmd itemId -1 orderBreakdown.items |> Cmd.batch )
 
-        UpdatePaymentMethod newPaymentMethod ->
-            ( { confirmationOrder | paymentMethod = newPaymentMethod }, Cmd.none )
+            UpdateItemQuantityDone ->
+                ( confirmationOrder, fetchBreakdowns )
 
-        UpdatePickupLocation newPickupLocation ->
-            ( { confirmationOrder | pickupLocation = newPickupLocation }, Cmd.none )
+            UpdateItemQuantityFail _ ->
+                ( confirmationOrder, Cmd.none )
 
-        PlaceOrderDone orderUuid ->
-          ( confirmationOrder, Navigation.newUrl ("#receipt/" ++ orderUuid) )
+            FetchBreakdownsDone newOrderBreakdown ->
+                ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.none )
 
-        PlaceOrderFail error ->
-            ( confirmationOrder, Cmd.none )
+            FetchBreakdownsFail _ ->
+                ( confirmationOrder, Cmd.none )
 
-        PlaceOrder ->
-            ( confirmationOrder, placeOrder confirmationOrder )
+            UpdateEmail newEmail ->
+                ( { confirmationOrder | email = newEmail }, Cmd.none )
+
+            UpdatePaymentMethod newPaymentMethod ->
+                ( { confirmationOrder | paymentMethod = newPaymentMethod }, Cmd.none )
+
+            UpdatePickupLocation newPickupLocation ->
+                ( { confirmationOrder | pickupLocation = newPickupLocation }, Cmd.none )
+
+            PlaceOrderDone orderUuid ->
+                ( confirmationOrder, Navigation.newUrl ("#receipt/" ++ orderUuid) )
+
+            PlaceOrderFail error ->
+                ( confirmationOrder, Cmd.none )
+
+            PlaceOrder ->
+                ( confirmationOrder, placeOrder confirmationOrder )
+
+
+updateQuantityCmd : ItemId -> Int -> List Item -> List (Cmd Msg)
+updateQuantityCmd itemId howMuch items =
+    let
+        update item =
+            if item.id == itemId then
+                if howMuch < 0 && item.quantity <= 1 then
+                    Cmd.none
+                else
+                    updateItem itemId (item.quantity + howMuch)
+            else
+                Cmd.none
+    in
+        List.map update items
+
+
+updateQuantity : ItemId -> Int -> List Item -> List Item
+updateQuantity itemId newQuantity items =
+    let
+        update item =
+            if item.id == itemId then
+                { item | quantity = newQuantity }
+            else
+                item
+    in
+        List.map update items

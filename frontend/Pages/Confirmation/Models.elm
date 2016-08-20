@@ -1,6 +1,25 @@
 module Pages.Confirmation.Models exposing (..)
 
-import OrderBreakdown.Models exposing (OrderBreakdown)
+
+type alias ItemId =
+    Int
+
+
+type alias Item =
+    { id : ItemId
+    , name : String
+    , unitPrice : String
+    , total : String
+    , quantity : Int
+    }
+
+
+type alias OrderBreakdown =
+    { subtotal : String
+    , total : String
+    , items : List Item
+    }
+
 
 type alias ConfirmationOrder =
     { email : String
@@ -9,6 +28,7 @@ type alias ConfirmationOrder =
     , orderBreakdown : OrderBreakdown
     }
 
+
 init : ConfirmationOrder
 init =
-  ConfirmationOrder "andres@otarola.me" "webpay" "galpon" OrderBreakdown.Models.init
+    ConfirmationOrder "andres@otarola.me" "webpay" "galpon" (OrderBreakdown "" "" [])
