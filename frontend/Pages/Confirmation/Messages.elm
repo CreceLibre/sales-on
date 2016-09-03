@@ -1,7 +1,7 @@
 module Pages.Confirmation.Messages exposing (..)
 
 import Http
-import API.Models exposing (OrderBreakdown, ItemId)
+import API.Models exposing (OrderBreakdown)
 
 
 type Msg
@@ -12,8 +12,8 @@ type Msg
     | FetchBreakdownsFail Http.Error
     | UpdateItemQuantityDone
     | UpdateItemQuantityFail Http.Error
-    | IncreaseQuantity ItemId
-    | DecreaseQuantity ItemId
+    | IncreaseQuantity Int
+    | DecreaseQuantity Int
     | PlaceOrderDone String
     | PlaceOrderFail Http.Error
     | PlaceOrder

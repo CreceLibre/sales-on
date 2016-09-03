@@ -1,14 +1,14 @@
 module Pages.Products.Messages exposing (..)
 
 import Http
-import API.Models exposing (ProductId, Product)
+import API.Models exposing (Product)
 
 
 type Msg
     = FetchAllDone (List Product)
     | FetchAllFail Http.Error
-    | AddToCart ProductId
+    | AddToCart Int
     | AddToCartSuccess
-    | AddToCartFail ProductId Http.Error
+    | AddToCartFail Int Http.Error
     | UpdateSearch String
     | ClickOnSearch

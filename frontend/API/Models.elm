@@ -1,16 +1,8 @@
 module API.Models exposing (..)
 
 
-type alias ItemId =
-    Int
-
-
-type alias ProductId =
-    Int
-
-
 type alias Item =
-    { id : ItemId
+    { id : Int
     , name : String
     , unitPrice : String
     , total : String
@@ -26,7 +18,7 @@ type alias OrderBreakdown =
 
 
 type alias Product =
-    { id : ProductId
+    { id : Int
     , name : String
     , category : String
     , price : String

@@ -1,7 +1,6 @@
 module Pages.Products.Update exposing (..)
 
 import Pages.Products.Messages exposing (Msg(..))
-import API.Models exposing (Product, ProductId)
 import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
 import Pages.Products.Commands exposing (addProductToCart, fetch)
 
@@ -47,7 +46,7 @@ update action model =
             ( { model | isLoading = True }, fetch model )
 
 
-updateCartStatus : ProductId -> Bool -> IndexedProduct -> IndexedProduct
+updateCartStatus : Int -> Bool -> IndexedProduct -> IndexedProduct
 updateCartStatus productId status indexedProduct =
     let
         ( index, product ) =
@@ -59,7 +58,7 @@ updateCartStatus productId status indexedProduct =
             ( index, product )
 
 
-addToCartCommands : ProductId -> List IndexedProduct -> List (Cmd Msg)
+addToCartCommands : Int -> List IndexedProduct -> List (Cmd Msg)
 addToCartCommands productId =
     let
         cmdForProduct ( index, product ) =

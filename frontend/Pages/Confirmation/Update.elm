@@ -9,7 +9,7 @@ import Pages.Confirmation.Commands
         , fetchBreakdowns
         )
 import Pages.Confirmation.Models exposing (ConfirmationOrder)
-import API.Models exposing (ItemId, Item, OrderBreakdown)
+import API.Models exposing (Item, OrderBreakdown)
 
 
 update : Msg -> ConfirmationOrder -> ( ConfirmationOrder, Cmd Msg )
@@ -56,7 +56,7 @@ update msg confirmationOrder =
                 ( confirmationOrder, placeOrder confirmationOrder )
 
 
-updateQuantityCmd : ItemId -> Int -> List Item -> List (Cmd Msg)
+updateQuantityCmd : Int -> Int -> List Item -> List (Cmd Msg)
 updateQuantityCmd itemId howMuch items =
     let
         update item =
@@ -71,7 +71,7 @@ updateQuantityCmd itemId howMuch items =
         List.map update items
 
 
-updateQuantity : ItemId -> Int -> List Item -> List Item
+updateQuantity : Int -> Int -> List Item -> List Item
 updateQuantity itemId newQuantity items =
     let
         update item =

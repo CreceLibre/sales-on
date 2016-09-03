@@ -2,7 +2,6 @@ module API.Resources.Cart exposing (saveTask, updateTask)
 
 import Http
 import Json.Decode as Decode exposing ((:=))
-import API.Models exposing (ItemId, ProductId, Product)
 import Json.Encode as Encode
 import Task
 
@@ -12,7 +11,7 @@ endpointUrl =
     "/api/v1/cart"
 
 
-saveTask : ProductId -> Task.Task Http.Error ()
+saveTask : Int -> Task.Task Http.Error ()
 saveTask productId =
     let
         body =
@@ -31,7 +30,7 @@ saveTask productId =
             |> Http.fromJson (Decode.succeed ())
 
 
-encodeForSave : ProductId -> Encode.Value
+encodeForSave : Int -> Encode.Value
 encodeForSave productId =
     let
         list =
@@ -42,7 +41,7 @@ encodeForSave productId =
             |> Encode.object
 
 
-updateTask : ItemId -> Int -> Task.Task Http.Error ()
+updateTask : Int -> Int -> Task.Task Http.Error ()
 updateTask itemId newQuantity =
     let
         body =
@@ -61,7 +60,7 @@ updateTask itemId newQuantity =
             |> Http.fromJson (Decode.succeed ())
 
 
-encodeForUpdate : ItemId -> Int -> Encode.Value
+encodeForUpdate : Int -> Int -> Encode.Value
 encodeForUpdate itemId newQuantity =
     let
         list =
