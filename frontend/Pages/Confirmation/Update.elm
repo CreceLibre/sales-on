@@ -8,13 +8,8 @@ import Pages.Confirmation.Commands
         , updateItem
         , fetchBreakdowns
         )
-import Pages.Confirmation.Models
-    exposing
-        ( ConfirmationOrder
-        , ItemId
-        , Item
-        , OrderBreakdown
-        )
+import Pages.Confirmation.Models exposing (ConfirmationOrder)
+import API.Models exposing (ItemId, Item, OrderBreakdown)
 
 
 update : Msg -> ConfirmationOrder -> ( ConfirmationOrder, Cmd Msg )

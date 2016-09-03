@@ -1,7 +1,8 @@
 module Pages.Products.Update exposing (..)
 
 import Pages.Products.Messages exposing (Msg(..))
-import Pages.Products.Models exposing (Product, ProductId, ProductPageModel, IndexedProduct)
+import API.Models exposing (Product, ProductId)
+import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
 import Pages.Products.Commands exposing (addProductToCart, fetch)
 
 
@@ -29,7 +30,8 @@ update action model =
 
         AddToCartFail productId error ->
             ( { model | products = List.map (updateCartStatus productId False) model.products }
-            , Cmd.none )
+            , Cmd.none
+            )
 
         UpdateSearch keyword ->
             let

@@ -12,8 +12,16 @@ import Html.Attributes
         , hidden
         )
 import Pages.Products.Messages exposing (..)
-import Pages.Products.Models exposing (Product, ProductPageModel, IndexedProduct)
-import Html.Events exposing (onClick, onInput)
+import Pages.Products.Models
+    exposing
+        ( ProductPageModel
+        , IndexedProduct
+        )
+import Html.Events
+    exposing
+        ( onClick
+        , onInput
+        )
 import Capitalize
 
 

@@ -1,7 +1,7 @@
 module Pages.Confirmation.Messages exposing (..)
 
 import Http
-import Pages.Confirmation.Models exposing (OrderBreakdown, ItemId)
+import API.Models exposing (OrderBreakdown, ItemId)
 
 
 type Msg

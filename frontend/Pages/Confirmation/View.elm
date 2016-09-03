@@ -1,16 +1,11 @@
 module Pages.Confirmation.View exposing (..)
 
 import Html exposing (..)
-import Html.App
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import Pages.Confirmation.Messages exposing (..)
-import Pages.Confirmation.Models
-    exposing
-        ( ConfirmationOrder
-        , OrderBreakdown
-        , Item
-        )
+import Pages.Confirmation.Models exposing (ConfirmationOrder)
+import API.Models exposing (OrderBreakdown, Item)
 
 
 view : ConfirmationOrder -> Html Msg

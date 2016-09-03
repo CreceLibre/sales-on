@@ -1,20 +1,10 @@
 module Pages.Products.Models exposing (..)
 
-
-type alias ProductId =
-    Int
+import API.Models exposing (Product)
 
 
-type alias Product =
-    { id : ProductId
-    , name : String
-    , category : String
-    , price : String
-    , isInCart : Bool
-    }
-
-
-type alias IndexedProduct = (Int, Product)
+type alias IndexedProduct =
+    ( Int, Product )
 
 
 type alias ProductPageModel =

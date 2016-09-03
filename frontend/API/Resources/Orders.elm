@@ -2,7 +2,7 @@ module API.Resources.Orders exposing (fetchTask, saveTask)
 
 import Http
 import Json.Decode as Decode
-import Pages.Receipt.Models exposing (Order')
+import API.Models exposing (Order')
 import Pages.Confirmation.Models exposing (ConfirmationOrder)
 import Task
 import Json.Decode.Pipeline as Pipeline

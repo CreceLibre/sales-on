@@ -2,7 +2,8 @@ module Pages.Confirmation.Commands exposing (..)
 
 import Task
 import Pages.Confirmation.Messages exposing (..)
-import Pages.Confirmation.Models exposing (ConfirmationOrder, ItemId)
+import API.Models exposing (ItemId)
+import Pages.Confirmation.Models exposing (ConfirmationOrder)
 import API.Resources.Orders as OrdersAPI
 import API.Resources.Breakdowns as BreakdownsAPI
 import API.Resources.Cart as CartAPI

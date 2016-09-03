@@ -1,10 +1,12 @@
 module Pages.Products.Commands exposing (..)
 
-import Pages.Products.Models exposing (ProductId, Product, ProductPageModel)
+import API.Models exposing (ProductId, Product)
+import Pages.Products.Models exposing (ProductPageModel)
 import Pages.Products.Messages exposing (..)
 import Task
 import API.Resources.Products as ProductsAPI
 import API.Resources.Cart as CartAPI
+
 
 fetch : ProductPageModel -> Cmd Msg
 fetch model =

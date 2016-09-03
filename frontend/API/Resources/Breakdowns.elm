@@ -2,7 +2,7 @@ module API.Resources.Breakdowns exposing (fetchTask)
 
 import Http
 import Json.Decode as Decode
-import Pages.Confirmation.Models exposing (OrderBreakdown, Item, ItemId)
+import API.Models exposing (OrderBreakdown, Item, ItemId)
 import Task
 import Json.Decode.Pipeline as Pipeline
 
