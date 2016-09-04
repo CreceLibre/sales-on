@@ -2,13 +2,13 @@ module Pages.Receipt.View exposing (..)
 
 import Html exposing (..)
 import Pages.Receipt.Messages exposing (..)
-import Pages.Receipt.Models exposing (Order')
+import Pages.Receipt.Models exposing (ReceiptPageModel)
 
 
-view : Order' -> Html Msg
-view order =
+view : ReceiptPageModel -> Html Msg
+view { orderReceipt } =
     div []
         [ div []
-            [ strong [] [ text ("Tu numero de pedido es " ++ toString (order.id) ++ ", te hemos enviado un correo con los detalles de tu pedido") ]
+            [ strong [] [ text ("Tu numero de pedido es " ++ toString (orderReceipt.id) ++ ", te hemos enviado un correo con los detalles de tu pedido") ]
             ]
         ]

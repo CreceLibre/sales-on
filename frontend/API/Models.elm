@@ -26,7 +26,7 @@ type alias Product =
     }
 
 
-type alias Order' =
+type alias OrderReceipt =
     { id : Int
     , email : String
     }

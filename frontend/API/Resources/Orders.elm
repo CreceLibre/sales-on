@@ -2,7 +2,7 @@ module API.Resources.Orders exposing (fetchTask, saveTask)
 
 import Http
 import Json.Decode as Decode
-import API.Models exposing (Order')
+import API.Models exposing (OrderReceipt)
 import Pages.Confirmation.Models exposing (ConfirmationOrder)
 import Task
 import Json.Decode.Pipeline as Pipeline
@@ -20,20 +20,20 @@ fetchUrl qs =
     endpointUrl ++ "/" ++ qs
 
 
-fetchTask : String -> Task.Task Http.Error Order'
+fetchTask : String -> Task.Task Http.Error OrderReceipt
 fetchTask orderUuid =
     Http.get collectionDecoder (fetchUrl orderUuid)
 
 
-collectionDecoder : Decode.Decoder Order'
+collectionDecoder : Decode.Decoder OrderReceipt
 collectionDecoder =
     Pipeline.decode identity
         |> Pipeline.required "order" orderDecoder
 
 
-orderDecoder : Decode.Decoder Order'
+orderDecoder : Decode.Decoder OrderReceipt
 orderDecoder =
-    Pipeline.decode Order'
+    Pipeline.decode OrderReceipt
         |> Pipeline.required "id" Decode.int
         |> Pipeline.required "email" Decode.string
 

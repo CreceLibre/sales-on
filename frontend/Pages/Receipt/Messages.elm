@@ -1,9 +1,9 @@
 module Pages.Receipt.Messages exposing (..)
 
 import Http
-import Pages.Receipt.Models exposing (Order')
+import API.Models exposing (OrderReceipt)
 
 
 type Msg
-    = FetchOrderDone Order'
+    = FetchOrderDone OrderReceipt
     | FetchOrderFail Http.Error

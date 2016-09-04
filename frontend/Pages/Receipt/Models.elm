@@ -1,12 +1,13 @@
 module Pages.Receipt.Models exposing (..)
 
+import API.Models exposing (OrderReceipt)
 
-type alias Order' =
-    { id : Int
-    , email : String
+
+type alias ReceiptPageModel =
+    { orderReceipt : OrderReceipt
     }
 
 
-init : Order'
+init : ReceiptPageModel
 init =
-    Order' 0 ""
+    ReceiptPageModel (OrderReceipt 0 "")
