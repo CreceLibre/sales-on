@@ -1,16 +1,14 @@
 module Pages.Confirmation.Models exposing (..)
 
-import API.Models exposing (OrderBreakdown)
+import API.Models exposing (OrderBreakdown, OrderConfirmation)
 
 
 type alias ConfirmationOrder =
-    { email : String
-    , paymentMethod : String
-    , pickupLocation : String
+    { orderConfirmation : OrderConfirmation
     , orderBreakdown : OrderBreakdown
     }
 
 
 init : ConfirmationOrder
 init =
-    ConfirmationOrder "andres@otarola.me" "webpay" "galpon" (OrderBreakdown "" "" [])
+    ConfirmationOrder (OrderConfirmation "" "" "") (OrderBreakdown "" "" [])

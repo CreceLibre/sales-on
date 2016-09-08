@@ -9,16 +9,16 @@ import API.Models exposing (OrderBreakdown, Item)
 
 
 view : ConfirmationOrder -> Html Msg
-view confirmationOrder =
+view { orderConfirmation, orderBreakdown } =
     div []
-        [ input [ placeholder "Correo", value confirmationOrder.email, type' "text", onInput UpdateEmail ] []
-        , input [ placeholder "Metodo de pago", value confirmationOrder.paymentMethod, type' "text", onInput UpdatePaymentMethod ] []
-        , input [ placeholder "Pickup", value confirmationOrder.pickupLocation, type' "text", onInput UpdatePickupLocation ] []
+        [ input [ placeholder "Correo", value orderConfirmation.email, type' "text", onInput UpdateEmail ] []
+        , input [ placeholder "Metodo de pago", value orderConfirmation.paymentMethod, type' "text", onInput UpdatePaymentMethod ] []
+        , input [ placeholder "Pickup", value orderConfirmation.pickupLocation, type' "text", onInput UpdatePickupLocation ] []
         , div []
             [ strong [] [ text "Método de Pago" ]
             ]
-        , overview confirmationOrder.orderBreakdown
-        , yourItems confirmationOrder.orderBreakdown
+        , overview orderBreakdown
+        , yourItems orderBreakdown
         , button [ onClick PlaceOrder ] [ text "Completar Pedido" ]
         ]
 

@@ -1,6 +1,15 @@
 module API.Models exposing (..)
 
 
+type alias Product =
+    { id : Int
+    , name : String
+    , category : String
+    , price : String
+    , isInCart : Bool
+    }
+
+
 type alias Item =
     { id : Int
     , name : String
@@ -17,12 +26,10 @@ type alias OrderBreakdown =
     }
 
 
-type alias Product =
-    { id : Int
-    , name : String
-    , category : String
-    , price : String
-    , isInCart : Bool
+type alias OrderConfirmation =
+    { email : String
+    , paymentMethod : String
+    , pickupLocation : String
     }
 
 

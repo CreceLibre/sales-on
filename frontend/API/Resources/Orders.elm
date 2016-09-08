@@ -2,8 +2,7 @@ module API.Resources.Orders exposing (fetchTask, saveTask)
 
 import Http
 import Json.Decode as Decode
-import API.Models exposing (OrderReceipt)
-import Pages.Confirmation.Models exposing (ConfirmationOrder)
+import API.Models exposing (OrderReceipt, OrderConfirmation)
 import Task
 import Json.Decode.Pipeline as Pipeline
 import Json.Decode as Decode exposing ((:=))
@@ -38,7 +37,7 @@ orderDecoder =
         |> Pipeline.required "email" Decode.string
 
 
-saveTask : ConfirmationOrder -> Task.Task Http.Error String
+saveTask : OrderConfirmation -> Task.Task Http.Error String
 saveTask confirmationOrder =
     let
         body =
@@ -69,7 +68,7 @@ decodeOrderId =
         ("uuid" := Decode.string)
 
 
-memberEncoded : ConfirmationOrder -> Encode.Value
+memberEncoded : OrderConfirmation -> Encode.Value
 memberEncoded confirmationOrder =
     let
         list =

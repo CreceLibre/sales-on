@@ -21,6 +21,6 @@ updateItem itemId newQuantity =
 
 
 placeOrder : ConfirmationOrder -> Cmd Msg
-placeOrder confirmationOrder =
-    OrdersAPI.saveTask confirmationOrder
+placeOrder { orderConfirmation } =
+    OrdersAPI.saveTask orderConfirmation
         |> Task.perform PlaceOrderFail PlaceOrderDone

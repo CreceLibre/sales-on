@@ -15,15 +15,21 @@ import API.Models exposing (Item, OrderBreakdown)
 update : Msg -> ConfirmationOrder -> ( ConfirmationOrder, Cmd Msg )
 update msg confirmationOrder =
     let
-        orderBreakdown =
-            confirmationOrder.orderBreakdown
+        { orderBreakdown, orderConfirmation } =
+            confirmationOrder
     in
         case msg of
             IncreaseQuantity itemId ->
-                ( confirmationOrder, updateQuantityCmd itemId 1 orderBreakdown.items |> Cmd.batch )
+                ( confirmationOrder
+                , updateQuantityCmd itemId 1 orderBreakdown.items
+                    |> Cmd.batch
+                )
 
             DecreaseQuantity itemId ->
-                ( confirmationOrder, updateQuantityCmd itemId -1 orderBreakdown.items |> Cmd.batch )
+                ( confirmationOrder
+                , updateQuantityCmd itemId -1 orderBreakdown.items
+                    |> Cmd.batch
+                )
 
             UpdateItemQuantityDone ->
                 ( confirmationOrder, fetchBreakdowns )
@@ -32,19 +38,51 @@ update msg confirmationOrder =
                 ( confirmationOrder, Cmd.none )
 
             FetchBreakdownsDone newOrderBreakdown ->
-                ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.none )
+                ( { confirmationOrder
+                    | orderBreakdown =
+                        newOrderBreakdown
+                  }
+                , Cmd.none
+                )
 
             FetchBreakdownsFail _ ->
                 ( confirmationOrder, Cmd.none )
 
             UpdateEmail newEmail ->
-                ( { confirmationOrder | email = newEmail }, Cmd.none )
+                let
+                    newOrderConfirmation =
+                        { orderConfirmation | email = newEmail }
+                in
+                    ( { confirmationOrder
+                        | orderConfirmation =
+                            newOrderConfirmation
+                      }
+                    , Cmd.none
+                    )
 
             UpdatePaymentMethod newPaymentMethod ->
-                ( { confirmationOrder | paymentMethod = newPaymentMethod }, Cmd.none )
+                let
+                    newOrderConfirmation =
+                        { orderConfirmation | paymentMethod = newPaymentMethod }
+                in
+                    ( { confirmationOrder
+                        | orderConfirmation =
+                            newOrderConfirmation
+                      }
+                    , Cmd.none
+                    )
 
             UpdatePickupLocation newPickupLocation ->
-                ( { confirmationOrder | pickupLocation = newPickupLocation }, Cmd.none )
+                let
+                    newOrderConfirmation =
+                        { orderConfirmation | pickupLocation = newPickupLocation }
+                in
+                    ( { confirmationOrder
+                        | orderConfirmation =
+                            newOrderConfirmation
+                      }
+                    , Cmd.none
+                    )
 
             PlaceOrderDone orderUuid ->
                 ( confirmationOrder, Navigation.newUrl ("#receipt/" ++ orderUuid) )
