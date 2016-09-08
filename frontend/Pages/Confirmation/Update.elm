@@ -8,11 +8,11 @@ import Pages.Confirmation.Commands
         , updateItem
         , fetchBreakdowns
         )
-import Pages.Confirmation.Models exposing (ConfirmationOrder)
+import Pages.Confirmation.Models exposing (ConfirmationPageModel)
 import API.Models exposing (Item, OrderBreakdown)
 
 
-update : Msg -> ConfirmationOrder -> ( ConfirmationOrder, Cmd Msg )
+update : Msg -> ConfirmationPageModel -> ( ConfirmationPageModel, Cmd Msg )
 update msg confirmationOrder =
     let
         { orderBreakdown, orderConfirmation } =

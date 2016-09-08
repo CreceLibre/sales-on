@@ -3,12 +3,12 @@ module Pages.Confirmation.Models exposing (..)
 import API.Models exposing (OrderBreakdown, OrderConfirmation)
 
 
-type alias ConfirmationOrder =
+type alias ConfirmationPageModel =
     { orderConfirmation : OrderConfirmation
     , orderBreakdown : OrderBreakdown
     }
 
 
-init : ConfirmationOrder
+init : ConfirmationPageModel
 init =
-    ConfirmationOrder (OrderConfirmation "" "" "") (OrderBreakdown "" "" [])
+    ConfirmationPageModel (OrderConfirmation "" "" "") (OrderBreakdown "" "" [])

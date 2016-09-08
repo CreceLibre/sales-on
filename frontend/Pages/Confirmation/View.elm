@@ -4,11 +4,11 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import Pages.Confirmation.Messages exposing (..)
-import Pages.Confirmation.Models exposing (ConfirmationOrder)
+import Pages.Confirmation.Models exposing (ConfirmationPageModel)
 import API.Models exposing (OrderBreakdown, Item)
 
 
-view : ConfirmationOrder -> Html Msg
+view : ConfirmationPageModel -> Html Msg
 view { orderConfirmation, orderBreakdown } =
     div []
         [ input [ placeholder "Correo", value orderConfirmation.email, type' "text", onInput UpdateEmail ] []

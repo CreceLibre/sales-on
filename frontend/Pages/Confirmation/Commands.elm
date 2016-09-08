@@ -2,7 +2,7 @@ module Pages.Confirmation.Commands exposing (..)
 
 import Task
 import Pages.Confirmation.Messages exposing (..)
-import Pages.Confirmation.Models exposing (ConfirmationOrder)
+import Pages.Confirmation.Models exposing (ConfirmationPageModel)
 import API.Resources.Orders as OrdersAPI
 import API.Resources.Breakdowns as BreakdownsAPI
 import API.Resources.Cart as CartAPI
@@ -20,7 +20,7 @@ updateItem itemId newQuantity =
         |> Task.perform UpdateItemQuantityFail (always UpdateItemQuantityDone)
 
 
-placeOrder : ConfirmationOrder -> Cmd Msg
+placeOrder : ConfirmationPageModel -> Cmd Msg
 placeOrder { orderConfirmation } =
     OrdersAPI.saveTask orderConfirmation
         |> Task.perform PlaceOrderFail PlaceOrderDone
