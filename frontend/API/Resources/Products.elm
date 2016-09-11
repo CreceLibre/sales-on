@@ -2,9 +2,9 @@ module API.Resources.Products exposing (fetchTask)
 
 import Http
 import Json.Decode as Decode exposing ((:=))
-import API.Models exposing (Product)
 import Json.Decode.Pipeline as Pipeline
 import Task
+import API.Models exposing (Product)
 
 
 endpointUrl : String

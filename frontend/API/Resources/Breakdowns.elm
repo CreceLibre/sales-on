@@ -2,9 +2,9 @@ module API.Resources.Breakdowns exposing (fetchTask)
 
 import Http
 import Json.Decode as Decode
-import API.Models exposing (OrderBreakdown, Item)
 import Task
 import Json.Decode.Pipeline as Pipeline
+import API.Models exposing (OrderBreakdown, Item)
 
 
 endpointUrl : String

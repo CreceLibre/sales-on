@@ -2,11 +2,11 @@ module API.Resources.Orders exposing (fetchTask, saveTask)
 
 import Http
 import Json.Decode as Decode
-import API.Models exposing (OrderReceipt, OrderConfirmation)
 import Task
 import Json.Decode.Pipeline as Pipeline
 import Json.Decode as Decode exposing ((:=))
 import Json.Encode as Encode
+import API.Models exposing (OrderReceipt, OrderConfirmation)
 
 
 endpointUrl : String
