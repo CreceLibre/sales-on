@@ -1,3 +1,9 @@
+$border-grey = rgb(213, 216, 219)
+
+html, button, input, select, textarea,.pure-g [class *= "pure-u"]
+    font-family: Arial, Georgia, Times, "Times New Roman", serif
+    -webkit-font-smoothing: antialiased
+
 .card-spacing
   padding 20px
 .card
@@ -19,4 +25,125 @@
       span
         color white
         padding 10px
-        background-color: green
+        background-color green
+.center
+  margin-left auto
+  margin-right auto
+  max-width 1080px
+
+.text-align-right
+  text-align right
+
+.module
+  margin-right 5px
+  margin-left 5px
+  h3, .block
+    padding 15px
+
+  h3
+    border 1px solid $border-grey
+    border-bottom 0
+    margin-bottom 0
+
+  hr
+    border-top: 1px solid $border-grey
+
+  .block
+    border 1px solid $border-grey
+    margin-top 5px
+
+    .field
+      display flex
+      flex-flow column-reverse
+      margin-bottom 1em
+
+      label, input
+        transition all 0.2s
+        touch-action manipulation
+
+      input
+        font-size 1.5em
+        border 0
+        border-bottom 1px solid #ccc
+        font-family inherit
+        -webkit-appearance none
+        border-radius 0
+        padding 0
+        cursor text
+
+      input:focus
+        outline 0
+        border-bottom 1px solid #666
+
+      label
+        text-transform uppercase
+        letter-spacing 0.05em
+
+      input:placeholder-shown + label
+        cursor text
+        max-width 66.66%
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+        transform-origin left bottom
+        transform translate(0, 2.125rem) scale(1.5)
+
+      /**
+      * By default, the placeholder should be transparent. Also, it should
+      * inherit the transition.
+      */
+      ::-webkit-input-placeholder
+        opacity 0
+        transition inherit
+
+      /**
+      * Show the placeholder when the input is focused.
+      */
+      input:focus::-webkit-input-placeholder
+        opacity 1
+
+      /**
+      * When the element is focused, remove the label transform.
+      * Also, do this when the placeholder is _not_ shown, i.e. when
+      * there's something in the input at all.
+      */
+      input:not(:placeholder-shown) + label,
+      input:focus + label
+        transform translate(0, 0) scale(1)
+        cursor pointer
+
+
+  .block:after
+    content "."
+    display block
+    height 0
+    clear both
+    visibility hidden
+
+  .body
+    .block:nth-child(1)
+      margin-top 0
+
+    .item-price
+      font-size x-large
+
+    .item-main
+      margin-left 5px
+      .item-title
+        margin-bottom 10px
+        font-weight bolder
+        text-transform capitalize
+      .item-quantity
+        height 0
+        vertical-align middle
+
+    .payment-method
+      width 150px
+
+    .payment-method-radio
+      margin-top 20px
+
+    .pure-button
+      margin-top 10px
+      padding 10px
+      width 100%

@@ -14,10 +14,10 @@ fetchBreakdowns =
         |> Task.perform FetchBreakdownsFail FetchBreakdownsDone
 
 
-updateItem : Int -> Int -> Cmd Msg
-updateItem itemId newQuantity =
+updateItem : Int -> Int -> Int -> Cmd Msg
+updateItem itemId oldQuantity newQuantity =
     CartAPI.updateTask itemId newQuantity
-        |> Task.perform UpdateItemQuantityFail (always UpdateItemQuantityDone)
+        |> Task.perform (UpdateItemQuantityFail itemId oldQuantity) (always UpdateItemQuantityDone)
 
 
 placeOrder : ConfirmationPageModel -> Cmd Msg

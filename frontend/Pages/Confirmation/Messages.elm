@@ -11,9 +11,8 @@ type Msg
     | FetchBreakdownsDone OrderBreakdown
     | FetchBreakdownsFail Http.Error
     | UpdateItemQuantityDone
-    | UpdateItemQuantityFail Http.Error
-    | IncreaseQuantity Int
-    | DecreaseQuantity Int
+    | UpdateItemQuantityFail Int Int Http.Error
+    | ChangeQuantity Int Int
     | PlaceOrderDone String
     | PlaceOrderFail Http.Error
     | PlaceOrder

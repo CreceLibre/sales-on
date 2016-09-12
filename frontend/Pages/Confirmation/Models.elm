@@ -11,4 +11,4 @@ type alias ConfirmationPageModel =
 
 init : ConfirmationPageModel
 init =
-    ConfirmationPageModel (OrderConfirmation "" "" "") (OrderBreakdown "" "" [])
+    ConfirmationPageModel (OrderConfirmation "" "webpay" "galpon") (OrderBreakdown "" "" [])

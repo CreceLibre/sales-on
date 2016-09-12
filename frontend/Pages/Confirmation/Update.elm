@@ -19,23 +19,33 @@ update msg confirmationOrder =
             confirmationOrder
     in
         case msg of
-            IncreaseQuantity itemId ->
-                ( confirmationOrder
-                , updateQuantityCmd itemId 1 orderBreakdown.items
-                    |> Cmd.batch
-                )
+            ChangeQuantity itemId newQuantity ->
+                let
+                    newOrderBreakdown =
+                        { orderBreakdown | items = updateQuantity itemId newQuantity orderBreakdown.items }
 
-            DecreaseQuantity itemId ->
-                ( confirmationOrder
-                , updateQuantityCmd itemId -1 orderBreakdown.items
-                    |> Cmd.batch
-                )
+                    oldQuantity =
+                        case List.filter (\x -> x.id == itemId) orderBreakdown.items of
+                            item :: _ ->
+                                item.quantity
+
+                            _ ->
+                                0
+                in
+                    ( { confirmationOrder | orderBreakdown = newOrderBreakdown }
+                    , updateQuantityCmd itemId oldQuantity newQuantity orderBreakdown.items
+                        |> Cmd.batch
+                    )
 
             UpdateItemQuantityDone ->
                 ( confirmationOrder, fetchBreakdowns )
 
-            UpdateItemQuantityFail _ ->
-                ( confirmationOrder, Cmd.none )
+            UpdateItemQuantityFail itemId oldQuantity _ ->
+                let
+                    newOrderBreakdown =
+                        { orderBreakdown | items = updateQuantity itemId oldQuantity orderBreakdown.items }
+                in
+                    ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.none )
 
             FetchBreakdownsDone newOrderBreakdown ->
                 ( { confirmationOrder
@@ -94,15 +104,15 @@ update msg confirmationOrder =
                 ( confirmationOrder, placeOrder confirmationOrder )
 
 
-updateQuantityCmd : Int -> Int -> List Item -> List (Cmd Msg)
-updateQuantityCmd itemId howMuch items =
+updateQuantityCmd : Int -> Int -> Int -> List Item -> List (Cmd Msg)
+updateQuantityCmd itemId oldValue howMuch items =
     let
         update item =
             if item.id == itemId then
-                if howMuch < 0 && item.quantity <= 1 then
+                if howMuch == item.quantity then
                     Cmd.none
                 else
-                    updateItem itemId (item.quantity + howMuch)
+                    updateItem itemId oldValue howMuch
             else
                 Cmd.none
     in
