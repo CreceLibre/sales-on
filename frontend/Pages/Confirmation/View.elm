@@ -6,8 +6,6 @@ import Html.Events exposing (onInput, onClick, on, targetValue)
 import Pages.Confirmation.Messages exposing (..)
 import Pages.Confirmation.Models exposing (ConfirmationPageModel)
 import API.Models exposing (OrderBreakdown, Item)
-import Html.Keyed as Keyed
-import Html.Lazy exposing (lazy)
 import Utils exposing (onChangeIntValue)
 
 
@@ -108,19 +106,11 @@ overviewModule { subtotal, total } =
         ]
 
 
-keyedSelect : List (Attribute msg) -> List ( String, Html msg ) -> Html msg
-keyedSelect =
-    Keyed.node "select"
-
-
 itemRow : Item -> Html Msg
 itemRow item =
     let
         getQuantityOption quantity x =
             option [ value (toString x), selected (quantity == x) ] [ text (toString x) ]
-
-        viewKeyedEntry quantity x =
-            ( (toString x) ++ " " ++ (toString quantity), lazy (getQuantityOption quantity) x )
     in
         div [ class "block" ]
             [ div [ class "pure-g" ]
@@ -137,12 +127,12 @@ itemRow item =
                             ]
                         , div
                             [ class "pure-u-2-5 pure-u-sm-4-5" ]
-                            [ keyedSelect [ onChangeIntValue (ChangeQuantity item.id) ] <|
-                                (List.map (viewKeyedEntry item.quantity) [1..5])
+                            [ select [ onChangeIntValue (ChangeQuantity item.id) ] <|
+                                (List.map (getQuantityOption item.quantity) [1..5])
                             ]
                         , div
                             []
-                            [ a [] [ text ("Quitar" ++ " " ++ (toString item.quantity)) ] ]
+                            [ a [] [ text "Quitar" ] ]
                         ]
                     ]
                 , div [ class "pure-u-1-5 pure-u-sm-1-5" ]

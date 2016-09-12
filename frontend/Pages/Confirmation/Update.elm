@@ -10,6 +10,7 @@ import Pages.Confirmation.Commands
         )
 import Pages.Confirmation.Models exposing (ConfirmationPageModel)
 import API.Models exposing (Item, OrderBreakdown)
+import Pages.Confirmation.Ports exposing (..)
 
 
 update : Msg -> ConfirmationPageModel -> ( ConfirmationPageModel, Cmd Msg )
@@ -19,6 +20,9 @@ update msg confirmationOrder =
             confirmationOrder
     in
         case msg of
+            Delay newOrderBreakdown ->
+                ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.none )
+
             ChangeQuantity itemId newQuantity ->
                 let
                     newOrderBreakdown =
@@ -45,7 +49,7 @@ update msg confirmationOrder =
                     newOrderBreakdown =
                         { orderBreakdown | items = updateQuantity itemId oldQuantity orderBreakdown.items }
                 in
-                    ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.none )
+                    ( confirmationOrder, delayRenderCmd newOrderBreakdown )
 
             FetchBreakdownsDone newOrderBreakdown ->
                 ( { confirmationOrder

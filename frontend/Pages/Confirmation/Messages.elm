@@ -15,4 +15,5 @@ type Msg
     | ChangeQuantity Int Int
     | PlaceOrderDone String
     | PlaceOrderFail Http.Error
+    | Delay OrderBreakdown
     | PlaceOrder
