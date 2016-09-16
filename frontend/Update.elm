@@ -12,10 +12,15 @@ update msg model =
     case msg of
         ProductsMsg subMsg ->
             let
-                ( updatedProducts, cmds ) =
+                ( updatedProducts, cmds, cartSize ) =
                     Pages.Products.Update.update subMsg model.productsPage
             in
-                ( { model | productsPage = updatedProducts }, Cmd.map ProductsMsg cmds )
+                ( { model
+                    | productsPage = updatedProducts
+                    , cartSize = cartSize
+                  }
+                , Cmd.map ProductsMsg cmds
+                )
 
         ConfirmationMsg subMsg ->
             let

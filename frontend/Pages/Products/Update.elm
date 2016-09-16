@@ -5,32 +5,47 @@ import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
 import Pages.Products.Commands exposing (addProductToCart, fetchProducts)
 
 
-update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg )
+update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg, Int )
 update action model =
     case action of
-        FetchAllDone newProducts ->
-            ( { model
-                | products = (List.indexedMap (\i p -> ( i + 1, p )) newProducts)
-                , isLoading = False
-              }
-            , Cmd.none
-            )
+        FetchAllDone response ->
+            let
+                newProducts =
+                    (List.indexedMap (\i p -> ( i + 1, p )) response)
+            in
+                ( { model
+                    | products = newProducts
+                    , isLoading = False
+                  }
+                , Cmd.none
+                , getCartSize newProducts
+                )
 
         FetchAllFail error ->
-            ( { model | isLoading = False }, Cmd.none )
+            ( { model | isLoading = False }, Cmd.none, model.cartSize )
 
         AddToCart productId ->
-            ( { model | products = List.map (updateCartStatus productId True) model.products }
-            , addToCartCommands productId model.products |> Cmd.batch
-            )
+            let
+                newProducts =
+                    List.map (updateCartStatus productId True) model.products
+            in
+                ( { model | products = newProducts }
+                , addToCartCommands productId model.products |> Cmd.batch
+                , getCartSize newProducts
+                )
 
         AddToCartSuccess ->
-            ( model, Cmd.none )
+            ( model, Cmd.none, getCartSize model.products )
 
         AddToCartFail productId error ->
-            ( { model | products = List.map (updateCartStatus productId False) model.products }
-            , Cmd.none
-            )
+            let
+                newProducts =
+                    List.map (updateCartStatus productId False) model.products
+            in
+                ( { model | products = newProducts }
+                , Cmd.none
+                , getCartSize newProducts
+                )
 
         UpdateSearch keyword ->
             let
@@ -40,10 +55,16 @@ update action model =
                     else
                         Just keyword
             in
-                ( { model | search = search }, Cmd.none )
+                ( { model | search = search }, Cmd.none, model.cartSize )
 
         ClickOnSearch ->
-            ( { model | isLoading = True }, fetchProducts model )
+            ( { model | isLoading = True }, fetchProducts model, model.cartSize )
+
+
+getCartSize : List IndexedProduct -> Int
+getCartSize products =
+    List.filter (\( _, item ) -> item.isInCart) products
+        |> List.length
 
 
 updateCartStatus : Int -> Bool -> IndexedProduct -> IndexedProduct

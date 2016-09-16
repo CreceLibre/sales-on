@@ -10,6 +10,7 @@ type alias Model =
     { confirmationPage : ConfirmationPageModel
     , receiptPage : ReceiptPageModel
     , productsPage : ProductPageModel
+    , cartSize : Int
     , route : Routing.Route
     }
 
@@ -19,5 +20,6 @@ initialModel route =
     { confirmationPage = Pages.Confirmation.Models.init
     , receiptPage = Pages.Receipt.Models.init
     , productsPage = Pages.Products.Models.init
+    , cartSize = 0
     , route = route
     }

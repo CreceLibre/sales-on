@@ -35,25 +35,38 @@ page model =
                     notFoundView
     in
         div []
-            [ menu
+            [ menu model
             , routedPage
             ]
 
 
-menu : Html Msg
-menu =
+menu : Model -> Html Msg
+menu { cartSize } =
     div [ class "pure-menu pure-menu-horizontal" ]
         [ span [ class "pure-menu-heading" ]
             [ text "Sales On" ]
         , ul [ class "pure-menu-list" ]
-            [ li [ class "pure-menu-item" ]
-                [ a [ class "pure-menu-link", href "#products" ]
-                    [ text "Productos" ]
-                ]
-            , li [ class "pure-menu-item" ]
-                [ a [ class "pure-menu-link", href "#confirmation" ]
-                    [ text "Confirmación de Compra" ]
-                ]
+            (menuItems cartSize)
+        ]
+
+
+menuItems : Int -> List (Html Msg)
+menuItems cartSize =
+    --  TODO Still not sure how to be DRY here
+    if cartSize == 0 then
+        [ li [ class "pure-menu-item" ]
+            [ a [ class "pure-menu-link", href "#products" ]
+                [ text "Productos" ]
+            ]
+        ]
+    else
+        [ li [ class "pure-menu-item" ]
+            [ a [ class "pure-menu-link", href "#products" ]
+                [ text "Productos" ]
+            ]
+        , li [ class "pure-menu-item" ]
+            [ a [ class "pure-menu-link", href "#confirmation" ]
+                [ text "Confirmación de Compra" ]
             ]
         ]
 
