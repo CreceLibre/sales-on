@@ -1,6 +1,10 @@
 module API.Models exposing (..)
 
 
+type alias ID =
+    Int
+
+
 type alias Product =
     { id : Int
     , name : String

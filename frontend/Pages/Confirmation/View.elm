@@ -127,12 +127,11 @@ itemRow item =
                             ]
                         , div
                             [ class "pure-u-2-5 pure-u-sm-4-5" ]
-                            [ select [ onChangeIntValue (ChangeQuantity item.id) ] <|
-                                (List.map (getQuantityOption item.quantity) [1..5])
+                            [ select [ onChangeIntValue (UpdateQuantity item.id) ] (List.map (getQuantityOption item.quantity) [1..5])
                             ]
                         , div
                             []
-                            [ a [] [ text "Quitar" ] ]
+                            [ a [ onClick (RemoveItem item.id) ] [ text "Quitar" ] ]
                         ]
                     ]
                 , div [ class "pure-u-1-5 pure-u-sm-1-5" ]

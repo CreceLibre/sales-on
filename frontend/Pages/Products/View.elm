@@ -50,9 +50,9 @@ listView model =
 
 searchView : Maybe String -> Html Msg
 searchView search =
-    div []
-        [ input [ placeholder "Search query", value (Maybe.withDefault "" search), type' "text", onInput UpdateSearch ] []
-        , button [ onClick ClickOnSearch ] [ text "Buscar" ]
+    form [ class "pure-form" ]
+        [ input [ placeholder "Search query", class "pure-input-rounded", value (Maybe.withDefault "" search), type' "text", onInput UpdateSearch ] []
+        , button [ onClick ClickOnSearch, class "pure-button" ] [ text "Buscar" ]
         ]
 
 

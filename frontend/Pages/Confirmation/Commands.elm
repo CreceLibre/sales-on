@@ -6,6 +6,7 @@ import Pages.Confirmation.Models exposing (ConfirmationPageModel)
 import API.Resources.Orders as OrdersAPI
 import API.Resources.Breakdowns as BreakdownsAPI
 import API.Resources.Cart as CartAPI
+import API.Models exposing (ID)
 
 
 fetchBreakdowns : Cmd Msg
@@ -14,10 +15,16 @@ fetchBreakdowns =
         |> Task.perform FetchBreakdownsFail FetchBreakdownsDone
 
 
-updateItem : Int -> Int -> Int -> Cmd Msg
+updateItem : ID -> Int -> Int -> Cmd Msg
 updateItem itemId oldQuantity newQuantity =
     CartAPI.updateTask itemId newQuantity
         |> Task.perform (UpdateItemQuantityFail itemId oldQuantity) (always UpdateItemQuantityDone)
+
+
+removeItem : ID -> Cmd Msg
+removeItem itemId =
+    CartAPI.deleteTask itemId
+        |> Task.perform RemoveItemFail (always RemoveItemDone)
 
 
 placeOrder : ConfirmationPageModel -> Cmd Msg

@@ -7,6 +7,7 @@ import Pages.Confirmation.Commands
         ( placeOrder
         , updateItem
         , fetchBreakdowns
+        , removeItem
         )
 import Pages.Confirmation.Models exposing (ConfirmationPageModel)
 import API.Models exposing (Item, OrderBreakdown)
@@ -23,7 +24,7 @@ update msg confirmationOrder =
             Delay newOrderBreakdown ->
                 ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.none )
 
-            ChangeQuantity itemId newQuantity ->
+            UpdateQuantity itemId newQuantity ->
                 let
                     newOrderBreakdown =
                         { orderBreakdown | items = updateQuantity itemId newQuantity orderBreakdown.items }
@@ -50,6 +51,15 @@ update msg confirmationOrder =
                         { orderBreakdown | items = updateQuantity itemId oldQuantity orderBreakdown.items }
                 in
                     ( confirmationOrder, delayRenderCmd newOrderBreakdown )
+
+            RemoveItem itemId ->
+                ( confirmationOrder, removeItem itemId )
+
+            RemoveItemDone ->
+                ( confirmationOrder, fetchBreakdowns )
+
+            RemoveItemFail err ->
+                ( confirmationOrder, Cmd.none )
 
             FetchBreakdownsDone newOrderBreakdown ->
                 ( { confirmationOrder
