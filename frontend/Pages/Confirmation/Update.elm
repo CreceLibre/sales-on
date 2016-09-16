@@ -62,12 +62,19 @@ update msg confirmationOrder =
                 ( confirmationOrder, Cmd.none )
 
             FetchBreakdownsDone newOrderBreakdown ->
-                ( { confirmationOrder
-                    | orderBreakdown =
-                        newOrderBreakdown
-                  }
-                , Cmd.none
-                )
+                let
+                    shouldRedirectToProducts =
+                        if List.isEmpty newOrderBreakdown.items then
+                            Navigation.newUrl "#products"
+                        else
+                            Cmd.none
+                in
+                    ( { confirmationOrder
+                        | orderBreakdown =
+                            newOrderBreakdown
+                      }
+                    , shouldRedirectToProducts
+                    )
 
             FetchBreakdownsFail _ ->
                 ( confirmationOrder, Cmd.none )
