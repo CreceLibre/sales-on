@@ -2,7 +2,7 @@ module Pages.Products.Update exposing (..)
 
 import Pages.Products.Messages exposing (Msg(..))
 import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
-import Pages.Products.Commands exposing (addProductToCart, fetch)
+import Pages.Products.Commands exposing (addProductToCart, fetchProducts)
 
 
 update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg )
@@ -43,7 +43,7 @@ update action model =
                 ( { model | search = search }, Cmd.none )
 
         ClickOnSearch ->
-            ( { model | isLoading = True }, fetch model )
+            ( { model | isLoading = True }, fetchProducts model )
 
 
 updateCartStatus : Int -> Bool -> IndexedProduct -> IndexedProduct

@@ -7,8 +7,8 @@ import API.Resources.Products as ProductsAPI
 import API.Resources.Cart as CartAPI
 
 
-fetch : ProductPageModel -> Cmd Msg
-fetch model =
+fetchProducts : ProductPageModel -> Cmd Msg
+fetchProducts model =
     ProductsAPI.fetchTask model.search
         |> Task.perform FetchAllFail FetchAllDone
 

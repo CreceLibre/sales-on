@@ -5,7 +5,7 @@ import Task
 import API.Resources.Orders as OrdersAPI
 
 
-fetch : String -> Cmd Msg
-fetch orderUuid =
+fetchOrder : String -> Cmd Msg
+fetchOrder orderUuid =
     OrdersAPI.fetchTask orderUuid
         |> Task.perform FetchOrderFail FetchOrderDone
