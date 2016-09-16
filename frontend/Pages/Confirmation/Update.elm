@@ -10,7 +10,7 @@ import Pages.Confirmation.Commands
         , removeItem
         )
 import Pages.Confirmation.Models exposing (ConfirmationPageModel)
-import API.Models exposing (Item, OrderBreakdown)
+import API.Models exposing (Item, OrderBreakdown, ID)
 import Pages.Confirmation.Ports exposing (..)
 
 
@@ -125,7 +125,7 @@ update msg confirmationOrder =
                 ( confirmationOrder, placeOrder confirmationOrder )
 
 
-updateQuantityCmd : Int -> Int -> Int -> List Item -> List (Cmd Msg)
+updateQuantityCmd : ID -> Int -> Int -> List Item -> List (Cmd Msg)
 updateQuantityCmd itemId oldValue howMuch items =
     let
         update item =
@@ -140,7 +140,7 @@ updateQuantityCmd itemId oldValue howMuch items =
         List.map update items
 
 
-updateQuantity : Int -> Int -> List Item -> List Item
+updateQuantity : ID -> Int -> List Item -> List Item
 updateQuantity itemId newQuantity items =
     let
         update item =
