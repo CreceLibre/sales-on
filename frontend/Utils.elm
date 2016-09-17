@@ -6,6 +6,12 @@ import Html.Events exposing (on, targetValue)
 import String
 
 
+never : Never -> a
+never n =
+    never n
+
+
+
 -- TODO should we decode the value here?
 
 

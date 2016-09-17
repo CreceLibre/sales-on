@@ -9,7 +9,6 @@ import Routing exposing (Route(..))
 import Pages.Confirmation.Commands exposing (fetchBreakdowns)
 import Pages.Products.Commands exposing (fetchProducts)
 import Pages.Receipt.Commands exposing (fetchOrder)
-import Pages.Confirmation.Subscriptions
 
 
 init : Result String Route -> ( Model, Cmd Msg )
@@ -49,11 +48,6 @@ urlUpdateCommand model route =
             Cmd.none
 
 
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.map ConfirmationMsg (Pages.Confirmation.Subscriptions.subscriptions model.confirmationPage)
-
-
 main : Program Never
 main =
     Navigation.program Routing.parser
@@ -61,5 +55,5 @@ main =
         , view = view
         , update = update
         , urlUpdate = urlUpdate
-        , subscriptions = subscriptions
+        , subscriptions = always Sub.none
         }

@@ -10,8 +10,10 @@ import Pages.Confirmation.Commands
         , removeItem
         )
 import Pages.Confirmation.Models exposing (ConfirmationPageModel)
+import Process
+import Task
 import API.Models exposing (Item, OrderBreakdown, ID)
-import Pages.Confirmation.Ports exposing (..)
+import Utils exposing (never)
 
 
 update : Msg -> ConfirmationPageModel -> ( ConfirmationPageModel, Cmd Msg )
@@ -21,8 +23,8 @@ update msg confirmationOrder =
             confirmationOrder
     in
         case msg of
-            Delay newOrderBreakdown ->
-                ( { confirmationOrder | orderBreakdown = newOrderBreakdown }, Cmd.none )
+            Delayed newConfirmationOrder ->
+                ( newConfirmationOrder, Cmd.none )
 
             UpdateQuantity itemId newQuantity ->
                 let
@@ -49,8 +51,18 @@ update msg confirmationOrder =
                 let
                     newOrderBreakdown =
                         { orderBreakdown | items = updateQuantity itemId oldQuantity orderBreakdown.items }
+
+                    newConfirmationOrder =
+                        { confirmationOrder | orderBreakdown = newOrderBreakdown }
                 in
-                    ( confirmationOrder, delayRenderCmd newOrderBreakdown )
+                    -- Okay, so this is a not-so-ugly workaround, for this `problem`
+                    -- https://gist.github.com/aotarola/62c8b4a067e8d0dcb40cca9e24133566
+                    -- I documented a `solution` for this particular problem here
+                    -- https://gist.github.com/aotarola/dcc94c26d81b4093a10b92946fa624d0
+                    confirmationOrder
+                        ! [ Process.sleep 50
+                                |> Task.perform never (always (Delayed newConfirmationOrder))
+                          ]
 
             RemoveItem itemId ->
                 ( confirmationOrder, removeItem itemId )

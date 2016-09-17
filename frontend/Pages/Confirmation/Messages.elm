@@ -2,6 +2,7 @@ module Pages.Confirmation.Messages exposing (..)
 
 import Http
 import API.Models exposing (OrderBreakdown, ID)
+import Pages.Confirmation.Models exposing (ConfirmationPageModel)
 
 
 type Msg
@@ -19,4 +20,4 @@ type Msg
     | PlaceOrder
     | PlaceOrderDone String
     | PlaceOrderFail Http.Error
-    | Delay OrderBreakdown
+    | Delayed ConfirmationPageModel
