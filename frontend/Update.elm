@@ -17,7 +17,7 @@ update msg model =
             in
                 { model
                     | productsPage = updatedProducts
-                    , cartSize = cartSize
+                    , shouldShowConfirmationMenu = cartSize > 0
                 }
                     ! [ Cmd.map ProductsMsg cmds ]
 
@@ -28,6 +28,7 @@ update msg model =
             in
                 { model
                     | confirmationPage = updatedConfirmation
+                    , shouldShowConfirmationMenu = False
                 }
                     ! [ Cmd.map ConfirmationMsg cmds ]
 
@@ -36,5 +37,8 @@ update msg model =
                 ( updatedReceipt, cmds ) =
                     Pages.Receipt.Update.update subMsg model.receiptPage
             in
-                { model | receiptPage = updatedReceipt }
+                { model
+                    | receiptPage = updatedReceipt
+                    , shouldShowConfirmationMenu = False
+                }
                     ! [ Cmd.map ReceiptMsg cmds ]
