@@ -9,7 +9,7 @@ import Pages.Confirmation.Commands
         , fetchBreakdowns
         , removeItem
         )
-import Pages.Confirmation.Models exposing (ConfirmationPageModel)
+import Pages.Confirmation.Models exposing (ConfirmationPageModel, init)
 import Process
 import Task
 import API.Models exposing (Item, OrderBreakdown, ID)
@@ -122,7 +122,7 @@ update msg confirmationOrder =
                         ! [ Cmd.none ]
 
             PlaceOrderDone orderUuid ->
-                confirmationOrder
+                init
                     ! [ Navigation.newUrl ("#receipt/" ++ orderUuid) ]
 
             PlaceOrderFail error ->
