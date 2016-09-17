@@ -59,7 +59,7 @@ update msg confirmationOrder =
                 in
                     -- Okay, so this is a not-so-ugly workaround, for this `problem`
                     -- https://gist.github.com/aotarola/62c8b4a067e8d0dcb40cca9e24133566
-                    -- I documented a `solution` for this particular problem here
+                    -- I documented a `solution` here
                     -- https://gist.github.com/aotarola/dcc94c26d81b4093a10b92946fa624d0
                     confirmationOrder
                         ! [ Process.sleep 50
