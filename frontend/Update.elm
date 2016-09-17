@@ -12,12 +12,11 @@ update msg model =
     case msg of
         ProductsMsg subMsg ->
             let
-                ( updatedProducts, cmds, cartSize ) =
+                ( updatedProducts, cmds ) =
                     Pages.Products.Update.update subMsg model.productsPage
             in
                 { model
                     | productsPage = updatedProducts
-                    , shouldShowConfirmationMenu = cartSize > 0
                 }
                     ! [ Cmd.map ProductsMsg cmds ]
 
@@ -28,7 +27,6 @@ update msg model =
             in
                 { model
                     | confirmationPage = updatedConfirmation
-                    , shouldShowConfirmationMenu = False
                 }
                     ! [ Cmd.map ConfirmationMsg cmds ]
 
@@ -39,6 +37,5 @@ update msg model =
             in
                 { model
                     | receiptPage = updatedReceipt
-                    , shouldShowConfirmationMenu = False
                 }
                     ! [ Cmd.map ReceiptMsg cmds ]

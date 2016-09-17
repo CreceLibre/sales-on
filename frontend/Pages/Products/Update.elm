@@ -5,7 +5,7 @@ import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
 import Pages.Products.Commands exposing (addProductToCart, fetchProducts)
 
 
-update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg, Int )
+update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg )
 update action model =
     case action of
         FetchAllDone response ->
@@ -18,11 +18,10 @@ update action model =
                     , isLoading = False
                   }
                 , Cmd.none
-                , getCartSize newProducts
                 )
 
         FetchAllFail error ->
-            ( { model | isLoading = False }, Cmd.none, model.cartSize )
+            ( { model | isLoading = False }, Cmd.none )
 
         AddToCart productId ->
             let
@@ -31,11 +30,10 @@ update action model =
             in
                 ( { model | products = newProducts }
                 , addToCartCommands productId model.products |> Cmd.batch
-                , getCartSize newProducts
                 )
 
         AddToCartSuccess ->
-            ( model, Cmd.none, getCartSize model.products )
+            ( model, Cmd.none )
 
         AddToCartFail productId error ->
             let
@@ -44,7 +42,6 @@ update action model =
             in
                 ( { model | products = newProducts }
                 , Cmd.none
-                , getCartSize newProducts
                 )
 
         UpdateSearch keyword ->
@@ -55,16 +52,10 @@ update action model =
                     else
                         Just keyword
             in
-                ( { model | search = search }, Cmd.none, model.cartSize )
+                ( { model | search = search }, Cmd.none )
 
         ClickOnSearch ->
-            ( { model | isLoading = True }, fetchProducts model, model.cartSize )
-
-
-getCartSize : List IndexedProduct -> Int
-getCartSize products =
-    List.filter (\( _, item ) -> item.isInCart) products
-        |> List.length
+            ( { model | isLoading = True }, fetchProducts model )
 
 
 updateCartStatus : Int -> Bool -> IndexedProduct -> IndexedProduct

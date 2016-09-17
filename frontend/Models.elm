@@ -10,7 +10,6 @@ type alias Model =
     { confirmationPage : ConfirmationPageModel
     , receiptPage : ReceiptPageModel
     , productsPage : ProductPageModel
-    , shouldShowConfirmationMenu : Bool
     , route : Routing.Route
     }
 
@@ -20,6 +19,5 @@ initialModel route =
     { confirmationPage = Pages.Confirmation.Models.init
     , receiptPage = Pages.Receipt.Models.init
     , productsPage = Pages.Products.Models.init
-    , shouldShowConfirmationMenu = False
     , route = route
     }
