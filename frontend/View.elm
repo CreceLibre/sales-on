@@ -2,12 +2,12 @@ module View exposing (..)
 
 import Html exposing (Html, div, text, button, a, ul, li, span)
 import Html.App
-import Html.Attributes exposing (class, href)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Pages.Products.View
 import Pages.Confirmation.View
 import Pages.Receipt.View
+import Menu.View
 import Routing exposing (Route(..))
 
 
@@ -35,40 +35,9 @@ page model =
                     notFoundView
     in
         div []
-            [ menu model
+            [ Html.App.map MenuMsg (Menu.View.view model.menu model.route)
             , routedPage
             ]
-
-
-menu : Model -> Html Msg
-menu { shouldShowConfirmationMenu } =
-    div [ class "pure-menu pure-menu-horizontal" ]
-        [ span [ class "pure-menu-heading" ]
-            [ text "Sales On" ]
-        , ul [ class "pure-menu-list" ]
-            (menuItems shouldShowConfirmationMenu)
-        ]
-
-
-menuItems : Bool -> List (Html Msg)
-menuItems shouldShowConfirmationMenu =
-    --  TODO Still not sure how to be DRY here
-    if shouldShowConfirmationMenu then
-        [ li [ class "pure-menu-item" ]
-            [ a [ class "pure-menu-link", href "#products" ]
-                [ text "Productos" ]
-            ]
-        , li [ class "pure-menu-item" ]
-            [ a [ class "pure-menu-link", href "#confirmation" ]
-                [ text "Confirmación de Compra" ]
-            ]
-        ]
-    else
-        [ li [ class "pure-menu-item" ]
-            [ a [ class "pure-menu-link", href "#products" ]
-                [ text "Productos" ]
-            ]
-        ]
 
 
 notFoundView : Html Msg

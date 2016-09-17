@@ -5,11 +5,22 @@ import Models exposing (Model)
 import Pages.Products.Update
 import Pages.Confirmation.Update
 import Pages.Receipt.Update
+import Menu.Update
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        MenuMsg subMsg ->
+            let
+                ( updatedMenu, cmds ) =
+                    Menu.Update.update subMsg model.menu
+            in
+                { model
+                    | menu = updatedMenu
+                }
+                    ! [ Cmd.map MenuMsg cmds ]
+
         ProductsMsg subMsg ->
             let
                 ( updatedProducts, cmds ) =

@@ -1,10 +1,11 @@
-module API.Resources.Cart exposing (saveTask, updateTask, deleteTask)
+module API.Resources.Cart exposing (saveTask, updateTask, deleteTask, fetchTask)
 
 import Http
 import Json.Decode as Decode exposing ((:=))
 import Json.Encode as Encode
+import Json.Decode.Pipeline as Pipeline
 import Task
-import API.Models exposing (ID)
+import API.Models exposing (ID, CartItem)
 
 
 endpointUrl : String
@@ -14,6 +15,11 @@ endpointUrl =
 
 
 -- Tasks
+
+
+fetchTask : Task.Task Http.Error (List CartItem)
+fetchTask =
+    Http.get collectionDecoder endpointUrl
 
 
 saveTask : ID -> Task.Task Http.Error ()
@@ -109,3 +115,20 @@ encodeForUpdate productId newQuantity =
     in
         list
             |> Encode.object
+
+
+
+-- Decoders
+
+
+collectionDecoder : Decode.Decoder (List CartItem)
+collectionDecoder =
+    Decode.object1 identity
+        ("items" := (Decode.list memberDecoder))
+
+
+memberDecoder : Decode.Decoder CartItem
+memberDecoder =
+    Pipeline.decode CartItem
+        |> Pipeline.required "product_id" Decode.int
+        |> Pipeline.required "quantity" Decode.int

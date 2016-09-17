@@ -9,6 +9,7 @@ import Routing exposing (Route(..))
 import Pages.Confirmation.Commands exposing (fetchBreakdowns)
 import Pages.Products.Commands exposing (fetchProducts)
 import Pages.Receipt.Commands exposing (fetchOrder)
+import Menu.Commands exposing (fetchCart)
 
 
 init : Result String Route -> ( Model, Cmd Msg )
@@ -39,7 +40,10 @@ urlUpdateCommand model route =
             Cmd.map ConfirmationMsg fetchBreakdowns
 
         ProductsRoute ->
-            Cmd.map ProductsMsg (fetchProducts model.productsPage)
+            Cmd.batch
+                [ Cmd.map ProductsMsg (fetchProducts model.productsPage)
+                , Cmd.map MenuMsg fetchCart
+                ]
 
         ReceiptRoute orderUuid ->
             Cmd.map ReceiptMsg (fetchOrder orderUuid)

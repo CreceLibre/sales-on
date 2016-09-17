@@ -14,6 +14,12 @@ type alias Product =
     }
 
 
+type alias CartItem =
+    { id : ID
+    , quantity : Int
+    }
+
+
 type alias OrderBreakdownItem =
     { id : ID
     , name : String
