@@ -5,7 +5,11 @@ import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
 import Pages.Products.Commands exposing (addProductToCart, fetchProducts)
 
 
-update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg )
+type OutMsg
+    = NewCartItem
+
+
+update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg, Maybe OutMsg )
 update action model =
     case action of
         FetchAllDone response ->
@@ -18,10 +22,11 @@ update action model =
                     , isLoading = False
                   }
                 , Cmd.none
+                , Nothing
                 )
 
         FetchAllFail error ->
-            ( { model | isLoading = False }, Cmd.none )
+            ( { model | isLoading = False }, Cmd.none, Nothing )
 
         AddToCart productId ->
             let
@@ -30,10 +35,11 @@ update action model =
             in
                 ( { model | products = newProducts }
                 , addToCartCommands productId model.products |> Cmd.batch
+                , Nothing
                 )
 
         AddToCartSuccess ->
-            ( model, Cmd.none )
+            ( model, Cmd.none, Just NewCartItem )
 
         AddToCartFail productId error ->
             let
@@ -42,6 +48,7 @@ update action model =
             in
                 ( { model | products = newProducts }
                 , Cmd.none
+                , Nothing
                 )
 
         UpdateSearch keyword ->
@@ -52,10 +59,10 @@ update action model =
                     else
                         Just keyword
             in
-                ( { model | search = search }, Cmd.none )
+                ( { model | search = search }, Cmd.none, Nothing )
 
         ClickOnSearch ->
-            ( { model | isLoading = True }, fetchProducts model )
+            ( { model | isLoading = True }, fetchProducts model, Nothing )
 
 
 updateCartStatus : Int -> Bool -> IndexedProduct -> IndexedProduct

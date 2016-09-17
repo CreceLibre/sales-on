@@ -14,3 +14,7 @@ update msg model =
         FetchAllFail error ->
             model
                 ! [ Cmd.none ]
+
+        NewCartItem ->
+            { model | cartSize = model.cartSize + 1 }
+                ! [ Cmd.none ]

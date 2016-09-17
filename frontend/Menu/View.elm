@@ -7,6 +7,9 @@ import Html.Attributes exposing (class, href)
 import Routing exposing (Route(..))
 
 
+-- TODO SEARCH functionality should be moved here (probably)
+
+
 view : MenuModel -> Routing.Route -> Html Msg
 view model currentRoute =
     div [ class "pure-menu pure-menu-horizontal" ]
