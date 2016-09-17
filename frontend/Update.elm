@@ -15,23 +15,26 @@ update msg model =
                 ( updatedProducts, cmds, cartSize ) =
                     Pages.Products.Update.update subMsg model.productsPage
             in
-                ( { model
+                { model
                     | productsPage = updatedProducts
                     , cartSize = cartSize
-                  }
-                , Cmd.map ProductsMsg cmds
-                )
+                }
+                    ! [ Cmd.map ProductsMsg cmds ]
 
         ConfirmationMsg subMsg ->
             let
                 ( updatedConfirmation, cmds ) =
                     Pages.Confirmation.Update.update subMsg model.confirmationPage
             in
-                ( { model | confirmationPage = updatedConfirmation }, Cmd.map ConfirmationMsg cmds )
+                { model
+                    | confirmationPage = updatedConfirmation
+                }
+                    ! [ Cmd.map ConfirmationMsg cmds ]
 
         ReceiptMsg subMsg ->
             let
                 ( updatedReceipt, cmds ) =
                     Pages.Receipt.Update.update subMsg model.receiptPage
             in
-                ( { model | receiptPage = updatedReceipt }, Cmd.map ReceiptMsg cmds )
+                { model | receiptPage = updatedReceipt }
+                    ! [ Cmd.map ReceiptMsg cmds ]

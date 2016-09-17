@@ -8,7 +8,9 @@ update : Msg -> ReceiptPageModel -> ( ReceiptPageModel, Cmd Msg )
 update msg order =
     case msg of
         FetchOrderDone updatedOrder ->
-            ( { order | orderReceipt = updatedOrder }, Cmd.none )
+            { order | orderReceipt = updatedOrder }
+                ! [ Cmd.none ]
 
         FetchOrderFail error ->
-            ( order, Cmd.none )
+            order
+                ! [ Cmd.none ]

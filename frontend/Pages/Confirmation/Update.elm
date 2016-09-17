@@ -31,6 +31,9 @@ update msg confirmationOrder =
                     newOrderBreakdown =
                         { orderBreakdown | items = updateQuantity itemId newQuantity orderBreakdown.items }
 
+                    newConfirmationOrder =
+                        { confirmationOrder | orderBreakdown = newOrderBreakdown }
+
                     oldQuantity =
                         case List.filter (\x -> x.id == itemId) orderBreakdown.items of
                             item :: _ ->
@@ -39,13 +42,12 @@ update msg confirmationOrder =
                             _ ->
                                 0
                 in
-                    ( { confirmationOrder | orderBreakdown = newOrderBreakdown }
-                    , updateQuantityCmd itemId oldQuantity newQuantity orderBreakdown.items
-                        |> Cmd.batch
-                    )
+                    newConfirmationOrder
+                        ! updateQuantityCmd itemId oldQuantity newQuantity orderBreakdown.items
 
             UpdateItemQuantityDone ->
-                ( confirmationOrder, fetchBreakdowns )
+                confirmationOrder
+                    ! [ fetchBreakdowns ]
 
             UpdateItemQuantityFail itemId oldQuantity _ ->
                 let
@@ -65,13 +67,16 @@ update msg confirmationOrder =
                           ]
 
             RemoveItem itemId ->
-                ( confirmationOrder, removeItem itemId )
+                confirmationOrder
+                    ! [ removeItem itemId ]
 
             RemoveItemDone ->
-                ( confirmationOrder, fetchBreakdowns )
+                confirmationOrder
+                    ! [ fetchBreakdowns ]
 
             RemoveItemFail err ->
-                ( confirmationOrder, Cmd.none )
+                confirmationOrder
+                    ! [ Cmd.none ]
 
             FetchBreakdownsDone newOrderBreakdown ->
                 let
@@ -81,60 +86,60 @@ update msg confirmationOrder =
                         else
                             Cmd.none
                 in
-                    ( { confirmationOrder
+                    { confirmationOrder
                         | orderBreakdown =
                             newOrderBreakdown
-                      }
-                    , shouldRedirectToProducts
-                    )
+                    }
+                        ! [ shouldRedirectToProducts ]
 
             FetchBreakdownsFail _ ->
-                ( confirmationOrder, Cmd.none )
+                confirmationOrder
+                    ! [ Cmd.none ]
 
             UpdateEmail newEmail ->
                 let
                     newOrderConfirmation =
                         { orderConfirmation | email = newEmail }
                 in
-                    ( { confirmationOrder
+                    { confirmationOrder
                         | orderConfirmation =
                             newOrderConfirmation
-                      }
-                    , Cmd.none
-                    )
+                    }
+                        ! [ Cmd.none ]
 
             UpdatePaymentMethod newPaymentMethod ->
                 let
                     newOrderConfirmation =
                         { orderConfirmation | paymentMethod = newPaymentMethod }
                 in
-                    ( { confirmationOrder
+                    { confirmationOrder
                         | orderConfirmation =
                             newOrderConfirmation
-                      }
-                    , Cmd.none
-                    )
+                    }
+                        ! [ Cmd.none ]
 
             UpdatePickupLocation newPickupLocation ->
                 let
                     newOrderConfirmation =
                         { orderConfirmation | pickupLocation = newPickupLocation }
                 in
-                    ( { confirmationOrder
+                    { confirmationOrder
                         | orderConfirmation =
                             newOrderConfirmation
-                      }
-                    , Cmd.none
-                    )
+                    }
+                        ! [ Cmd.none ]
 
             PlaceOrderDone orderUuid ->
-                ( confirmationOrder, Navigation.newUrl ("#receipt/" ++ orderUuid) )
+                confirmationOrder
+                    ! [ Navigation.newUrl ("#receipt/" ++ orderUuid) ]
 
             PlaceOrderFail error ->
-                ( confirmationOrder, Cmd.none )
+                confirmationOrder
+                    ! [ Cmd.none ]
 
             PlaceOrder ->
-                ( confirmationOrder, placeOrder confirmationOrder )
+                confirmationOrder
+                    ! [ placeOrder confirmationOrder ]
 
 
 updateQuantityCmd : ID -> Int -> Int -> List Item -> List (Cmd Msg)
