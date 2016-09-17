@@ -127,7 +127,7 @@ itemRow item =
                             ]
                         , div
                             [ class "pure-u-2-5 pure-u-sm-4-5" ]
-                            [ select [ onChangeIntValue (UpdateQuantity item.id) ] (List.map (getQuantityOption item.quantity) [1..5])
+                            [ select [ onChangeIntValue (UpdateQuantity item.id item.quantity) ] (List.map (getQuantityOption item.quantity) [1..5])
                             ]
                         , div
                             []

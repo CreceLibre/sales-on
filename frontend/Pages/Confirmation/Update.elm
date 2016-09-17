@@ -26,21 +26,13 @@ update msg confirmationOrder =
             Delayed newConfirmationOrder ->
                 ( newConfirmationOrder, Cmd.none )
 
-            UpdateQuantity itemId newQuantity ->
+            UpdateQuantity itemId oldQuantity newQuantity ->
                 let
                     newOrderBreakdown =
                         { orderBreakdown | items = updateQuantity itemId newQuantity orderBreakdown.items }
 
                     newConfirmationOrder =
                         { confirmationOrder | orderBreakdown = newOrderBreakdown }
-
-                    oldQuantity =
-                        case List.filter (\x -> x.id == itemId) orderBreakdown.items of
-                            item :: _ ->
-                                item.quantity
-
-                            _ ->
-                                0
                 in
                     newConfirmationOrder
                         ! updateQuantityCmd itemId oldQuantity newQuantity orderBreakdown.items

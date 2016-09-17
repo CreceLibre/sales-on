@@ -11,7 +11,7 @@ type Msg
     | UpdatePickupLocation String
     | FetchBreakdownsDone OrderBreakdown
     | FetchBreakdownsFail Http.Error
-    | UpdateQuantity ID Int
+    | UpdateQuantity ID Int Int
     | UpdateItemQuantityDone
     | UpdateItemQuantityFail ID Int Http.Error
     | RemoveItem ID
