@@ -4,7 +4,7 @@ import Http
 import Json.Decode as Decode
 import Task
 import Json.Decode.Pipeline as Pipeline
-import API.Models exposing (OrderBreakdown, Item)
+import API.Models exposing (OrderBreakdown, OrderBreakdownItem)
 
 
 endpointUrl : String
@@ -37,9 +37,9 @@ decodeAmount =
         |> Pipeline.required "formattedAmount" Decode.string
 
 
-decodeItem : Decode.Decoder Item
+decodeItem : Decode.Decoder OrderBreakdownItem
 decodeItem =
-    Pipeline.decode Item
+    Pipeline.decode OrderBreakdownItem
         |> Pipeline.required "productId" Decode.int
         |> Pipeline.required "name" Decode.string
         |> Pipeline.required "unitPrice" decodeAmount

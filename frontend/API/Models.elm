@@ -6,7 +6,7 @@ type alias ID =
 
 
 type alias Product =
-    { id : Int
+    { id : ID
     , name : String
     , category : String
     , price : String
@@ -14,8 +14,8 @@ type alias Product =
     }
 
 
-type alias Item =
-    { id : Int
+type alias OrderBreakdownItem =
+    { id : ID
     , name : String
     , unitPrice : String
     , total : String
@@ -26,7 +26,7 @@ type alias Item =
 type alias OrderBreakdown =
     { subtotal : String
     , total : String
-    , items : List Item
+    , items : List OrderBreakdownItem
     }
 
 
@@ -38,6 +38,6 @@ type alias OrderConfirmation =
 
 
 type alias OrderReceipt =
-    { id : Int
+    { id : ID
     , email : String
     }

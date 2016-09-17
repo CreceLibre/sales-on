@@ -5,7 +5,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick, on, targetValue)
 import Pages.Confirmation.Messages exposing (..)
 import Pages.Confirmation.Models exposing (ConfirmationPageModel)
-import API.Models exposing (OrderBreakdown, Item)
+import API.Models exposing (OrderBreakdown, OrderBreakdownItem)
 import Utils exposing (onChangeIntValue)
 
 
@@ -106,7 +106,7 @@ overviewModule { subtotal, total } =
         ]
 
 
-itemRow : Item -> Html Msg
+itemRow : OrderBreakdownItem -> Html Msg
 itemRow item =
     let
         getQuantityOption quantity x =
