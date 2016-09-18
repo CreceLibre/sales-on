@@ -2,18 +2,18 @@ module Pages.Products.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, src, hidden)
-import Pages.Products.Messages exposing (..)
-import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
+import Messages exposing (Msg(..))
 import Html.Events exposing (onClick, onInput)
 import Capitalize
+import Models exposing (State, IndexedProduct)
 
 
-view : ProductPageModel -> Html Msg
+view : State -> Html Msg
 view model =
     div [] [ listView model ]
 
 
-listView : ProductPageModel -> Html Msg
+listView : State -> Html Msg
 listView model =
     let
         { products, isLoading } =

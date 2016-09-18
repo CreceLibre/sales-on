@@ -23,7 +23,7 @@ page model =
         routedPage =
             case model.route of
                 ProductsRoute ->
-                    Html.App.map ProductsMsg <| Pages.Products.View.view model.productsPage
+                    Pages.Products.View.view model
 
                 ConfirmationRoute ->
                     Html.App.map ConfirmationMsg <| Pages.Confirmation.View.view model.confirmationPage
@@ -34,7 +34,7 @@ page model =
                 NotFoundRoute ->
                     notFoundView
     in
-        [ Html.App.map MenuMsg <| Menu.View.view model.menu model.route
+        [ Menu.View.view model
         , routedPage
         ]
 

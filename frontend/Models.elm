@@ -1,26 +1,33 @@
 module Models exposing (..)
 
-import Pages.Products.Models exposing (ProductPageModel)
 import Pages.Confirmation.Models exposing (ConfirmationPageModel)
-import Menu.Models exposing (MenuModel)
-import API.Models exposing (OrderReceipt, initOrderReceipt)
+import API.Models exposing (OrderReceipt, Product, initOrderReceipt)
 import Routing
 
 
+type alias IndexedProduct =
+    ( Int, Product )
+
+
 type alias State =
-    { productsPage : ProductPageModel
+    { search : Maybe String
+    , products : List IndexedProduct
+    , isLoading : Bool
     , confirmationPage : ConfirmationPageModel
     , receipt : OrderReceipt
-    , menu : MenuModel
+    , cartSize : Int
+    , search : Maybe String
     , route : Routing.Route
     }
 
 
 initialState : Routing.Route -> State
 initialState route =
-    { productsPage = Pages.Products.Models.init
+    { search = Nothing
+    , products = []
+    , isLoading = False
     , confirmationPage = Pages.Confirmation.Models.init
     , receipt = initOrderReceipt
-    , menu = Menu.Models.init
+    , cartSize = 0
     , route = route
     }

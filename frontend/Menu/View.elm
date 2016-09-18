@@ -1,20 +1,20 @@
 module Menu.View exposing (..)
 
 import Html exposing (..)
-import Menu.Messages exposing (..)
-import Menu.Models exposing (MenuModel)
 import Html.Attributes exposing (class, href, placeholder, value, type')
 import Routing exposing (Route(..))
 import Html.Events exposing (onClick, onInput)
+import Models exposing (State)
+import Messages exposing (Msg(..))
 
 
-view : MenuModel -> Routing.Route -> Html Msg
-view model currentRoute =
+view : State -> Html Msg
+view model =
     div [ class "pure-menu pure-menu-horizontal" ]
         [ span [ class "pure-menu-heading" ]
             [ text "Sales On" ]
         , ul [ class "pure-menu-list" ]
-            (menuItems model currentRoute)
+            (menuItems model)
         ]
 
 
@@ -26,8 +26,8 @@ searchView search =
         ]
 
 
-menuItems : MenuModel -> Routing.Route -> List (Html Msg)
-menuItems model route =
+menuItems : State -> List (Html Msg)
+menuItems { cartSize, search, route } =
     let
         extraMenu =
             case route of
@@ -39,8 +39,8 @@ menuItems model route =
                     []
 
                 _ ->
-                    [ searchView model.search ]
-                        ++ if model.cartSize > 0 then
+                    [ searchView search ]
+                        ++ if cartSize > 0 then
                             [ li [ class "pure-menu-item" ]
                                 [ a [ class "pure-menu-link", href "#confirmation" ]
                                     [ text "Confirmación de Compra" ]

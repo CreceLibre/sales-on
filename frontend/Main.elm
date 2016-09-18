@@ -7,9 +7,7 @@ import View exposing (view)
 import Update exposing (update)
 import Routing exposing (Route(..))
 import Pages.Confirmation.Commands exposing (fetchBreakdowns, resetState)
-import Pages.Products.Commands exposing (fetchProducts)
-import Commands exposing (fetchOrder)
-import Menu.Commands exposing (fetchCart)
+import Commands exposing (fetchOrder, fetchProducts, fetchCart)
 
 
 init : Result String Route -> ( State, Cmd Msg )
@@ -40,8 +38,8 @@ urlUpdateCommand model route =
             [ Cmd.map ConfirmationMsg fetchBreakdowns ]
 
         ProductsRoute ->
-            [ Cmd.map ProductsMsg <| fetchProducts Nothing
-            , Cmd.map MenuMsg fetchCart
+            [ fetchProducts Nothing
+            , fetchCart
             , Cmd.map ConfirmationMsg resetState
             ]
 

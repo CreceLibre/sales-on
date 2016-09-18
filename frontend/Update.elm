@@ -2,29 +2,71 @@ module Update exposing (..)
 
 import Messages exposing (Msg(..))
 import Models exposing (State)
-import Pages.Products.Update
-import Pages.Products.Messages
 import Pages.Confirmation.Update
-import Menu.Update
-import Menu.Messages
-import OutMessage
-import Utils exposing (GlobalEvent(..))
+import API.Models exposing (ID)
+import Models exposing (IndexedProduct)
+import Commands exposing (addProductToCart, fetchProducts)
 
 
 update : Msg -> State -> ( State, Cmd Msg )
 update msg model =
     case msg of
-        MenuMsg subMsg ->
-            Menu.Update.update subMsg model.menu
-                |> OutMessage.mapComponent (\newChild -> { model | menu = newChild })
-                |> OutMessage.mapCmd MenuMsg
-                |> OutMessage.evaluateMaybe updateFromMenuEvents Cmd.none
+        FetchCartSucceed cartItems ->
+            ( { model | cartSize = List.length cartItems }
+            , Cmd.none
+            )
 
-        ProductsMsg subMsg ->
-            Pages.Products.Update.update subMsg model.productsPage
-                |> OutMessage.mapComponent (\newChild -> { model | productsPage = newChild })
-                |> OutMessage.mapCmd ProductsMsg
-                |> OutMessage.evaluateMaybe updateFromProductsEvents Cmd.none
+        FetchCartFail error ->
+            ( model, Cmd.none )
+
+        UpdateSearch keyword ->
+            let
+                search =
+                    if keyword == "" then
+                        Nothing
+                    else
+                        Just keyword
+            in
+                ( { model | search = search }, Cmd.none )
+
+        ClickOnSearch ->
+            ( model, Cmd.none )
+
+        FetchProductsSuccess response ->
+            let
+                newProducts =
+                    (List.indexedMap (\i p -> ( i + 1, p )) response)
+            in
+                ( { model
+                    | products = newProducts
+                    , isLoading = False
+                  }
+                , Cmd.none
+                )
+
+        FetchProductsFail error ->
+            ( { model | isLoading = False }, Cmd.none )
+
+        AddToCart productId ->
+            let
+                newProducts =
+                    List.map (updateCartStatus productId True) model.products
+            in
+                ( { model | products = newProducts }
+                , addToCartCommands productId model.products |> Cmd.batch
+                )
+
+        AddToCartSuccess ->
+            ( { model | cartSize = model.cartSize + 1 }, Cmd.none )
+
+        AddToCartFail productId error ->
+            let
+                newProducts =
+                    List.map (updateCartStatus productId False) model.products
+            in
+                ( { model | products = newProducts }
+                , Cmd.none
+                )
 
         ConfirmationMsg subMsg ->
             let
@@ -45,48 +87,25 @@ update msg model =
                 ! [ Cmd.none ]
 
 
-updateFromProductsEvents : GlobalEvent -> State -> ( State, Cmd Msg )
-updateFromProductsEvents msg model =
-    case msg of
-        NewCartWasAdded ->
-            updateMenu (Menu.Messages.GlobalEvent NewCartWasAdded) model
-
-        FetchAllProducts ->
-            updateMenu (Menu.Messages.GlobalEvent FetchAllProducts) model
-
-        _ ->
-            ( model, Cmd.none )
-
-
-updateFromMenuEvents : GlobalEvent -> State -> ( State, Cmd Msg )
-updateFromMenuEvents msg model =
-    case msg of
-        SearchForProduct keyword ->
-            updateProducts (Pages.Products.Messages.GlobalEvent <| SearchForProduct keyword) model
-
-        _ ->
-            ( model, Cmd.none )
-
-
-updateProducts : Pages.Products.Messages.Msg -> State -> ( State, Cmd Msg )
-updateProducts msg model =
+updateCartStatus : ID -> Bool -> IndexedProduct -> IndexedProduct
+updateCartStatus productId status indexedProduct =
     let
-        ( updatedProducts, cmds, _ ) =
-            Pages.Products.Update.update msg model.productsPage
+        ( index, product ) =
+            indexedProduct
     in
-        { model
-            | productsPage = updatedProducts
-        }
-            ! [ Cmd.map ProductsMsg cmds ]
+        if product.id == productId then
+            ( index, { product | isInCart = status } )
+        else
+            ( index, product )
 
 
-updateMenu : Menu.Messages.Msg -> State -> ( State, Cmd Msg )
-updateMenu msg model =
+addToCartCommands : ID -> List IndexedProduct -> List (Cmd Msg)
+addToCartCommands productId =
     let
-        ( updatedMenu, cmds, _ ) =
-            Menu.Update.update msg model.menu
+        cmdForProduct ( index, product ) =
+            if product.id == productId then
+                addProductToCart productId
+            else
+                Cmd.none
     in
-        { model
-            | menu = updatedMenu
-        }
-            ! [ Cmd.map MenuMsg cmds ]
+        List.map cmdForProduct

@@ -1,15 +1,20 @@
 module Messages exposing (..)
 
 import Http
-import Pages.Products.Messages
 import Pages.Confirmation.Messages
-import Menu.Messages
-import API.Models exposing (OrderReceipt)
+import API.Models exposing (OrderReceipt, Product, ID, CartItem)
 
 
 type Msg
-    = ProductsMsg Pages.Products.Messages.Msg
+    = FetchProductsSuccess (List Product)
+    | FetchProductsFail Http.Error
+    | AddToCart ID
+    | AddToCartSuccess
+    | AddToCartFail ID Http.Error
     | ConfirmationMsg Pages.Confirmation.Messages.Msg
-    | MenuMsg Menu.Messages.Msg
     | FetchOrderSucceed OrderReceipt
     | FetchOrderFail Http.Error
+    | FetchCartSucceed (List CartItem)
+    | FetchCartFail Http.Error
+    | UpdateSearch String
+    | ClickOnSearch
