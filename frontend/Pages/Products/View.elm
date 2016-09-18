@@ -1,27 +1,10 @@
 module Pages.Products.View exposing (..)
 
 import Html exposing (..)
-import Html.Attributes
-    exposing
-        ( class
-        , disabled
-        , value
-        , placeholder
-        , type'
-        , src
-        , hidden
-        )
+import Html.Attributes exposing (class, src, hidden)
 import Pages.Products.Messages exposing (..)
-import Pages.Products.Models
-    exposing
-        ( ProductPageModel
-        , IndexedProduct
-        )
-import Html.Events
-    exposing
-        ( onClick
-        , onInput
-        )
+import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
+import Html.Events exposing (onClick, onInput)
 import Capitalize
 
 
