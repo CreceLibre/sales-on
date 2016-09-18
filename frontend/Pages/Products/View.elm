@@ -10,7 +10,7 @@ import Capitalize
 
 view : ProductPageModel -> Html Msg
 view model =
-    div [] <| (searchView model.search) ++ [ listView model ]
+    div [] [ listView model ]
 
 
 listView : ProductPageModel -> Html Msg
@@ -26,13 +26,6 @@ listView model =
                 text "No se encontraron productos"
         else
             div [ class "pure-g" ] (List.map productRow products)
-
-
-searchView : Maybe String -> List (Html Msg)
-searchView search =
-    [ input [ placeholder "Search query", class "pure-input-rounded", value (Maybe.withDefault "" search), type' "text", onInput UpdateSearch ] []
-    , a [ onClick ClickOnSearch, class "pure-button" ] [ text "Buscar" ]
-    ]
 
 
 productRow : IndexedProduct -> Html Msg

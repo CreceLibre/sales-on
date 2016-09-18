@@ -2,6 +2,7 @@ module Pages.Products.Messages exposing (..)
 
 import Http
 import API.Models exposing (Product)
+import Utils exposing (GlobalEvent)
 
 
 type Msg
@@ -10,5 +11,4 @@ type Msg
     | AddToCart Int
     | AddToCartSuccess
     | AddToCartFail Int Http.Error
-    | UpdateSearch String
-    | ClickOnSearch
+    | GlobalEvent GlobalEvent

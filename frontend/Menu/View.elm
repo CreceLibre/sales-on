@@ -3,11 +3,9 @@ module Menu.View exposing (..)
 import Html exposing (..)
 import Menu.Messages exposing (..)
 import Menu.Models exposing (MenuModel)
-import Html.Attributes exposing (class, href)
+import Html.Attributes exposing (class, href, placeholder, value, type')
 import Routing exposing (Route(..))
-
-
--- TODO SEARCH functionality should be moved here (probably)
+import Html.Events exposing (onClick, onInput)
 
 
 view : MenuModel -> Routing.Route -> Html Msg
@@ -17,6 +15,14 @@ view model currentRoute =
             [ text "Sales On" ]
         , ul [ class "pure-menu-list" ]
             (menuItems model currentRoute)
+        ]
+
+
+searchView : Maybe String -> Html Msg
+searchView search =
+    li [ class "pure-menu-item" ]
+        [ input [ placeholder "Search query", class "pure-input-rounded", value (Maybe.withDefault "" search), type' "text", onInput UpdateSearch ] []
+        , a [ onClick ClickOnSearch, class "pure-button" ] [ text "Buscar" ]
         ]
 
 
@@ -33,14 +39,15 @@ menuItems model route =
                     []
 
                 _ ->
-                    if model.cartSize > 0 then
-                        [ li [ class "pure-menu-item" ]
-                            [ a [ class "pure-menu-link", href "#confirmation" ]
-                                [ text "Confirmación de Compra" ]
+                    [ searchView model.search ]
+                        ++ if model.cartSize > 0 then
+                            [ li [ class "pure-menu-item" ]
+                                [ a [ class "pure-menu-link", href "#confirmation" ]
+                                    [ text "Confirmación de Compra" ]
+                                ]
                             ]
-                        ]
-                    else
-                        []
+                           else
+                            []
     in
         [ li [ class "pure-menu-item" ]
             [ a [ class "pure-menu-link", href "#products" ]

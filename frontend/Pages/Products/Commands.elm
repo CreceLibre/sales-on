@@ -1,15 +1,14 @@
 module Pages.Products.Commands exposing (..)
 
-import Pages.Products.Models exposing (ProductPageModel)
 import Pages.Products.Messages exposing (..)
 import Task
 import API.Resources.Products as ProductsAPI
 import API.Resources.Cart as CartAPI
 
 
-fetchProducts : ProductPageModel -> Cmd Msg
-fetchProducts model =
-    ProductsAPI.fetchTask model.search
+fetchProducts : Maybe String -> Cmd Msg
+fetchProducts keyword =
+    ProductsAPI.fetchTask keyword
         |> Task.perform FetchAllFail FetchAllDone
 
 

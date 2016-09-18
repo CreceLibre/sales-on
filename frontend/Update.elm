@@ -3,6 +3,7 @@ module Update exposing (..)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Pages.Products.Update
+import Pages.Products.Messages
 import Pages.Confirmation.Update
 import Pages.Receipt.Update
 import Menu.Update
@@ -15,13 +16,16 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         MenuMsg subMsg ->
-            updateMenu subMsg model
+            Menu.Update.update subMsg model.menu
+                |> OutMessage.mapComponent (\newChild -> { model | menu = newChild })
+                |> OutMessage.mapCmd MenuMsg
+                |> OutMessage.evaluateMaybe updateProductsFromMenuEvents Cmd.none
 
         ProductsMsg subMsg ->
             Pages.Products.Update.update subMsg model.productsPage
                 |> OutMessage.mapComponent (\newChild -> { model | productsPage = newChild })
                 |> OutMessage.mapCmd ProductsMsg
-                |> OutMessage.evaluateMaybe updateMenuFromProducts Cmd.none
+                |> OutMessage.evaluateMaybe updateMenuFromProductsEvents Cmd.none
 
         ConfirmationMsg subMsg ->
             let
@@ -44,17 +48,42 @@ update msg model =
                     ! [ Cmd.map ReceiptMsg cmds ]
 
 
-updateMenuFromProducts : GlobalEvent -> Model -> ( Model, Cmd Msg )
-updateMenuFromProducts msg model =
+updateMenuFromProductsEvents : GlobalEvent -> Model -> ( Model, Cmd Msg )
+updateMenuFromProductsEvents msg model =
     case msg of
         NewCartWasAdded ->
             updateMenu (Menu.Messages.GlobalEvent NewCartWasAdded) model
+
+        _ ->
+            ( model, Cmd.none )
+
+
+updateProductsFromMenuEvents : GlobalEvent -> Model -> ( Model, Cmd Msg )
+updateProductsFromMenuEvents msg model =
+    case msg of
+        SearchForProduct keyword ->
+            updateProducts (Pages.Products.Messages.GlobalEvent <| SearchForProduct keyword) model
+
+        _ ->
+            ( model, Cmd.none )
+
+
+updateProducts : Pages.Products.Messages.Msg -> Model -> ( Model, Cmd Msg )
+updateProducts msg model =
+    let
+        ( updatedProducts, cmds, _ ) =
+            Pages.Products.Update.update msg model.productsPage
+    in
+        { model
+            | productsPage = updatedProducts
+        }
+            ! [ Cmd.map ProductsMsg cmds ]
 
 
 updateMenu : Menu.Messages.Msg -> Model -> ( Model, Cmd Msg )
 updateMenu msg model =
     let
-        ( updatedMenu, cmds ) =
+        ( updatedMenu, cmds, _ ) =
             Menu.Update.update msg model.menu
     in
         { model

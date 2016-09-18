@@ -5,19 +5,35 @@ import Menu.Models exposing (MenuModel)
 import Utils exposing (GlobalEvent(..))
 
 
-update : Msg -> MenuModel -> ( MenuModel, Cmd Msg )
+update : Msg -> MenuModel -> ( MenuModel, Cmd Msg, Maybe GlobalEvent )
 update msg model =
     case msg of
         FetchAllDone cartItems ->
-            { model | cartSize = List.length cartItems }
-                ! [ Cmd.none ]
+            ( { model | cartSize = List.length cartItems }
+            , Cmd.none
+            , Nothing
+            )
 
         FetchAllFail error ->
-            model
-                ! [ Cmd.none ]
+            ( model, Cmd.none, Nothing )
 
         GlobalEvent e ->
             case e of
                 NewCartWasAdded ->
-                    { model | cartSize = model.cartSize + 1 }
-                        ! [ Cmd.none ]
+                    ( { model | cartSize = model.cartSize + 1 }, Cmd.none, Nothing )
+
+                _ ->
+                    ( model, Cmd.none, Nothing )
+
+        UpdateSearch keyword ->
+            let
+                search =
+                    if keyword == "" then
+                        Nothing
+                    else
+                        Just keyword
+            in
+                ( { model | search = search }, Cmd.none, Nothing )
+
+        ClickOnSearch ->
+            ( model, Cmd.none, Just <| SearchForProduct model.search )

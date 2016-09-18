@@ -11,6 +11,7 @@ import String
 
 type GlobalEvent
     = NewCartWasAdded
+    | SearchForProduct (Maybe String)
 
 
 

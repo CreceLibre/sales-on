@@ -30,26 +30,25 @@ urlUpdate result model =
         currentRoute =
             Routing.routeFromResult result
     in
-        ( { model | route = currentRoute }, urlUpdateCommand model currentRoute )
+        { model | route = currentRoute } ! urlUpdateCommand model currentRoute
 
 
-urlUpdateCommand : Model -> Route -> Cmd Msg
+urlUpdateCommand : Model -> Route -> List (Cmd Msg)
 urlUpdateCommand model route =
     case route of
         ConfirmationRoute ->
-            Cmd.map ConfirmationMsg fetchBreakdowns
+            [ Cmd.map ConfirmationMsg fetchBreakdowns ]
 
         ProductsRoute ->
-            Cmd.batch
-                [ Cmd.map ProductsMsg (fetchProducts model.productsPage)
-                , Cmd.map MenuMsg fetchCart
-                ]
+            [ Cmd.map ProductsMsg <| fetchProducts Nothing
+            , Cmd.map MenuMsg fetchCart
+            ]
 
         ReceiptRoute orderUuid ->
-            Cmd.map ReceiptMsg (fetchOrder orderUuid)
+            [ Cmd.map ReceiptMsg <| fetchOrder orderUuid ]
 
         NotFoundRoute ->
-            Cmd.none
+            [ Cmd.none ]
 
 
 main : Program Never

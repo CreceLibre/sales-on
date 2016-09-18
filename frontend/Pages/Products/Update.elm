@@ -48,18 +48,13 @@ update action model =
                 , Nothing
                 )
 
-        UpdateSearch keyword ->
-            let
-                search =
-                    if keyword == "" then
-                        Nothing
-                    else
-                        Just keyword
-            in
-                ( { model | search = search }, Cmd.none, Nothing )
+        GlobalEvent e ->
+            case e of
+                SearchForProduct keyword ->
+                    ( { model | isLoading = True }, fetchProducts keyword, Nothing )
 
-        ClickOnSearch ->
-            ( { model | isLoading = True }, fetchProducts model, Nothing )
+                _ ->
+                    ( model, Cmd.none, Nothing )
 
 
 updateCartStatus : Int -> Bool -> IndexedProduct -> IndexedProduct
