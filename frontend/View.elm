@@ -14,7 +14,7 @@ import Routing exposing (Route(..))
 
 view : Model -> Html Msg
 view model =
-    form [ class "pure-g pure-form" ] <| page model
+    form [ class "pure-form" ] <| page model
 
 
 page : Model -> List (Html Msg)
