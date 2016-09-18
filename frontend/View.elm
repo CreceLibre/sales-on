@@ -4,10 +4,10 @@ import Html exposing (Html, form, text)
 import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
 import Models exposing (State)
-import Pages.Products.View
-import Pages.Confirmation.View
-import Pages.Receipt.View
-import Menu.View
+import Views.Products
+import Views.Confirmation
+import Views.Receipt
+import Views.Menu
 import Routing exposing (Route(..))
 
 
@@ -22,18 +22,18 @@ page model =
         routedPage =
             case model.route of
                 ProductsRoute ->
-                    Pages.Products.View.view model
+                    Views.Products.view model
 
                 ConfirmationRoute ->
-                    Pages.Confirmation.View.view model
+                    Views.Confirmation.view model
 
                 ReceiptRoute _ ->
-                    Pages.Receipt.View.view model
+                    Views.Receipt.view model
 
                 NotFoundRoute ->
                     notFoundView
     in
-        [ Menu.View.view model
+        [ Views.Menu.view model
         , routedPage
         ]
 

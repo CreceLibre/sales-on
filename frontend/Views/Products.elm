@@ -1,4 +1,4 @@
-module Pages.Products.View exposing (..)
+module Views.Products exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, src, hidden)

@@ -1,4 +1,4 @@
-module Pages.Confirmation.View exposing (..)
+module Views.Confirmation exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)

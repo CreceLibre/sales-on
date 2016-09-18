@@ -1,4 +1,4 @@
-module Pages.Receipt.View exposing (..)
+module Views.Receipt exposing (..)
 
 import Html exposing (..)
 import Models exposing (State)
