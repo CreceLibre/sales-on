@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, value, type')
 import Routing exposing (Route(..))
 import Html.Events exposing (onClick, onInput)
-import Models exposing (State)
+import State exposing (State)
 import Messages exposing (Msg(..))
 
 

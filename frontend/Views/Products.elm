@@ -5,7 +5,7 @@ import Html.Attributes exposing (class, src, hidden)
 import Messages exposing (Msg(..))
 import Html.Events exposing (onClick, onInput)
 import Capitalize
-import Models exposing (State, IndexedProduct)
+import State exposing (State, IndexedProduct)
 
 
 view : State -> Html Msg

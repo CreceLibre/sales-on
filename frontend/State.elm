@@ -1,4 +1,4 @@
-module Models exposing (..)
+module State exposing (..)
 
 import Routing
 import API.Models

@@ -6,7 +6,7 @@ import Html.Events exposing (onInput, onClick, on, targetValue)
 import Messages exposing (Msg(..))
 import API.Models exposing (OrderBreakdown, OrderBreakdownItem)
 import Utils exposing (onChangeIntValue)
-import Models exposing (State)
+import State exposing (State)
 
 
 view : State -> Html Msg

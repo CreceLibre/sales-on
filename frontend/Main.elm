@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Navigation
 import Messages exposing (Msg(..))
-import Models exposing (State, initialState)
+import State exposing (State, initialState)
 import View exposing (view)
 import Update exposing (update)
 import Routing exposing (Route(..))

@@ -3,7 +3,7 @@ module View exposing (..)
 import Html exposing (Html, form, text)
 import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
-import Models exposing (State)
+import State exposing (State)
 import Views.Products
 import Views.Confirmation
 import Views.Receipt

@@ -9,7 +9,7 @@ import API.Models
         , CartItem
         , OrderBreakdown
         )
-import Models exposing (State)
+import State exposing (State)
 
 
 type Msg

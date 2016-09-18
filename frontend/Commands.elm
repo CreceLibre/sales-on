@@ -3,7 +3,7 @@ module Commands exposing (..)
 import Task
 import Basics.Extra exposing (never)
 import Messages exposing (Msg(..))
-import Models exposing (State)
+import State exposing (State)
 import API.Models exposing (ID)
 import API.Resources.Orders as OrdersAPI
 import API.Resources.Products as ProductsAPI

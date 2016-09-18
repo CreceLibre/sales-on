@@ -5,9 +5,8 @@ import Task
 import Navigation
 import Basics.Extra exposing (never)
 import Messages exposing (Msg(..))
-import Models exposing (State)
 import API.Models exposing (ID, OrderBreakdownItem, OrderBreakdown)
-import Models exposing (IndexedProduct, initConfirmationState)
+import State exposing (State, IndexedProduct, initConfirmationState)
 import Commands
     exposing
         ( addProductToCart

@@ -1,7 +1,7 @@
 module Views.Receipt exposing (..)
 
 import Html exposing (..)
-import Models exposing (State)
+import State exposing (State)
 import Messages exposing (Msg(..))
 
 
