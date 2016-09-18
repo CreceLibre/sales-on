@@ -52,7 +52,7 @@ searchView : Maybe String -> Html Msg
 searchView search =
     form [ class "pure-form" ]
         [ input [ placeholder "Search query", class "pure-input-rounded", value (Maybe.withDefault "" search), type' "text", onInput UpdateSearch ] []
-        , button [ onClick ClickOnSearch, class "pure-button" ] [ text "Buscar" ]
+        , a [ onClick ClickOnSearch, class "pure-button" ] [ text "Buscar" ]
         ]
 
 
