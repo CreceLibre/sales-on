@@ -21,3 +21,4 @@ type Msg
     | PlaceOrderSucceed String
     | PlaceOrderFail Http.Error
     | Delayed ConfirmationPageModel
+    | Reset

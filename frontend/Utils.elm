@@ -16,15 +16,6 @@ type GlobalEvent
 
 
 
--- Handy function for never failing tasks
-
-
-never : Never -> a
-never n =
-    never n
-
-
-
 -- TODO should we decode the value here?
 
 

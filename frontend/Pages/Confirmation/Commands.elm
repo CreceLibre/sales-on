@@ -7,6 +7,12 @@ import API.Resources.Orders as OrdersAPI
 import API.Resources.Breakdowns as BreakdownsAPI
 import API.Resources.Cart as CartAPI
 import API.Models exposing (ID)
+import Basics.Extra exposing (never)
+
+
+resetState : Cmd Msg
+resetState =
+    (Task.succeed ()) |> Task.perform never (always Reset)
 
 
 fetchBreakdowns : Cmd Msg

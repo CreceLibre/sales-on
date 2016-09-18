@@ -13,7 +13,7 @@ import Pages.Confirmation.Models exposing (ConfirmationPageModel, init)
 import Process
 import Task
 import API.Models exposing (OrderBreakdownItem, OrderBreakdown, ID)
-import Utils exposing (never)
+import Basics.Extra exposing (never)
 
 
 update : Msg -> ConfirmationPageModel -> ( ConfirmationPageModel, Cmd Msg )
@@ -23,6 +23,9 @@ update msg confirmationOrder =
             confirmationOrder
     in
         case msg of
+            Reset ->
+                ( init, Cmd.none )
+
             Delayed newConfirmationOrder ->
                 ( newConfirmationOrder, Cmd.none )
 
