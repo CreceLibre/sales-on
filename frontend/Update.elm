@@ -1,7 +1,7 @@
 module Update exposing (..)
 
 import Messages exposing (Msg(..))
-import Models exposing (Model)
+import Models exposing (State)
 import Pages.Products.Update
 import Pages.Products.Messages
 import Pages.Confirmation.Update
@@ -12,7 +12,7 @@ import OutMessage
 import Utils exposing (GlobalEvent(..))
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> State -> ( State, Cmd Msg )
 update msg model =
     case msg of
         MenuMsg subMsg ->
@@ -48,7 +48,7 @@ update msg model =
                     ! [ Cmd.map ReceiptMsg cmds ]
 
 
-updateFromProductsEvents : GlobalEvent -> Model -> ( Model, Cmd Msg )
+updateFromProductsEvents : GlobalEvent -> State -> ( State, Cmd Msg )
 updateFromProductsEvents msg model =
     case msg of
         NewCartWasAdded ->
@@ -61,7 +61,7 @@ updateFromProductsEvents msg model =
             ( model, Cmd.none )
 
 
-updateFromMenuEvents : GlobalEvent -> Model -> ( Model, Cmd Msg )
+updateFromMenuEvents : GlobalEvent -> State -> ( State, Cmd Msg )
 updateFromMenuEvents msg model =
     case msg of
         SearchForProduct keyword ->
@@ -71,7 +71,7 @@ updateFromMenuEvents msg model =
             ( model, Cmd.none )
 
 
-updateProducts : Pages.Products.Messages.Msg -> Model -> ( Model, Cmd Msg )
+updateProducts : Pages.Products.Messages.Msg -> State -> ( State, Cmd Msg )
 updateProducts msg model =
     let
         ( updatedProducts, cmds, _ ) =
@@ -83,7 +83,7 @@ updateProducts msg model =
             ! [ Cmd.map ProductsMsg cmds ]
 
 
-updateMenu : Menu.Messages.Msg -> Model -> ( Model, Cmd Msg )
+updateMenu : Menu.Messages.Msg -> State -> ( State, Cmd Msg )
 updateMenu msg model =
     let
         ( updatedMenu, cmds, _ ) =

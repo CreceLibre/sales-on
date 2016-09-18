@@ -7,7 +7,7 @@ import Menu.Models exposing (MenuModel)
 import Routing
 
 
-type alias Model =
+type alias State =
     { confirmationPage : ConfirmationPageModel
     , receiptPage : ReceiptPageModel
     , productsPage : ProductPageModel
@@ -16,8 +16,8 @@ type alias Model =
     }
 
 
-initialModel : Routing.Route -> Model
-initialModel route =
+initialState : Routing.Route -> State
+initialState route =
     { confirmationPage = Pages.Confirmation.Models.init
     , receiptPage = Pages.Receipt.Models.init
     , productsPage = Pages.Products.Models.init

@@ -4,7 +4,7 @@ import Html.App
 import Html exposing (Html, form, div, text)
 import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
-import Models exposing (Model)
+import Models exposing (State)
 import Pages.Products.View
 import Pages.Confirmation.View
 import Pages.Receipt.View
@@ -12,12 +12,12 @@ import Menu.View
 import Routing exposing (Route(..))
 
 
-view : Model -> Html Msg
+view : State -> Html Msg
 view model =
     form [ class "pure-form" ] <| page model
 
 
-page : Model -> List (Html Msg)
+page : State -> List (Html Msg)
 page model =
     let
         routedPage =

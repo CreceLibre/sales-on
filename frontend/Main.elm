@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Navigation
 import Messages exposing (Msg(..))
-import Models exposing (Model, initialModel)
+import Models exposing (State, initialState)
 import View exposing (view)
 import Update exposing (update)
 import Routing exposing (Route(..))
@@ -12,19 +12,19 @@ import Pages.Receipt.Commands exposing (fetchOrder)
 import Menu.Commands exposing (fetchCart)
 
 
-init : Result String Route -> ( Model, Cmd Msg )
+init : Result String Route -> ( State, Cmd Msg )
 init result =
     let
         currentRoute =
             Routing.routeFromResult result
 
         model =
-            initialModel currentRoute
+            initialState currentRoute
     in
         urlUpdate result model
 
 
-urlUpdate : Result String Route -> Model -> ( Model, Cmd Msg )
+urlUpdate : Result String Route -> State -> ( State, Cmd Msg )
 urlUpdate result model =
     let
         currentRoute =
@@ -33,7 +33,7 @@ urlUpdate result model =
         { model | route = currentRoute } ! urlUpdateCommand model currentRoute
 
 
-urlUpdateCommand : Model -> Route -> List (Cmd Msg)
+urlUpdateCommand : State -> Route -> List (Cmd Msg)
 urlUpdateCommand model route =
     case route of
         ConfirmationRoute ->
