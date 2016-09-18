@@ -6,8 +6,8 @@ import Utils exposing (GlobalEvent)
 
 
 type Msg
-    = FetchAllDone (List CartItem)
-    | FetchAllFail Http.Error
+    = FetchCartSucceed (List CartItem)
+    | FetchCartFail Http.Error
     | UpdateSearch String
     | ClickOnSearch
     | GlobalEvent GlobalEvent

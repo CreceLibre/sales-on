@@ -37,7 +37,7 @@ update msg confirmationOrder =
                     newConfirmationOrder
                         ! updateQuantityCmd itemId oldQuantity newQuantity orderBreakdown.items
 
-            UpdateItemQuantityDone ->
+            UpdateItemQuantitySucceed ->
                 confirmationOrder
                     ! [ fetchBreakdowns ]
 
@@ -62,7 +62,7 @@ update msg confirmationOrder =
                 confirmationOrder
                     ! [ removeItem itemId ]
 
-            RemoveItemDone ->
+            RemoveItemSucceed ->
                 confirmationOrder
                     ! [ fetchBreakdowns ]
 
@@ -70,7 +70,7 @@ update msg confirmationOrder =
                 confirmationOrder
                     ! [ Cmd.none ]
 
-            FetchBreakdownsDone newOrderBreakdown ->
+            FetchBreakdownsSucceed newOrderBreakdown ->
                 let
                     shouldRedirectToProducts =
                         if List.isEmpty newOrderBreakdown.items then
@@ -121,7 +121,7 @@ update msg confirmationOrder =
                     }
                         ! [ Cmd.none ]
 
-            PlaceOrderDone orderUuid ->
+            PlaceOrderSucceed orderUuid ->
                 init
                     ! [ Navigation.newUrl ("#receipt/" ++ orderUuid) ]
 

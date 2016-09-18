@@ -5,5 +5,5 @@ import API.Models exposing (OrderReceipt)
 
 
 type Msg
-    = FetchOrderDone OrderReceipt
+    = FetchOrderSucceed OrderReceipt
     | FetchOrderFail Http.Error

@@ -8,13 +8,13 @@ import Utils exposing (GlobalEvent(..))
 update : Msg -> MenuModel -> ( MenuModel, Cmd Msg, Maybe GlobalEvent )
 update msg model =
     case msg of
-        FetchAllDone cartItems ->
+        FetchCartSucceed cartItems ->
             ( { model | cartSize = List.length cartItems }
             , Cmd.none
             , Nothing
             )
 
-        FetchAllFail error ->
+        FetchCartFail error ->
             ( model, Cmd.none, Nothing )
 
         GlobalEvent e ->

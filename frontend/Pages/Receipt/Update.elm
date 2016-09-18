@@ -7,7 +7,7 @@ import Pages.Receipt.Models exposing (ReceiptPageModel)
 update : Msg -> ReceiptPageModel -> ( ReceiptPageModel, Cmd Msg )
 update msg order =
     case msg of
-        FetchOrderDone updatedOrder ->
+        FetchOrderSucceed updatedOrder ->
             { order | orderReceipt = updatedOrder }
                 ! [ Cmd.none ]
 

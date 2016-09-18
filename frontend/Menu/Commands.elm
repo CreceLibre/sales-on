@@ -8,4 +8,4 @@ import API.Resources.Cart as CartAPI
 fetchCart : Cmd Msg
 fetchCart =
     CartAPI.fetchTask
-        |> Task.perform FetchAllFail FetchAllDone
+        |> Task.perform FetchCartFail FetchCartSucceed

@@ -12,22 +12,22 @@ import API.Models exposing (ID)
 fetchBreakdowns : Cmd Msg
 fetchBreakdowns =
     BreakdownsAPI.fetchTask
-        |> Task.perform FetchBreakdownsFail FetchBreakdownsDone
+        |> Task.perform FetchBreakdownsFail FetchBreakdownsSucceed
 
 
 updateItem : ID -> Int -> Int -> Cmd Msg
 updateItem itemId oldQuantity newQuantity =
     CartAPI.updateTask itemId newQuantity
-        |> Task.perform (UpdateItemQuantityFail itemId oldQuantity) (always UpdateItemQuantityDone)
+        |> Task.perform (UpdateItemQuantityFail itemId oldQuantity) (always UpdateItemQuantitySucceed)
 
 
 removeItem : ID -> Cmd Msg
 removeItem itemId =
     CartAPI.deleteTask itemId
-        |> Task.perform RemoveItemFail (always RemoveItemDone)
+        |> Task.perform RemoveItemFail (always RemoveItemSucceed)
 
 
 placeOrder : ConfirmationPageModel -> Cmd Msg
 placeOrder { orderConfirmation } =
     OrdersAPI.saveTask orderConfirmation
-        |> Task.perform PlaceOrderFail PlaceOrderDone
+        |> Task.perform PlaceOrderFail PlaceOrderSucceed

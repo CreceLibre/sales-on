@@ -9,15 +9,15 @@ type Msg
     = UpdateEmail String
     | UpdatePaymentMethod String
     | UpdatePickupLocation String
-    | FetchBreakdownsDone OrderBreakdown
+    | FetchBreakdownsSucceed OrderBreakdown
     | FetchBreakdownsFail Http.Error
     | UpdateQuantity ID Int Int
-    | UpdateItemQuantityDone
+    | UpdateItemQuantitySucceed
     | UpdateItemQuantityFail ID Int Http.Error
     | RemoveItem ID
-    | RemoveItemDone
+    | RemoveItemSucceed
     | RemoveItemFail Http.Error
     | PlaceOrder
-    | PlaceOrderDone String
+    | PlaceOrderSucceed String
     | PlaceOrderFail Http.Error
     | Delayed ConfirmationPageModel
