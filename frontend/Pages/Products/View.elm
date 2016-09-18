@@ -27,10 +27,7 @@ import Capitalize
 
 view : ProductPageModel -> Html Msg
 view model =
-    div []
-        [ searchView model.search
-        , listView model
-        ]
+    div [] <| (searchView model.search) ++ [ listView model ]
 
 
 listView : ProductPageModel -> Html Msg
@@ -48,12 +45,11 @@ listView model =
             div [ class "pure-g" ] (List.map productRow products)
 
 
-searchView : Maybe String -> Html Msg
+searchView : Maybe String -> List (Html Msg)
 searchView search =
-    form [ class "pure-form" ]
-        [ input [ placeholder "Search query", class "pure-input-rounded", value (Maybe.withDefault "" search), type' "text", onInput UpdateSearch ] []
-        , a [ onClick ClickOnSearch, class "pure-button" ] [ text "Buscar" ]
-        ]
+    [ input [ placeholder "Search query", class "pure-input-rounded", value (Maybe.withDefault "" search), type' "text", onInput UpdateSearch ] []
+    , a [ onClick ClickOnSearch, class "pure-button" ] [ text "Buscar" ]
+    ]
 
 
 productRow : IndexedProduct -> Html Msg

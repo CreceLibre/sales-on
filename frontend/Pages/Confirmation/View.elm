@@ -12,10 +12,8 @@ import Utils exposing (onChangeIntValue)
 view : ConfirmationPageModel -> Html Msg
 view { orderConfirmation, orderBreakdown } =
     div [ class "center" ]
-        [ Html.form [ class "pure-g pure-form" ]
-            [ rightContent orderBreakdown
-            , leftContent orderBreakdown
-            ]
+        [ rightContent orderBreakdown
+        , leftContent orderBreakdown
         ]
 
 
