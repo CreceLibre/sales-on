@@ -8,7 +8,7 @@ import Update exposing (update)
 import Routing exposing (Route(..))
 import Pages.Confirmation.Commands exposing (fetchBreakdowns, resetState)
 import Pages.Products.Commands exposing (fetchProducts)
-import Pages.Receipt.Commands exposing (fetchOrder)
+import Commands exposing (fetchOrder)
 import Menu.Commands exposing (fetchCart)
 
 
@@ -46,7 +46,7 @@ urlUpdateCommand model route =
             ]
 
         ReceiptRoute orderUuid ->
-            [ Cmd.map ReceiptMsg <| fetchOrder orderUuid ]
+            [ fetchOrder orderUuid ]
 
         NotFoundRoute ->
             [ Cmd.none ]

@@ -47,3 +47,12 @@ type alias OrderReceipt =
     { id : ID
     , email : String
     }
+
+
+
+-- Initializers
+
+
+initOrderReceipt : OrderReceipt
+initOrderReceipt =
+    OrderReceipt 0 ""

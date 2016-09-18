@@ -29,7 +29,7 @@ page model =
                     Html.App.map ConfirmationMsg <| Pages.Confirmation.View.view model.confirmationPage
 
                 ReceiptRoute _ ->
-                    Html.App.map ReceiptMsg <| Pages.Receipt.View.view model.receiptPage
+                    Pages.Receipt.View.view model
 
                 NotFoundRoute ->
                     notFoundView

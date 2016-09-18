@@ -5,7 +5,6 @@ import Models exposing (State)
 import Pages.Products.Update
 import Pages.Products.Messages
 import Pages.Confirmation.Update
-import Pages.Receipt.Update
 import Menu.Update
 import Menu.Messages
 import OutMessage
@@ -37,15 +36,13 @@ update msg model =
                 }
                     ! [ Cmd.map ConfirmationMsg cmds ]
 
-        ReceiptMsg subMsg ->
-            let
-                ( updatedReceipt, cmds ) =
-                    Pages.Receipt.Update.update subMsg model.receiptPage
-            in
-                { model
-                    | receiptPage = updatedReceipt
-                }
-                    ! [ Cmd.map ReceiptMsg cmds ]
+        FetchOrderSucceed updatedOrder ->
+            { model | receipt = updatedOrder }
+                ! [ Cmd.none ]
+
+        FetchOrderFail error ->
+            model
+                ! [ Cmd.none ]
 
 
 updateFromProductsEvents : GlobalEvent -> State -> ( State, Cmd Msg )
