@@ -20,15 +20,15 @@ import Commands
 
 
 update : Msg -> State -> ( State, Cmd Msg )
-update msg model =
+update msg state =
     case msg of
         FetchCartSucceed cartItems ->
-            ( { model | cartSize = List.length cartItems }
+            ( { state | cartSize = List.length cartItems }
             , Cmd.none
             )
 
         FetchCartFail error ->
-            ( model, Cmd.none )
+            ( state, Cmd.none )
 
         UpdateSearch keyword ->
             let
@@ -38,17 +38,17 @@ update msg model =
                     else
                         Just keyword
             in
-                ( { model | search = search }, Cmd.none )
+                ( { state | search = search }, Cmd.none )
 
         ClickOnSearch ->
-            ( model, fetchProducts model.search )
+            ( state, fetchProducts state.search )
 
         FetchProductsSuccess response ->
             let
                 newProducts =
                     (List.indexedMap (\i p -> ( i + 1, p )) response)
             in
-                ( { model
+                ( { state
                     | products = newProducts
                     , isLoading = False
                   }
@@ -56,39 +56,39 @@ update msg model =
                 )
 
         FetchProductsFail error ->
-            ( { model | isLoading = False }, Cmd.none )
+            ( { state | isLoading = False }, Cmd.none )
 
         AddToCart productId ->
             let
                 newProducts =
-                    List.map (updateCartStatus productId True) model.products
+                    List.map (updateCartStatus productId True) state.products
             in
-                ( { model | products = newProducts }
-                , addToCartCommands productId model.products |> Cmd.batch
+                ( { state | products = newProducts }
+                , addToCartCommands productId state.products |> Cmd.batch
                 )
 
         AddToCartSuccess ->
-            ( { model | cartSize = model.cartSize + 1 }, Cmd.none )
+            ( { state | cartSize = state.cartSize + 1 }, Cmd.none )
 
         AddToCartFail productId error ->
             let
                 newProducts =
-                    List.map (updateCartStatus productId False) model.products
+                    List.map (updateCartStatus productId False) state.products
             in
-                ( { model | products = newProducts }
+                ( { state | products = newProducts }
                 , Cmd.none
                 )
 
         FetchOrderSucceed updatedOrder ->
-            { model | receipt = updatedOrder }
+            { state | receipt = updatedOrder }
                 ! [ Cmd.none ]
 
         FetchOrderFail error ->
-            model
+            state
                 ! [ Cmd.none ]
 
         Reset ->
-            ( initConfirmationState model, Cmd.none )
+            ( initConfirmationState state, Cmd.none )
 
         Delayed state ->
             ( state, Cmd.none )
@@ -96,51 +96,51 @@ update msg model =
         UpdateQuantity itemId oldQuantity newQuantity ->
             let
                 { orderBreakdown } =
-                    model
+                    state
 
                 newOrderBreakdown =
                     { orderBreakdown | items = updateQuantity itemId newQuantity orderBreakdown.items }
 
                 updatedModel =
-                    { model | orderBreakdown = newOrderBreakdown }
+                    { state | orderBreakdown = newOrderBreakdown }
             in
                 updatedModel
                     ! updateQuantityCmd itemId oldQuantity newQuantity orderBreakdown.items
 
         UpdateItemQuantitySucceed ->
-            model
+            state
                 ! [ fetchBreakdowns ]
 
         UpdateItemQuantityFail itemId oldQuantity _ ->
             let
                 { orderBreakdown } =
-                    model
+                    state
 
                 newOrderBreakdown =
                     { orderBreakdown | items = updateQuantity itemId oldQuantity orderBreakdown.items }
 
                 updatedModel =
-                    { model | orderBreakdown = newOrderBreakdown }
+                    { state | orderBreakdown = newOrderBreakdown }
             in
                 -- Okay, so this is a not-so-ugly workaround, for this `problem`
                 -- https://gist.github.com/aotarola/62c8b4a067e8d0dcb40cca9e24133566
                 -- I documented a `solution` here
                 -- https://gist.github.com/aotarola/dcc94c26d81b4093a10b92946fa624d0
-                model
+                state
                     ! [ Process.sleep 50
                             |> Task.perform never (always <| Delayed updatedModel)
                       ]
 
         RemoveItem itemId ->
-            model
+            state
                 ! [ removeItem itemId ]
 
         RemoveItemSucceed ->
-            model
+            state
                 ! [ fetchBreakdowns ]
 
         RemoveItemFail err ->
-            model
+            state
                 ! [ Cmd.none ]
 
         FetchBreakdownsSucceed newOrderBreakdown ->
@@ -151,41 +151,41 @@ update msg model =
                     else
                         Cmd.none
             in
-                { model
+                { state
                     | orderBreakdown =
                         newOrderBreakdown
                 }
                     ! [ shouldShowProducts ]
 
         FetchBreakdownsFail _ ->
-            model
+            state
                 ! [ Cmd.none ]
 
         UpdateEmail newEmail ->
             let
                 { orderConfirmation } =
-                    model
+                    state
 
                 newOrderConfirmation =
                     { orderConfirmation | email = newEmail }
             in
-                { model
+                { state
                     | orderConfirmation =
                         newOrderConfirmation
                 }
                     ! [ Cmd.none ]
 
         PlaceOrderSucceed orderUuid ->
-            initConfirmationState model
+            initConfirmationState state
                 ! [ Navigation.newUrl ("#receipt/" ++ orderUuid) ]
 
         PlaceOrderFail error ->
-            model
+            state
                 ! [ Cmd.none ]
 
         PlaceOrder ->
-            model
-                ! [ placeOrder model ]
+            state
+                ! [ placeOrder state ]
 
 
 updateCartStatus : ID -> Bool -> IndexedProduct -> IndexedProduct
