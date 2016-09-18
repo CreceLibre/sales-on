@@ -6,8 +6,14 @@ import Models exposing (State, initialState)
 import View exposing (view)
 import Update exposing (update)
 import Routing exposing (Route(..))
-import Pages.Confirmation.Commands exposing (fetchBreakdowns, resetState)
-import Commands exposing (fetchOrder, fetchProducts, fetchCart)
+import Commands
+    exposing
+        ( fetchOrder
+        , fetchProducts
+        , fetchCart
+        , fetchBreakdowns
+        , resetState
+        )
 
 
 init : Result String Route -> ( State, Cmd Msg )
@@ -35,12 +41,12 @@ urlUpdateCommand : State -> Route -> List (Cmd Msg)
 urlUpdateCommand model route =
     case route of
         ConfirmationRoute ->
-            [ Cmd.map ConfirmationMsg fetchBreakdowns ]
+            [ fetchBreakdowns ]
 
         ProductsRoute ->
             [ fetchProducts Nothing
             , fetchCart
-            , Cmd.map ConfirmationMsg resetState
+            , resetState
             ]
 
         ReceiptRoute orderUuid ->

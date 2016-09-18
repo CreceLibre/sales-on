@@ -1,8 +1,16 @@
 module Models exposing (..)
 
-import Pages.Confirmation.Models exposing (ConfirmationPageModel)
-import API.Models exposing (OrderReceipt, Product, initOrderReceipt)
 import Routing
+import API.Models
+    exposing
+        ( OrderReceipt
+        , Product
+        , OrderBreakdown
+        , OrderConfirmation
+        , initOrderReceipt
+        , initOrderConfirmation
+        , initOrderBreakdown
+        )
 
 
 type alias IndexedProduct =
@@ -13,7 +21,8 @@ type alias State =
     { search : Maybe String
     , products : List IndexedProduct
     , isLoading : Bool
-    , confirmationPage : ConfirmationPageModel
+    , orderConfirmation : OrderConfirmation
+    , orderBreakdown : OrderBreakdown
     , receipt : OrderReceipt
     , cartSize : Int
     , search : Maybe String
@@ -26,8 +35,17 @@ initialState route =
     { search = Nothing
     , products = []
     , isLoading = False
-    , confirmationPage = Pages.Confirmation.Models.init
+    , orderConfirmation = initOrderConfirmation
+    , orderBreakdown = initOrderBreakdown
     , receipt = initOrderReceipt
     , cartSize = 0
     , route = route
+    }
+
+
+initConfirmationState : State -> State
+initConfirmationState state =
+    { state
+        | orderConfirmation = initOrderConfirmation
+        , orderBreakdown = initOrderBreakdown
     }

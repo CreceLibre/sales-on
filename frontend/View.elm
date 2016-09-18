@@ -1,7 +1,6 @@
 module View exposing (..)
 
-import Html.App
-import Html exposing (Html, form, div, text)
+import Html exposing (Html, form, text)
 import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
 import Models exposing (State)
@@ -26,7 +25,7 @@ page model =
                     Pages.Products.View.view model
 
                 ConfirmationRoute ->
-                    Html.App.map ConfirmationMsg <| Pages.Confirmation.View.view model.confirmationPage
+                    Pages.Confirmation.View.view model
 
                 ReceiptRoute _ ->
                     Pages.Receipt.View.view model

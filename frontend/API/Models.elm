@@ -56,3 +56,13 @@ type alias OrderReceipt =
 initOrderReceipt : OrderReceipt
 initOrderReceipt =
     OrderReceipt 0 ""
+
+
+initOrderConfirmation : OrderConfirmation
+initOrderConfirmation =
+    OrderConfirmation "" "webpay" "galpon"
+
+
+initOrderBreakdown : OrderBreakdown
+initOrderBreakdown =
+    OrderBreakdown "" "" []

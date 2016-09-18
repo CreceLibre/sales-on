@@ -3,13 +3,13 @@ module Pages.Confirmation.View exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick, on, targetValue)
-import Pages.Confirmation.Messages exposing (..)
-import Pages.Confirmation.Models exposing (ConfirmationPageModel)
+import Messages exposing (Msg(..))
 import API.Models exposing (OrderBreakdown, OrderBreakdownItem)
 import Utils exposing (onChangeIntValue)
+import Models exposing (State)
 
 
-view : ConfirmationPageModel -> Html Msg
+view : State -> Html Msg
 view { orderConfirmation, orderBreakdown } =
     div [ class "center" ]
         [ rightContent orderBreakdown

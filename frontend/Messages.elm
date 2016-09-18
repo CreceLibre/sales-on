@@ -1,8 +1,15 @@
 module Messages exposing (..)
 
 import Http
-import Pages.Confirmation.Messages
-import API.Models exposing (OrderReceipt, Product, ID, CartItem)
+import API.Models
+    exposing
+        ( OrderReceipt
+        , Product
+        , ID
+        , CartItem
+        , OrderBreakdown
+        )
+import Models exposing (State)
 
 
 type Msg
@@ -11,10 +18,23 @@ type Msg
     | AddToCart ID
     | AddToCartSuccess
     | AddToCartFail ID Http.Error
-    | ConfirmationMsg Pages.Confirmation.Messages.Msg
     | FetchOrderSucceed OrderReceipt
     | FetchOrderFail Http.Error
     | FetchCartSucceed (List CartItem)
     | FetchCartFail Http.Error
     | UpdateSearch String
     | ClickOnSearch
+    | UpdateEmail String
+    | FetchBreakdownsSucceed OrderBreakdown
+    | FetchBreakdownsFail Http.Error
+    | UpdateQuantity ID Int Int
+    | UpdateItemQuantitySucceed
+    | UpdateItemQuantityFail ID Int Http.Error
+    | RemoveItem ID
+    | RemoveItemSucceed
+    | RemoveItemFail Http.Error
+    | PlaceOrder
+    | PlaceOrderSucceed String
+    | PlaceOrderFail Http.Error
+    | Delayed State
+    | Reset
