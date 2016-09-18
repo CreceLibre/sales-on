@@ -19,13 +19,13 @@ update msg model =
             Menu.Update.update subMsg model.menu
                 |> OutMessage.mapComponent (\newChild -> { model | menu = newChild })
                 |> OutMessage.mapCmd MenuMsg
-                |> OutMessage.evaluateMaybe updateProductsFromMenuEvents Cmd.none
+                |> OutMessage.evaluateMaybe updateFromMenuEvents Cmd.none
 
         ProductsMsg subMsg ->
             Pages.Products.Update.update subMsg model.productsPage
                 |> OutMessage.mapComponent (\newChild -> { model | productsPage = newChild })
                 |> OutMessage.mapCmd ProductsMsg
-                |> OutMessage.evaluateMaybe updateMenuFromProductsEvents Cmd.none
+                |> OutMessage.evaluateMaybe updateFromProductsEvents Cmd.none
 
         ConfirmationMsg subMsg ->
             let
@@ -48,8 +48,8 @@ update msg model =
                     ! [ Cmd.map ReceiptMsg cmds ]
 
 
-updateMenuFromProductsEvents : GlobalEvent -> Model -> ( Model, Cmd Msg )
-updateMenuFromProductsEvents msg model =
+updateFromProductsEvents : GlobalEvent -> Model -> ( Model, Cmd Msg )
+updateFromProductsEvents msg model =
     case msg of
         NewCartWasAdded ->
             updateMenu (Menu.Messages.GlobalEvent NewCartWasAdded) model
@@ -61,8 +61,8 @@ updateMenuFromProductsEvents msg model =
             ( model, Cmd.none )
 
 
-updateProductsFromMenuEvents : GlobalEvent -> Model -> ( Model, Cmd Msg )
-updateProductsFromMenuEvents msg model =
+updateFromMenuEvents : GlobalEvent -> Model -> ( Model, Cmd Msg )
+updateFromMenuEvents msg model =
     case msg of
         SearchForProduct keyword ->
             updateProducts (Pages.Products.Messages.GlobalEvent <| SearchForProduct keyword) model
