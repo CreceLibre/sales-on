@@ -9,20 +9,26 @@ import Utils exposing (GlobalEvent(..))
 update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg, Maybe GlobalEvent )
 update action model =
     case action of
-        FetchAllDone response ->
+        FetchProductsSuccess wasFullFetch response ->
             let
                 newProducts =
                     (List.indexedMap (\i p -> ( i + 1, p )) response)
+
+                globalEvent =
+                    if wasFullFetch then
+                        Just FetchAllProducts
+                    else
+                        Nothing
             in
                 ( { model
                     | products = newProducts
                     , isLoading = False
                   }
                 , Cmd.none
-                , Nothing
+                , globalEvent
                 )
 
-        FetchAllFail error ->
+        FetchProductsFail error ->
             ( { model | isLoading = False }, Cmd.none, Nothing )
 
         AddToCart productId ->

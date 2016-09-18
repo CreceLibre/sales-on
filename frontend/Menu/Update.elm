@@ -22,6 +22,9 @@ update msg model =
                 NewCartWasAdded ->
                     ( { model | cartSize = model.cartSize + 1 }, Cmd.none, Nothing )
 
+                FetchAllProducts ->
+                    ( { model | search = Nothing }, Cmd.none, Nothing )
+
                 _ ->
                     ( model, Cmd.none, Nothing )
 

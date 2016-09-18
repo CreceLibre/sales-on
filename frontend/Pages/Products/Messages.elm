@@ -6,8 +6,8 @@ import Utils exposing (GlobalEvent)
 
 
 type Msg
-    = FetchAllDone (List Product)
-    | FetchAllFail Http.Error
+    = FetchProductsSuccess Bool (List Product)
+    | FetchProductsFail Http.Error
     | AddToCart Int
     | AddToCartSuccess
     | AddToCartFail Int Http.Error

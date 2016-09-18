@@ -8,8 +8,17 @@ import API.Resources.Cart as CartAPI
 
 fetchProducts : Maybe String -> Cmd Msg
 fetchProducts keyword =
-    ProductsAPI.fetchTask keyword
-        |> Task.perform FetchAllFail FetchAllDone
+    let
+        isFullFetch =
+            case keyword of
+                Just _ ->
+                    False
+
+                Nothing ->
+                    True
+    in
+        ProductsAPI.fetchTask keyword
+            |> Task.perform FetchProductsFail (FetchProductsSuccess isFullFetch)
 
 
 addProductToCart : Int -> Cmd Msg

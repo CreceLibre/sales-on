@@ -54,6 +54,9 @@ updateMenuFromProductsEvents msg model =
         NewCartWasAdded ->
             updateMenu (Menu.Messages.GlobalEvent NewCartWasAdded) model
 
+        FetchAllProducts ->
+            updateMenu (Menu.Messages.GlobalEvent FetchAllProducts) model
+
         _ ->
             ( model, Cmd.none )
 
