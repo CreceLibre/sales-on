@@ -3,13 +3,10 @@ module Pages.Products.Update exposing (..)
 import Pages.Products.Messages exposing (Msg(..))
 import Pages.Products.Models exposing (ProductPageModel, IndexedProduct)
 import Pages.Products.Commands exposing (addProductToCart, fetchProducts)
+import Utils exposing (GlobalEvent(..))
 
 
-type OutMsg
-    = NewCartItem
-
-
-update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg, Maybe OutMsg )
+update : Msg -> ProductPageModel -> ( ProductPageModel, Cmd Msg, Maybe GlobalEvent )
 update action model =
     case action of
         FetchAllDone response ->
@@ -39,7 +36,7 @@ update action model =
                 )
 
         AddToCartSuccess ->
-            ( model, Cmd.none, Just NewCartItem )
+            ( model, Cmd.none, Just NewCartWasAdded )
 
         AddToCartFail productId error ->
             let

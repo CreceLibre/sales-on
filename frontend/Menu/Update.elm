@@ -2,6 +2,7 @@ module Menu.Update exposing (..)
 
 import Menu.Messages exposing (Msg(..))
 import Menu.Models exposing (MenuModel)
+import Utils exposing (GlobalEvent(..))
 
 
 update : Msg -> MenuModel -> ( MenuModel, Cmd Msg )
@@ -15,6 +16,8 @@ update msg model =
             model
                 ! [ Cmd.none ]
 
-        NewCartItem ->
-            { model | cartSize = model.cartSize + 1 }
-                ! [ Cmd.none ]
+        GlobalEvent e ->
+            case e of
+                NewCartWasAdded ->
+                    { model | cartSize = model.cartSize + 1 }
+                        ! [ Cmd.none ]

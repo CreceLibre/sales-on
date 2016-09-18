@@ -55,7 +55,7 @@ update msg confirmationOrder =
                     -- https://gist.github.com/aotarola/dcc94c26d81b4093a10b92946fa624d0
                     confirmationOrder
                         ! [ Process.sleep 50
-                                |> Task.perform never (always (Delayed newConfirmationOrder))
+                                |> Task.perform never (always <| Delayed newConfirmationOrder)
                           ]
 
             RemoveItem itemId ->
