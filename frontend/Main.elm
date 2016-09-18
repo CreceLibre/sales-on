@@ -12,7 +12,8 @@ import Commands
         , fetchProducts
         , fetchCart
         , fetchBreakdowns
-        , resetState
+        , resetConfirmationState
+        , resetSearchState
         )
 
 
@@ -46,7 +47,8 @@ urlUpdateCommand model route =
         ProductsRoute ->
             [ fetchProducts Nothing
             , fetchCart
-            , resetState
+            , resetConfirmationState
+            , resetSearchState
             ]
 
         ReceiptRoute orderUuid ->

@@ -37,4 +37,5 @@ type Msg
     | PlaceOrderSucceed String
     | PlaceOrderFail Http.Error
     | Delayed State
-    | Reset
+    | ResetConfirmation
+    | ResetSearch

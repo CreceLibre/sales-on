@@ -49,3 +49,10 @@ initConfirmationState state =
         | orderConfirmation = initOrderConfirmation
         , orderBreakdown = initOrderBreakdown
     }
+
+
+initSearchState : State -> State
+initSearchState state =
+    { state
+        | search = Nothing
+    }

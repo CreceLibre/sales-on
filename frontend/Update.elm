@@ -6,7 +6,8 @@ import Navigation
 import Basics.Extra exposing (never)
 import Messages exposing (Msg(..))
 import API.Models exposing (ID, OrderBreakdownItem, OrderBreakdown)
-import State exposing (State, IndexedProduct, initConfirmationState)
+import State exposing (State, IndexedProduct, initConfirmationState, initSearchState)
+import Utils exposing (toMaybe)
 import Commands
     exposing
         ( addProductToCart
@@ -22,22 +23,21 @@ update : Msg -> State -> ( State, Cmd Msg )
 update msg state =
     case msg of
         FetchCartSucceed cartItems ->
-            ( { state | cartSize = List.length cartItems }
-            , Cmd.none
-            )
+            let
+                newState =
+                    { state | cartSize = List.length cartItems }
+            in
+                newState ! [ Cmd.none ]
 
         FetchCartFail error ->
-            ( state, Cmd.none )
+            state ! [ Cmd.none ]
 
         UpdateSearch keyword ->
             let
-                search =
-                    if keyword == "" then
-                        Nothing
-                    else
-                        Just keyword
+                newState =
+                    { state | search = toMaybe (\x -> x /= "") keyword }
             in
-                ( { state | search = search }, Cmd.none )
+                newState ! [ Cmd.none ]
 
         ClickOnSearch ->
             ( state, fetchProducts state.search )
@@ -86,8 +86,11 @@ update msg state =
             state
                 ! [ Cmd.none ]
 
-        Reset ->
+        ResetConfirmation ->
             ( initConfirmationState state, Cmd.none )
+
+        ResetSearch ->
+            ( initSearchState state, Cmd.none )
 
         Delayed state ->
             ( state, Cmd.none )

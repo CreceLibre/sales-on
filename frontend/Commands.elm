@@ -35,9 +35,14 @@ fetchCart =
         |> Task.perform FetchCartFail FetchCartSucceed
 
 
-resetState : Cmd Msg
-resetState =
-    (Task.succeed ()) |> Task.perform never (always Reset)
+resetConfirmationState : Cmd Msg
+resetConfirmationState =
+    (Task.succeed ()) |> Task.perform never (always ResetConfirmation)
+
+
+resetSearchState : Cmd Msg
+resetSearchState =
+    (Task.succeed ()) |> Task.perform never (always ResetSearch)
 
 
 fetchBreakdowns : Cmd Msg
