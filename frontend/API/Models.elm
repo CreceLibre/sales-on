@@ -46,6 +46,7 @@ type alias OrderConfirmation =
 type alias OrderReceipt =
     { id : ID
     , email : String
+    , uuid : String
     }
 
 
@@ -55,7 +56,7 @@ type alias OrderReceipt =
 
 initOrderReceipt : OrderReceipt
 initOrderReceipt =
-    OrderReceipt 0 ""
+    OrderReceipt 0 "" ""
 
 
 initOrderConfirmation : OrderConfirmation

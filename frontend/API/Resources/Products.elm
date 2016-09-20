@@ -2,9 +2,7 @@ module API.Resources.Products exposing (fetchTask)
 
 import Http
 import Json.Decode as Decode exposing ((:=))
-import Json.Decode.Pipeline as Pipeline
 import Task
-import API.Models exposing (Product)
 
 
 endpointUrl : String
@@ -12,38 +10,15 @@ endpointUrl =
     "/api/v1/products"
 
 
-fetchAllUrl : Maybe String -> String
-fetchAllUrl qs =
-    case qs of
-        Just term ->
-            endpointUrl ++ "?q=" ++ term
+fetchTask : Maybe String -> Decode.Decoder a -> Task.Task Http.Error a
+fetchTask query decoder =
+    let
+        url qs =
+            case qs of
+                Just term ->
+                    endpointUrl ++ "?q=" ++ term
 
-        Nothing ->
-            endpointUrl
-
-
-fetchTask : Maybe String -> Task.Task Http.Error (List Product)
-fetchTask query =
-    Http.get collectionDecoder (fetchAllUrl query)
-
-
-collectionDecoder : Decode.Decoder (List Product)
-collectionDecoder =
-    Decode.object1 identity
-        ("products" := (Decode.list memberDecoder))
-
-
-memberDecoder : Decode.Decoder Product
-memberDecoder =
-    Pipeline.decode Product
-        |> Pipeline.required "id" Decode.int
-        |> Pipeline.required "name" Decode.string
-        |> Pipeline.required "category" Decode.string
-        |> Pipeline.required "price" decodePrice
-        |> Pipeline.required "isInCart" Decode.bool
-
-
-decodePrice : Decode.Decoder String
-decodePrice =
-    Pipeline.decode identity
-        |> Pipeline.required "formattedAmount" Decode.string
+                Nothing ->
+                    endpointUrl
+    in
+        Http.get decoder (url query)

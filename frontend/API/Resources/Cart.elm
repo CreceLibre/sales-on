@@ -3,9 +3,7 @@ module API.Resources.Cart exposing (saveTask, updateTask, deleteTask, fetchTask)
 import Http
 import Json.Decode as Decode exposing ((:=))
 import Json.Encode as Encode
-import Json.Decode.Pipeline as Pipeline
 import Task
-import API.Models exposing (ID, CartItem)
 
 
 endpointUrl : String
@@ -17,16 +15,16 @@ endpointUrl =
 -- Tasks
 
 
-fetchTask : Task.Task Http.Error (List CartItem)
-fetchTask =
-    Http.get collectionDecoder endpointUrl
+fetchTask : Decode.Decoder a -> Task.Task Http.Error a
+fetchTask decoder =
+    Http.get decoder endpointUrl
 
 
-saveTask : ID -> Task.Task Http.Error ()
-saveTask productId =
+saveTask : Encode.Value -> Task.Task Http.Error ()
+saveTask encoder =
     let
         body =
-            encodeForSave productId
+            encoder
                 |> Encode.encode 0
                 |> Http.string
 
@@ -41,11 +39,11 @@ saveTask productId =
             |> Http.fromJson (Decode.succeed ())
 
 
-updateTask : ID -> Int -> Task.Task Http.Error ()
-updateTask productId newQuantity =
+updateTask : Encode.Value -> Task.Task Http.Error ()
+updateTask encoder =
     let
         body =
-            encodeForUpdate productId newQuantity
+            encoder
                 |> Encode.encode 0
                 |> Http.string
 
@@ -60,11 +58,11 @@ updateTask productId newQuantity =
             |> Http.fromJson (Decode.succeed ())
 
 
-deleteTask : ID -> Task.Task Http.Error ()
-deleteTask productId =
+deleteTask : Encode.Value -> Task.Task Http.Error ()
+deleteTask encoder =
     let
         body =
-            encodeForDelete productId
+            encoder
                 |> Encode.encode 0
                 |> Http.string
 
@@ -77,58 +75,3 @@ deleteTask productId =
     in
         Http.send Http.defaultSettings config
             |> Http.fromJson (Decode.succeed ())
-
-
-
--- Encoders
-
-
-encodeForSave : ID -> Encode.Value
-encodeForSave productId =
-    let
-        list =
-            [ ( "product_id", Encode.int productId )
-            ]
-    in
-        list
-            |> Encode.object
-
-
-encodeForDelete : ID -> Encode.Value
-encodeForDelete productId =
-    let
-        list =
-            [ ( "product_id", Encode.int productId )
-            ]
-    in
-        list
-            |> Encode.object
-
-
-encodeForUpdate : ID -> Int -> Encode.Value
-encodeForUpdate productId newQuantity =
-    let
-        list =
-            [ ( "product_id", Encode.int productId )
-            , ( "quantity", Encode.int newQuantity )
-            ]
-    in
-        list
-            |> Encode.object
-
-
-
--- Decoders
-
-
-collectionDecoder : Decode.Decoder (List CartItem)
-collectionDecoder =
-    Decode.object1 identity
-        ("items" := (Decode.list memberDecoder))
-
-
-memberDecoder : Decode.Decoder CartItem
-memberDecoder =
-    Pipeline.decode CartItem
-        |> Pipeline.required "product_id" Decode.int
-        |> Pipeline.required "quantity" Decode.int

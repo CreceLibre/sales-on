@@ -9,29 +9,49 @@ import API.Resources.Orders as OrdersAPI
 import API.Resources.Products as ProductsAPI
 import API.Resources.Cart as CartAPI
 import API.Resources.Breakdowns as BreakdownsAPI
+import Encoders
+    exposing
+        ( saveCartItemEncoder
+        , deleteCartItemEncoder
+        , updateItemEncoder
+        , saveOrderEncoder
+        )
+import Decoders
+    exposing
+        ( breakdownsCollectionDecoder
+        , cartItemCollectionDecoder
+        , orderReceiptDecoder
+        , productCollectionDecoder
+        )
+
+
+placeOrder : State -> Cmd Msg
+placeOrder { orderConfirmation } =
+    OrdersAPI.saveTask (saveOrderEncoder orderConfirmation) orderReceiptDecoder
+        |> Task.perform PlaceOrderFail PlaceOrderSucceed
 
 
 fetchOrder : String -> Cmd Msg
 fetchOrder orderUuid =
-    OrdersAPI.fetchTask orderUuid
+    OrdersAPI.fetchTask orderUuid orderReceiptDecoder
         |> Task.perform FetchOrderFail FetchOrderSucceed
 
 
 fetchProducts : Maybe String -> Cmd Msg
 fetchProducts keyword =
-    ProductsAPI.fetchTask keyword
+    ProductsAPI.fetchTask keyword productCollectionDecoder
         |> Task.perform FetchProductsFail FetchProductsSuccess
 
 
 addProductToCart : Int -> Cmd Msg
 addProductToCart productId =
-    CartAPI.saveTask productId
+    CartAPI.saveTask (saveCartItemEncoder productId)
         |> Task.perform (AddToCartFail productId) (always AddToCartSuccess)
 
 
 fetchCart : Cmd Msg
 fetchCart =
-    CartAPI.fetchTask
+    CartAPI.fetchTask cartItemCollectionDecoder
         |> Task.perform FetchCartFail FetchCartSucceed
 
 
@@ -47,23 +67,17 @@ resetSearchState =
 
 fetchBreakdowns : Cmd Msg
 fetchBreakdowns =
-    BreakdownsAPI.fetchTask
+    BreakdownsAPI.fetchTask breakdownsCollectionDecoder
         |> Task.perform FetchBreakdownsFail FetchBreakdownsSucceed
 
 
 updateItem : ID -> Int -> Int -> Cmd Msg
 updateItem itemId oldQuantity newQuantity =
-    CartAPI.updateTask itemId newQuantity
+    CartAPI.updateTask (updateItemEncoder itemId newQuantity)
         |> Task.perform (UpdateItemQuantityFail itemId oldQuantity) (always UpdateItemQuantitySucceed)
 
 
 removeItem : ID -> Cmd Msg
 removeItem itemId =
-    CartAPI.deleteTask itemId
+    CartAPI.deleteTask (deleteCartItemEncoder itemId)
         |> Task.perform RemoveItemFail (always RemoveItemSucceed)
-
-
-placeOrder : State -> Cmd Msg
-placeOrder { orderConfirmation } =
-    OrdersAPI.saveTask orderConfirmation
-        |> Task.perform PlaceOrderFail PlaceOrderSucceed

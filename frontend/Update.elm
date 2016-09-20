@@ -177,9 +177,9 @@ update msg state =
                 }
                     ! [ Cmd.none ]
 
-        PlaceOrderSucceed orderUuid ->
+        PlaceOrderSucceed { uuid } ->
             initConfirmationState state
-                ! [ Navigation.newUrl ("#receipt/" ++ orderUuid) ]
+                ! [ Navigation.newUrl ("#receipt/" ++ uuid) ]
 
         PlaceOrderFail error ->
             state

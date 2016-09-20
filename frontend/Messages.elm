@@ -34,7 +34,7 @@ type Msg
     | RemoveItemSucceed
     | RemoveItemFail Http.Error
     | PlaceOrder
-    | PlaceOrderSucceed String
+    | PlaceOrderSucceed OrderReceipt
     | PlaceOrderFail Http.Error
     | Delayed State
     | ResetConfirmation

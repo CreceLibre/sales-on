@@ -3,10 +3,8 @@ module API.Resources.Orders exposing (fetchTask, saveTask)
 import Http
 import Json.Decode as Decode
 import Task
-import Json.Decode.Pipeline as Pipeline
 import Json.Decode as Decode exposing ((:=))
 import Json.Encode as Encode
-import API.Models exposing (OrderReceipt, OrderConfirmation)
 
 
 endpointUrl : String
@@ -14,34 +12,20 @@ endpointUrl =
     "/api/v1/orders"
 
 
-fetchUrl : String -> String
-fetchUrl qs =
-    endpointUrl ++ "/" ++ qs
+fetchTask : String -> Decode.Decoder a -> Task.Task Http.Error a
+fetchTask orderUuid decoder =
+    let
+        url qs =
+            endpointUrl ++ "/" ++ qs
+    in
+        Http.get decoder (url orderUuid)
 
 
-fetchTask : String -> Task.Task Http.Error OrderReceipt
-fetchTask orderUuid =
-    Http.get collectionDecoder (fetchUrl orderUuid)
-
-
-collectionDecoder : Decode.Decoder OrderReceipt
-collectionDecoder =
-    Pipeline.decode identity
-        |> Pipeline.required "order" orderDecoder
-
-
-orderDecoder : Decode.Decoder OrderReceipt
-orderDecoder =
-    Pipeline.decode OrderReceipt
-        |> Pipeline.required "id" Decode.int
-        |> Pipeline.required "email" Decode.string
-
-
-saveTask : OrderConfirmation -> Task.Task Http.Error String
-saveTask confirmationOrder =
+saveTask : Encode.Value -> Decode.Decoder a -> Task.Task Http.Error a
+saveTask encoder decoder =
     let
         body =
-            memberEncoded confirmationOrder
+            encoder
                 |> Encode.encode 0
                 |> Http.string
 
@@ -53,29 +37,4 @@ saveTask confirmationOrder =
             }
     in
         Http.send Http.defaultSettings config
-            |> Http.fromJson decodeOrderResult
-
-
-decodeOrderResult : Decode.Decoder String
-decodeOrderResult =
-    Decode.object1 identity
-        ("order" := decodeOrderId)
-
-
-decodeOrderId : Decode.Decoder String
-decodeOrderId =
-    Decode.object1 identity
-        ("uuid" := Decode.string)
-
-
-memberEncoded : OrderConfirmation -> Encode.Value
-memberEncoded confirmationOrder =
-    let
-        list =
-            [ ( "email", Encode.string confirmationOrder.email )
-            , ( "payment_method", Encode.string confirmationOrder.paymentMethod )
-            , ( "pickup_location", Encode.string confirmationOrder.pickupLocation )
-            ]
-    in
-        list
-            |> Encode.object
+            |> Http.fromJson decoder
